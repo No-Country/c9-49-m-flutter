@@ -1,56 +1,38 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/screens/chat_screen.dart';
+import 'package:flutter_application_1/screens/connect_screen.dart';
+import 'package:flutter_application_1/screens/profile_screen.dart';
 
 class homeScreen extends StatefulWidget {
- 
-
   @override
   State<homeScreen> createState() => _homeScreenState();
 }
 
 class _homeScreenState extends State<homeScreen> {
-
-int currentPage = 0;
- var pages = [
-      
-      [CustomScreen(color: Colors.blueGrey,  textPlace: 'Chat')],
-      [CustomScreen(color: Colors.pink,  textPlace: 'Connect')],
-       [CustomScreen(color: Color.fromARGB(255, 224, 227, 238), textPlace: 'Profile')],
-       
-      ];
+  int currentPage = 0;
+  var pages = [
+    [ChatScreen()],
+    [ConnectScreen()],
+    [ProfileScreen()],
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return 
-
-     Scaffold(
-    //* AppBar
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 49, 128, 189),
         title: Text("ChatLingo $currentPage"),
          elevation: 5,
       ),
-      
-//? Cambiar la pantalla
-  
-
-
       body: PageView(
         children: pages[currentPage],
-
-      
-     
-
       ),
-     //* Bottom navigation bar
      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap:(index) {
-      
-
-       setState(() {
-          currentPage = index;
-       });
+        setState(() {
+            currentPage = index;
+        });
         },
         backgroundColor: Color.fromARGB(255, 49, 128, 189),
         selectedItemColor: Colors.white.withOpacity(1),
