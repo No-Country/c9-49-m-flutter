@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/chat_screen.dart';
+import 'package:flutter_application_1/screens/connect_screen.dart';
+import 'package:flutter_application_1/screens/profile_screen.dart';
 
 class homeScreen extends StatefulWidget {
   @override
@@ -8,18 +11,15 @@ class homeScreen extends StatefulWidget {
 class _homeScreenState extends State<homeScreen> {
   int currentPage = 0;
   var pages = [
-    [CustomScreen(color: Colors.blueGrey, textPlace: 'Chat')],
-    [CustomScreen(color: Colors.pink, textPlace: 'Connect')],
-    [
-      CustomScreen(
-          color: Color.fromARGB(255, 224, 227, 238), textPlace: 'Profile')
-    ],
+    [ChatScreen()],
+    [ConnectScreen()],
+    [ProfileScreen()],
   ];
 
   @override
   Widget build(BuildContext context) {
+    //* AppBar
     return Scaffold(
-      //* AppBar
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 49, 128, 189),
         title: Text("ChatLingo $currentPage"),
@@ -32,6 +32,7 @@ class _homeScreenState extends State<homeScreen> {
         children: pages[currentPage],
       ),
       //* Bottom navigation bar
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (index) {
