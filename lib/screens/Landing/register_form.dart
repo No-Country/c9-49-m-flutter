@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "../../widgets/form_input.dart";
 
 class FormScreen extends StatelessWidget {
   @override
@@ -71,31 +72,7 @@ class _FormRegisterState extends State<FormRegister> {
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: 'Ingrese su nombre',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      hintText: 'Chat Lingo',
-                      hintStyle: TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
-                  controller: nameCtrl,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    return null;
-                  },
-                ),
+                child: FormInput(label: "Ingrese su nombre", controller: nameCtrl),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
