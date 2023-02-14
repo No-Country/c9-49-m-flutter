@@ -1,18 +1,19 @@
 import "package:flutter/material.dart";
+import "../../widgets/primary_button.dart";
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: const Text("Second Route"),
       ),
       body: Center(
-        child: ElevatedButton(
+        child: PrimaryButton(
+          text: "INICIAR SESION",
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/');
           },
-          child: Text('Go back!'),
         ),
       ),
     );
