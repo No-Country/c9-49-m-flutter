@@ -6,7 +6,7 @@ class Lading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(213, 221, 234, 1),
+      color: const Color.fromRGBO(213, 221, 234, 1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -42,8 +42,9 @@ class Lading extends StatelessWidget {
                       Navigator.pushNamed(context, '/onboarding');
                     },
                     style: TextButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 255, 251, 239),
-                        minimumSize: Size(200, 50)),
+                        backgroundColor:
+                            const Color.fromARGB(255, 255, 251, 239),
+                        minimumSize: const Size(200, 50)),
                     child: const Text(
                       "REGISTRARME",
                       style: TextStyle(
@@ -59,7 +60,7 @@ class Lading extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                         backgroundColor: Colors.amber,
-                        minimumSize: Size(200, 50)),
+                        minimumSize: const Size(200, 50)),
                     child: const Text("INICIAR SESIÓN",
                         style: TextStyle(
                           color: Colors.black,
