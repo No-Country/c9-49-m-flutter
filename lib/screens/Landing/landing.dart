@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
-class Lading extends StatelessWidget {
-  const Lading({super.key});
+class Landing extends StatelessWidget {
+  const Landing({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Lading extends StatelessWidget {
             children: [
               Expanded(
                 flex: 10,
-                child: Image.asset("assets/landing/1.png"),
+                child: Image.asset("../assets/landing/1.png"),
               ),
             ],
           ),

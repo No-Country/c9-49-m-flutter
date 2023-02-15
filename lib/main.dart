@@ -17,7 +17,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,9 +25,9 @@ class MyApp extends StatelessWidget {
 
       // home: homeScreen(),
       routes: {
-        "/": (context) => Lading(),
+        "/": (context) => const Landing(),
         "/register": (context) => FormScreen(),
-        "/onboarding": (context) => OnBoarding(),
+        "/onboarding": (context) => const OnBoarding(),
         "/login": (context) => LoginScreen(),
       },
     );
