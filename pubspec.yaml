@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.6+1
   path_provider: ^2.0.12
+  firebase_auth: ^4.2.6
+  cloud_firestore: ^4.3.2
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +61,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/avatarPerfil.jpeg
+    - assets/
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #  - assets/avatarPerfil.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -89,3 +92,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+ 

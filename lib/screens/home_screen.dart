@@ -21,21 +21,27 @@ class _homeScreenState extends State<homeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //* AppBar
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 49, 128, 189),
         title: Text("Speak easy $currentPage"),
          elevation: 5,
       ),
+
+//? Cambiar la pantalla
+
       body: PageView(
         children: pages[currentPage],
       ),
-     bottomNavigationBar: BottomNavigationBar(
+      //* Bottom navigation bar
+
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
-        onTap:(index) {
-        setState(() {
+        onTap: (index) {
+          setState(() {
             currentPage = index;
-        });
+          });
         },
         backgroundColor: Color.fromARGB(255, 49, 128, 189),
         selectedItemColor: Colors.white.withOpacity(1),
@@ -57,23 +63,25 @@ class _homeScreenState extends State<homeScreen> {
         ),
 
     );
-   
   }
 }
 
 class CustomScreen extends StatelessWidget {
   final Color color;
-  final String textPlace; 
+  final String textPlace;
 
-  const CustomScreen({  required this.color, required this.textPlace});
+  const CustomScreen({required this.color, required this.textPlace});
 
   @override
   Widget build(BuildContext context) {
-      return Container(
-        color: color,
-        child: Center(
-          child: Text(this.textPlace, style: TextStyle(fontSize: 25),),
-          ),
-      );
+    return Container(
+      color: color,
+      child: Center(
+        child: Text(
+          this.textPlace,
+          style: TextStyle(fontSize: 25),
+        ),
+      ),
+    );
   }
 }
