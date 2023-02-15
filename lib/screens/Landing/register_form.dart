@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "../../widgets/form_input.dart";
+import '../../widgets/input_field.dart';
 
 class FormScreen extends StatelessWidget {
   @override
@@ -72,40 +72,34 @@ class _FormRegisterState extends State<FormRegister> {
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: FormInput(label: "Ingrese su nombre", controller: nameCtrl),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      labelText: 'Ingrese su mail',
-                      labelStyle: TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      hintText: 'chat_lingo@gmail.com',
-                      hintStyle: TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
-                  controller: emailCtrl,
-                  validator: (value) {
+                child: InputField(
+                  label: "Ingrese su nombre", 
+                  controller: nameCtrl, 
+                  hintText: "Jon Doe",
+                  validation: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
-                      return "Ingrese un mail valido porfavor";
+                      return "Este campo no puede estar vacío";
                     }
                     return null;
                   },
                 ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: InputField(
+                  label: "Ingrese su mail", 
+                  controller: nameCtrl, 
+                  hintText: "chat_lingo@gmail.com",
+                  validation: (value) {
+                    if (value!.isEmpty) return "Please enter some text";
+                    if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                      .hasMatch(value)
+                    )  {
+                      return "Ingrese un email valido porfavor";
+                    }
+                    return null;
+                  },
+                )
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -125,18 +119,18 @@ class _FormRegisterState extends State<FormRegister> {
                       ),
                       suffixIconColor: Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Ingrese un password',
-                      hintStyle: TextStyle(color: Colors.black),
-                      labelStyle: TextStyle(
+                      hintStyle: const TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       hintText: 'Minimo 8 caracteres',
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: const BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                       )),
                   validator: (value) {

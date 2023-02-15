@@ -1,10 +1,12 @@
 import "package:flutter/material.dart";
 
-class FormInput extends StatelessWidget {
+class InputField extends StatelessWidget {
   final String label;
+  final String hintText;
   final TextEditingController controller;
+  final String? Function(String?)? validation;
 
-  const FormInput({super.key, required this.label, required this.controller});
+  const InputField({super.key, required this.label, required this.hintText, required this.controller, required this.validation});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,8 @@ class FormInput extends StatelessWidget {
         labelStyle: const TextStyle(
           color: Color.fromRGBO(0, 0, 0, 0.87),
         ),
-        // hintText: 'Chat Lingo',
-        // hintStyle: const TextStyle(color: Colors.black),
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Colors.black),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1, color: Color.fromARGB(98, 0, 238, 1)
@@ -28,12 +30,7 @@ class FormInput extends StatelessWidget {
           ),
         )),
       controller: controller,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Este campo no puede estar vacío";
-        }
-        return null;
-      },
+      validator: validation,
     );
   }
 }
