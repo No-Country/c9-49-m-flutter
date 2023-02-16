@@ -1,12 +1,22 @@
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import '../../widgets/Inputs/text_input.dart';
 
 class FormScreen extends StatelessWidget {
+  const FormScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro'),
+        title: const Text('Registro'),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/login");
+              },
+              child: Text("Iniciar sesión"))
+        ],
       ),
       body: Center(
         child: Container(
@@ -70,11 +80,35 @@ class _FormRegisterState extends State<FormRegister> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: TextInput(label: "Ingrese su nombre", hintText: "Jhon Doe",controller: nameCtrl),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      labelText: 'Ingrese su nombre',
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      hintText: 'Chat Lingo',
+                      hintStyle: const TextStyle(color: Colors.black),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+                      )),
+                  controller: nameCtrl,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter some text";
+                    }
+                    return null;
+                  },
+                ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
                       labelText: 'Ingrese su mail',
@@ -107,7 +141,7 @@ class _FormRegisterState extends State<FormRegister> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: TextFormField(
                   controller: passwordCtrl,
                   obscureText: _passwordHidden,
@@ -122,19 +156,19 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      suffixIconColor: Color.fromARGB(255, 0, 0, 0),
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Ingrese un password',
-                      hintStyle: TextStyle(color: Colors.black),
-                      labelStyle: TextStyle(
+                      hintStyle: const TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       hintText: 'Minimo 8 caracteres',
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                       )),
@@ -147,7 +181,7 @@ class _FormRegisterState extends State<FormRegister> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: TextFormField(
                   controller: confirmPasswordCtrl,
                   obscureText: _confirmPasswordHidden,
@@ -162,19 +196,19 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      suffixIconColor: Color.fromARGB(255, 0, 0, 0),
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Confirme el password',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       hintText: 'Repita el password',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintStyle: const TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                       )),
@@ -189,7 +223,7 @@ class _FormRegisterState extends State<FormRegister> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     // devolverá true si el formulario es válido, o falso si
@@ -197,9 +231,9 @@ class _FormRegisterState extends State<FormRegister> {
                     if (_formKey.currentState!.validate()) {
                       // Si el formulario es válido, queremos mostrar un Snackbar
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Processing Data')));
+                          const SnackBar(content: Text('Processing Data')));
+                      singUp();
                     }
-                    print("form valido");
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -212,12 +246,24 @@ class _FormRegisterState extends State<FormRegister> {
                         });
                   },
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey, minimumSize: Size(200, 50)),
-                  child: Text("Registrarme"),
+                      backgroundColor: Colors.grey,
+                      minimumSize: const Size(200, 50)),
+                  child: const Text("Registrarme"),
                 ),
               )
             ],
           ),
         ));
+  }
+
+  Future singUp() async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailCtrl.text.trim(),
+        password: passwordCtrl.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 }

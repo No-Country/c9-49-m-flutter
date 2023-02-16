@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
 //Landing
 import "package:flutter_application_1/screens/Landing/landing.dart";
 import 'package:flutter_application_1/screens/Landing/login_form.dart';
 import "package:flutter_application_1/screens/Landing/onboarding.dart";
 import "package:flutter_application_1/screens/Landing/register_form.dart";
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
