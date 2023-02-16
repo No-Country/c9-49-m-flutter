@@ -1,41 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/chat_screen.dart';
-import 'package:flutter_application_1/screens/connect_screen.dart';
-import 'package:flutter_application_1/screens/profile_screen.dart';
 
+import './connect_screen.dart';
+import '../Chat/chat_screen.dart';
+import '../Profile/profile_screen.dart';
 
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-class homeScreen extends StatefulWidget {
   @override
-  State<homeScreen> createState() => _homeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _homeScreenState extends State<homeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   int currentPage = 0;
   var pages = [
     [ChatScreen()],
     [ConnectScreen()],
     [ProfileScreen()],
-    
   ];
 
   @override
   Widget build(BuildContext context) {
-    //* AppBar
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 49, 128, 189),
+        backgroundColor: const Color.fromARGB(255, 49, 128, 189),
         title: Text("Speak easy $currentPage"),
          elevation: 5,
       ),
-
-//? Cambiar la pantalla
-
       body: PageView(
-        children: pages[currentPage],
+        children: pages[currentPage]
       ),
-      //* Bottom navigation bar
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (index) {
@@ -43,10 +37,10 @@ class _homeScreenState extends State<homeScreen> {
             currentPage = index;
           });
         },
-        backgroundColor: Color.fromARGB(255, 49, 128, 189),
+        backgroundColor: const Color.fromARGB(255, 49, 128, 189),
         selectedItemColor: Colors.white.withOpacity(1),
         unselectedItemColor: Colors.grey,
-        items: [
+        items: const [
             BottomNavigationBarItem(
             icon: Icon( Icons.forum_outlined),
             label: 'Mensajes'
@@ -62,26 +56,6 @@ class _homeScreenState extends State<homeScreen> {
           ],
         ),
 
-    );
-  }
-}
-
-class CustomScreen extends StatelessWidget {
-  final Color color;
-  final String textPlace;
-
-  const CustomScreen({required this.color, required this.textPlace});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: Center(
-        child: Text(
-          this.textPlace,
-          style: TextStyle(fontSize: 25),
-        ),
-      ),
     );
   }
 }

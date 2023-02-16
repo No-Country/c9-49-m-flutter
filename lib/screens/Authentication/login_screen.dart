@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              FormRegister()
+              const FormRegister()
             ],
           ),
         ),
@@ -74,11 +74,11 @@ class _FormRegisterState extends State<FormRegister> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextInput(label: "Ingrese su email", hintText: "name@gmail.com", controller: emailCtrl),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: TextFormField(
                   controller: passwordCtrl,
                   obscureText: _passwordHidden,
@@ -93,10 +93,10 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      suffixIconColor: Color.fromARGB(255, 0, 0, 0),
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Ingrese un password',
                       hintStyle: const TextStyle(color: Colors.black, fontSize: 16),
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Color.fromRGBO(0, 0, 0, 0.87),
                       ),
                       hintText: 'Minimo 8 caracteres',
@@ -120,7 +120,7 @@ class _FormRegisterState extends State<FormRegister> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: PrimaryButton(
                   text: "INICIAR SESION",
                   onPressed: () {
@@ -129,9 +129,9 @@ class _FormRegisterState extends State<FormRegister> {
                     if (_formKey.currentState!.validate()) {
                       // Si el formulario es válido, queremos mostrar un Snackbar
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Processing Data')));
+                          const SnackBar(content: Text('Processing Data')));
                     }
-                    print("form valido");
+                    // print("form valido");
                     showDialog(
                         context: context,
                         builder: (context) {
