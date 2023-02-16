@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "../../widgets/form_input.dart";
+import '../../widgets/Inputs/text_input.dart';
 
 class FormScreen extends StatelessWidget {
   @override
@@ -14,11 +14,10 @@ class FormScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text(
                 "¡Estamos felices de que seas parte!",
                 style: TextStyle(fontSize: 35, color: Colors.black),
-                textAlign: TextAlign.center,
               ),
               FormRegister()
             ],
@@ -72,24 +71,24 @@ class _FormRegisterState extends State<FormRegister> {
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: FormInput(label: "Ingrese su nombre", controller: nameCtrl),
+                child: TextInput(label: "Ingrese su nombre", hintText: "Jhon Doe",controller: nameCtrl),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
                       labelText: 'Ingrese su mail',
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),
                       hintText: 'chat_lingo@gmail.com',
-                      hintStyle: TextStyle(color: Colors.black),
+                      hintStyle: const TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                             width: 3, color: Color.fromARGB(255, 0, 0, 0)),
                       )),

@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 
-class FormInput extends StatelessWidget {
+class TextInput extends StatelessWidget {
   final String label;
+  final String hintText;
   final TextEditingController controller;
 
-  const FormInput({super.key, required this.label, required this.controller});
+  const TextInput({super.key, required this.label, required this.hintText,required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class FormInput extends StatelessWidget {
         labelStyle: const TextStyle(
           color: Color.fromRGBO(0, 0, 0, 0.87),
         ),
-        // hintText: 'Chat Lingo',
-        // hintStyle: const TextStyle(color: Colors.black),
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Colors.black, fontSize: 16),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1, color: Color.fromARGB(98, 0, 238, 1)
