@@ -2,6 +2,9 @@ import "package:flutter/material.dart";
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// Services
+import '../../services/auth_service.dart';
+
 // Widgets:
 import "../../widgets/Inputs/text_input.dart";
 import "../../widgets/Inputs/password_input.dart";
@@ -33,33 +36,32 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  // Login function
-  static Future<User?> loginWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
-    try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        showDialog(
-            context: context,
-            builder: (context) => const AlertDialog(
-                content: Text("No user found for that email")));
-      }
-    }
-
-    return user;
-  }
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+
+    //  Login function
+    Future<void> signIn() async {
+      try {
+        User? user = await _authService.loginWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        if (user != null) {
+          Navigator.pushNamed(context, '/onboarding');
+        }
+      } on FirebaseAuthException catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            content: Text("Usuario o contraseño incorrectos"),
+          ),
+        );
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.all(24.0),
@@ -106,13 +108,7 @@ class _LoginFormState extends State<LoginForm> {
             child: PrimaryButton(
                 text: "INICIAR SESION",
                 onPressed: () async {
-                  User? user = await loginWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
-                      context: context);
-                  if (user != null) {
-                    Navigator.pushNamed(context, '/onboarding');
-                  }
+                  await signIn();
                 }),
           )
         ],

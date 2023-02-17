@@ -11,8 +11,7 @@ import "./screens/Authentication/register_screen.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
       options: const FirebaseOptions(
     apiKey: "AIzaSyCgbvaQflUG-Vw7iK_11MI0HfoNSo7a6s4",
     projectId: "speak-easy-no-country-c78ba",
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false, // eliminar banda 'debug' borde sup
-      title: 'Material app',
+      title: 'SpeakEasy',
       routes: {
         "/": (context) => const IntroScreen(),
         "/home": (context) => const HomeScreen(),
