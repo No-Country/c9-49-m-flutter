@@ -9,18 +9,16 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => onPressed,
+      onPressed: () => onPressed(),
       style: TextButton.styleFrom(
-        backgroundColor: const Color.fromRGBO(0, 90, 194, 1),
-        padding: const EdgeInsets.all(14.0)
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Color.fromRGBO(230, 230, 230, 1),
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        )),
+          backgroundColor: const Color.fromRGBO(0, 90, 194, 1),
+          padding: const EdgeInsets.all(14.0)),
+      child: Text(text,
+          style: const TextStyle(
+            color: Color.fromRGBO(230, 230, 230, 1),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          )),
     );
   }
 }
