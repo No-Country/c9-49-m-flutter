@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,6 +12,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   // Funcion que muestra una segunda vista del perfil
+  
   void _secondView(){
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -19,7 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               
           backgroundColor: const Color.fromRGBO(235, 241, 159, 1),
           appBar: AppBar ( 
-        
+                    automaticallyImplyLeading: false,
+
           elevation: 0, 
           backgroundColor: const Color.fromRGBO(235, 241, 159, 1),
           title: const Text('Perfil de Usuario', style: TextStyle(color: Colors.black)),
@@ -49,22 +52,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
           ),
               
-          // ElevatedButton( // seleccionar imagen de perfil / Cambiar el estilo del boton
-          // onPressed: getImage, child: const Text('seleccionar imagen')),
                       
 
-          // ignore: prefer_const_constructors
-          Padding(
+         const Padding(
               
-          padding: const EdgeInsets.all(8.0),
-          child: const Text('Borerj fjwbbh', style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold )),
+          padding:  EdgeInsets.all(8.0),
+          child:  Text('Borerj fjwbbh', style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold )),
           ),
                     
 
-          // ignore: prefer_const_constructors
-          Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: const Icon( Icons.emoji_flags),
+          const Padding(
+                  padding:  EdgeInsets.all(1.0),
+                  child:  Icon( Icons.emoji_flags),
           ),
               
           const Padding(
@@ -119,12 +118,7 @@ Future getImage() async {
           actions: <Widget>[
             IconButton(icon: const Icon(Icons.settings), onPressed: _secondView),
           ],
-        // leading: BackButton ( 
-        //         onPressed: ()=> {
-        //             Navigator.push(
-        //                 context, MaterialPageRoute(builder: (context)=> Profile2Screen()))
-        //         }
-        //     ),
+       
         elevation: 0, // sombra, borde.
         backgroundColor: const Color.fromRGBO(235, 241, 159, 1),
         title: const Text('Perfil de Usuario', style: TextStyle(color: Colors.black)),
@@ -153,9 +147,14 @@ Future getImage() async {
                     ),
         ),
             
-        ElevatedButton( // seleccionar imagen de perfil / Cambiar el estilo del boton
+        ElevatedButton( 
+        // seleccionar imagen de perfil / Cambiar el estilo del boton
         onPressed: getImage, 
-        child: const Text('seleccionar imagen')),// subir imagen a firebase
+         child:  const Icon(
+          Icons.mode, color: Colors.white,
+          ),
+          ),
+       // child: const Text('seleccionar imagen')),// subir imagen a firebase
                     
 
         
@@ -178,7 +177,7 @@ Future getImage() async {
         ),
         ),
         const Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding:  EdgeInsets.all(32.0),
         child: Text('Español      Italiano      Frances',
         style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.bold),
         ),
