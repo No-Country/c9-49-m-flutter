@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // SCREENS:
 import "./screens/Onboarding/intro_screen.dart";
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
         "/home": (context) => const HomeScreen(),
         "/onboarding": (context) => const OnboardingScreen(),
         "/login": (context) => const LoginScreen(),
-        // "/register": (context) => RegisterScreen(),
+        "/register": (context) => const RegisterScreen(),
       },
     );
   }
