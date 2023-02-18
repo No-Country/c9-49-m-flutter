@@ -57,7 +57,28 @@ class _LoginFormState extends State<LoginForm> {
         showDialog(
           context: context,
           builder: (context) => const AlertDialog(
-            content: Text("Usuario o contraseño incorrectos"),
+            content: Text("Usuario o contraseña incorrectos"),
+          ),
+        );
+      }
+    }
+
+    Future<void> signInWithGoogle() async {
+      try {
+        User? user = await _authService.loginWithGoogle();
+        if (user != null) {
+          showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+              content: Text("Logueado con google"),
+            ),
+          );
+        }
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            content: Text("No se pudo conectar con Google"),
           ),
         );
       }
@@ -109,6 +130,17 @@ class _LoginFormState extends State<LoginForm> {
                 text: "INICIAR SESION",
                 onPressed: () async {
                   await signIn();
+                }),
+          ),
+          const SizedBox(
+            height: 32.0,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: PrimaryButton(
+                text: "GOOGLE",
+                onPressed: () async {
+                  await signInWithGoogle();
                 }),
           )
         ],
