@@ -26,6 +26,12 @@
     <meta name="apple-mobile-web-app-title" content="flutter_application_1" />
     <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
+    <!-- Google SignIn -->
+    <meta
+      name="google-signin-client_id"
+      content="1062828650314-5fe7i5f46955ep91f4slj4r1e8lm0kmn.apps.googleusercontent.com"
+    />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
 
@@ -37,25 +43,8 @@
       var serviceWorkerVersion = null
     </script>
 
-    <!-- Firebase SDK -->
+    <!-- This script adds the flutter initialization JS code -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-
-    <!-- Firebase Configuration -->
-    <script>
-      var firebaseConfig = {
-        apiKey: 'AIzaSyCgbvaQflUG-Vw7iK_11MI0HfoNSo7a6s4',
-        authDomain: 'speak-easy-no-country-c78ba.firebaseapp.com',
-        databaseURL: 'https://speak-easy-no-country-c78ba.firebaseio.com',
-        projectId: 'speak-easy-no-country-c78ba',
-        storageBucket: 'speak-easy-no-country-c78ba.appspot.com',
-        messagingSenderId: '1062828650314',
-        appId: '1:1062828650314:web:c6dee7dbf7b98412bb9bb3',
-        measurementId: 'G-BG6SCELV91',
-      }
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig)
-    </script>
 
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>

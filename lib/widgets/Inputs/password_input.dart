@@ -1,44 +1,105 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+
+class PasswordInput extends StatefulWidget {
+  final String hintText;
+  final String label;
+  final TextEditingController controller;
+  const PasswordInput(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      required this.label})
+      : super(key: key);
+
+  @override
+  _PasswordInputState createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<PasswordInput> {
+  bool _passwordHidden = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: widget.controller,
+      keyboardType: TextInputType.emailAddress,
+      obscureText: _passwordHidden,
+      decoration: InputDecoration(
+          labelText: widget.label,
+          labelStyle: const TextStyle(
+              color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.6)),
+          suffixIcon: IconButton(
+            icon: (Icon(
+                _passwordHidden ? Icons.visibility : Icons.visibility_off)),
+            onPressed: () {
+              setState(() {
+                _passwordHidden = !_passwordHidden;
+              });
+            },
+          ),
+          suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+                width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderSide:
+                BorderSide(width: 2, color: Color.fromARGB(98, 0, 238, 1)),
+          )),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Please enter some text";
+        }
+        return null;
+      },
+    );
+  }
+}
 
 // class PasswordInput extends StatelessWidget {
 //   final String label;
 //   final String hintText;
-//   final bool passwordHidden;
 //   final TextEditingController controller;
 
-//   const PasswordInput({super.key, required this.label, required this.hintText,required this.passwordHidden, required this.controller});
+//   const PasswordInput(
+//       {super.key,
+//       required this.label,
+//       required this.hintText,
+//       required this.controller});
 
 //   @override
 //   Widget build(BuildContext context) {
+//     bool passwordHidden = true;
+
 //     return TextFormField(
 //       controller: controller,
+//       keyboardType: TextInputType.emailAddress,
 //       obscureText: passwordHidden,
 //       decoration: InputDecoration(
 //           suffixIcon: IconButton(
-//             icon: (Icon(passwordHidden
-//                 ? Icons.visibility
-//                 : Icons.visibility_off)),
+//             icon: (Icon(
+//                 passwordHidden ? Icons.visibility : Icons.visibility_off)),
 //             onPressed: () {
-//               setState(() {
-//                 passwordHidden = !passwordHidden;
-//               });
+//               passwordHidden = !passwordHidden;
 //             },
 //           ),
-//           suffixIconColor: Color.fromARGB(255, 0, 0, 0),
+//           suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
 //           labelText: label,
 //           hintText: hintText,
-//           hintStyle: const TextStyle(color: Colors.black),
+//           hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.6)),
 //           labelStyle: const TextStyle(
-//             color: Color.fromARGB(255, 0, 0, 0),
-//           ),
+//               color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
 //           enabledBorder: OutlineInputBorder(
 //             borderSide: const BorderSide(
-//                 width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-//             borderRadius: BorderRadius.circular(5),
+//                 width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+//             borderRadius: BorderRadius.circular(4),
 //           ),
 //           focusedBorder: const OutlineInputBorder(
-//             borderSide: BorderSide(
-//                 width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+//             borderSide:
+//                 BorderSide(width: 2, color: Color.fromARGB(98, 0, 238, 1)),
 //           )),
 //       validator: (value) {
 //         if (value!.isEmpty) {
