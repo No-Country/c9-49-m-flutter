@@ -1,151 +1,152 @@
 import "package:flutter/material.dart";
-import 'package:flutter_application_1/widgets/Buttons/primary_button.dart';
-import '../../widgets/Inputs/text_input.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+// Services:
+import '../../services/auth_service.dart';
 
+// Screens:
+import './forgot_pw_screen.dart';
+
+// Widgets:
+import "../../widgets/Inputs/text_input.dart";
+import "../../widgets/Inputs/password_input.dart";
+import "../../widgets/Texts/title.dart";
+import '../../widgets/Buttons/primary_button.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Center(
-        child: Container(
-          // color: Theme.of(context).primaryColor,
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(30.0),
-                child: const Text(
-                  "¡Bienvenido de nuevo!",
-                  style: TextStyle(fontSize: 24, color: Colors.black, fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              const FormRegister()
-            ],
-          ),
-        ),
-      ),
+      appBar: AppBar(title: const Text("Login")),
+      body: const LoginForm(),
     );
   }
 }
 
-class FormRegister extends StatefulWidget {
-  const FormRegister({super.key});
+class LoginForm extends StatefulWidget {
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
-  State<FormRegister> createState() => _FormRegisterState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _FormRegisterState extends State<FormRegister> {
-  final _formKey = GlobalKey<FormState>();
-  // static const snackBar = SnackBar(
-  //   content: Text('Yay! A SnackBar!'),
-  // );
-
-  final emailCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
-  bool _passwordHidden = true;
-
-  @override
-  void dispose() {
-    emailCtrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    _passwordHidden = true;
-  }
+class _LoginFormState extends State<LoginForm> {
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: TextInput(label: "Ingrese su email", hintText: "name@gmail.com", controller: emailCtrl),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: TextFormField(
-                  controller: passwordCtrl,
-                  obscureText: _passwordHidden,
-                  decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: (Icon(_passwordHidden
-                          ? Icons.visibility
-                          : Icons.visibility_off)),
-                        onPressed: () {
-                          setState(() {
-                            _passwordHidden = !_passwordHidden;
-                          });
-                        },
-                      ),
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
-                      labelText: 'Ingrese un password',
-                      hintStyle: const TextStyle(color: Colors.black, fontSize: 16),
-                      labelStyle: const TextStyle(
-                        color: Color.fromRGBO(0, 0, 0, 0.87),
-                      ),
-                      hintText: 'Minimo 8 caracteres',
-                      enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        width: 1, color: Color.fromARGB(98, 0, 238, 1)
-                      ),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 2, color: Color.fromARGB(98, 0, 238, 1)
-                      ),
-                    )),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: PrimaryButton(
-                  text: "INICIAR SESION",
-                  onPressed: () {
-                    // devolverá true si el formulario es válido, o falso si
-                    // el formulario no es válido.
-                    if (_formKey.currentState!.validate()) {
-                      // Si el formulario es válido, queremos mostrar un Snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')));
-                    }
-                    // print("form valido");
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          String mailValue = emailCtrl.text;
-                          String passValue = passwordCtrl.text;
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
-                          return AlertDialog(
-                            content: Text("email: $mailValue pass: $passValue"),
-                          );
-                        });
-                  },
-                ))
-            ],
+    //  Login function
+    Future<void> signIn() async {
+      try {
+        User? user = await _authService.loginWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        if (user != null) {
+          Navigator.pushNamed(context, '/onboarding');
+        }
+      } on FirebaseAuthException catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            content: Text("Usuario o contraseña incorrectos"),
           ),
-        ));
+        );
+      }
+    }
+
+    Future<void> signInWithGoogle() async {
+      try {
+        User? user = await _authService.loginWithGoogle();
+        if (user != null) {
+          showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+              content: Text("Logueado con google"),
+            ),
+          );
+        }
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => const AlertDialog(
+            content: Text("No se pudo conectar con Google"),
+          ),
+        );
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const AppTitle(text: "¡Bienvenido otra vez!"),
+          const SizedBox(
+            height: 50.0,
+          ),
+          TextInput(
+              label: "Email",
+              hintText: "example@gmail.com",
+              controller: emailController),
+          const SizedBox(
+            height: 15.0,
+          ),
+          PasswordInput(
+            label: "Contraseña",
+            hintText: "Minimo 8 caracteres",
+            controller: passwordController,
+          ),
+          const SizedBox(
+            height: 18.0,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ForgotPasswordScreen();
+              }));
+            },
+            child: const Text(
+              "¿Olvidaste tu contraseña?",
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
+          const SizedBox(
+            height: 32.0,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: PrimaryButton(
+                text: "INICIAR SESION",
+                onPressed: () async {
+                  await signIn();
+                }),
+          ),
+          const SizedBox(
+            height: 32.0,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: PrimaryButton(
+                text: "GOOGLE",
+                onPressed: () async {
+                  await signInWithGoogle();
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
