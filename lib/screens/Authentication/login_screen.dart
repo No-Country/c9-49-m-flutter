@@ -1,9 +1,12 @@
 import "package:flutter/material.dart";
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Services
+// Services:
 import '../../services/auth_service.dart';
+
+// Screens:
+import './forgot_pw_screen.dart';
 
 // Widgets:
 import "../../widgets/Inputs/text_input.dart";
@@ -109,18 +112,17 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(
             height: 18.0,
           ),
-          TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => const AlertDialog(
-                          content: Text("Cambiando contraseña"),
-                        ));
-              },
-              child: const Text(
-                "¿Olvidaste tu contraseña?",
-                style: TextStyle(color: Colors.blue),
-              )),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const ForgotPasswordScreen();
+              }));
+            },
+            child: const Text(
+              "¿Olvidaste tu contraseña?",
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
           const SizedBox(
             height: 32.0,
           ),
