@@ -7,6 +7,7 @@ import '../../services/auth_service.dart';
 
 // Screens:
 import './forgot_pw_screen.dart';
+import '../Home/home_screen.dart';
 
 // Widgets:
 import '../../widgets/Inputs/email_input.dart';
@@ -56,7 +57,12 @@ class _LoginFormState extends State<LoginForm> {
           password: passwordController.text,
         );
         if (user != null) {
-          Navigator.pushNamed(context, '/home');
+          String token = await user.getIdToken();
+          String uid = user.uid;
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomeScreen(userId: uid, token: token);
+          }));
+          // Navigator.pushNamed(context, '/home');
         }
       } on FirebaseAuthException catch (e) {
         print(e);

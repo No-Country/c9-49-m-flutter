@@ -5,7 +5,9 @@ import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  String userId;
+  String token;
+  HomeScreen({super.key, required this.userId, required this.token});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,16 +22,21 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void initState() {
+    print('id: ' + widget.userId);
+    print('token: ' + widget.token);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 49, 128, 189),
         title: Text("Speak easy $currentPage"),
-         elevation: 5,
+        elevation: 5,
       ),
-      body: PageView(
-        children: pages[currentPage]
-      ),
+      body: PageView(children: pages[currentPage]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (index) {
@@ -41,21 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedItemColor: Colors.white.withOpacity(1),
         unselectedItemColor: Colors.grey,
         items: const [
-            BottomNavigationBarItem(
-            icon: Icon( Icons.forum_outlined),
-            label: 'Mensajes'
-            ),
-             BottomNavigationBarItem(
-            icon: Icon( Icons.spatial_audio_off_outlined),
-            label: 'Conectar'
-            ),
-             BottomNavigationBarItem(
-            icon: Icon( Icons.account_circle_outlined ),
-            label: 'Perfil'
-             ),
-          ],
-        ),
-
+          BottomNavigationBarItem(
+              icon: Icon(Icons.forum_outlined), label: 'Mensajes'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.spatial_audio_off_outlined), label: 'Conectar'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined), label: 'Perfil'),
+        ],
+      ),
     );
   }
 }

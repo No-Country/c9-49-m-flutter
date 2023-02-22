@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'SpeakEasy',
       routes: {
         "/": (context) => const IntroScreen(),
-        "/home": (context) => const HomeScreen(),
+        // "/home": (context) => const HomeScreen(),
         "/onboarding": (context) => const OnboardingScreen(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
