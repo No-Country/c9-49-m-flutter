@@ -7,6 +7,7 @@ import "package:flutter_application_1/screens/Landing/landing.dart";
 import 'package:flutter_application_1/screens/Landing/login_form.dart';
 import "package:flutter_application_1/screens/Landing/onboarding.dart";
 import "package:flutter_application_1/screens/Landing/register_form.dart";
+import "package:flutter_application_1/screens/Landing/user_settings.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         "/register": (context) => FormScreen(),
         "/onboarding": (context) => const OnBoarding(),
         "/login": (context) => LoginScreen(),
+        "/register/preferences": (context) => UserPreferencesScreen(),
       },
     );
   }

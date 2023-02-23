@@ -10,8 +10,16 @@ class FormScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro'),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
         actions: [
           ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  elevation: MaterialStateProperty.all(0)),
               onPressed: () {
                 Navigator.pushNamed(context, "/login");
               },
@@ -20,7 +28,7 @@ class FormScreen extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          color: Theme.of(context).primaryColor,
+          color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,10 +55,12 @@ class FormRegister extends StatefulWidget {
 }
 
 class _FormRegisterState extends State<FormRegister> {
+  var userCredential;
+
   final _formKey = GlobalKey<FormState>();
-  static const snackBar = SnackBar(
-    content: Text('Yay! A SnackBar!'),
-  );
+  // static const snackBar = SnackBar(
+  //   content: Text('Yay! A SnackBar!'),
+  // );
 
   final nameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
@@ -69,6 +79,7 @@ class _FormRegisterState extends State<FormRegister> {
   void initState() {
     _passwordHidden = true;
     _confirmPasswordHidden = true;
+    userCredential = null;
   }
 
   @override
@@ -226,28 +237,36 @@ class _FormRegisterState extends State<FormRegister> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // devolverá true si el formulario es válido, o falso si
                     // el formulario no es válido.
                     if (_formKey.currentState!.validate()) {
                       // Si el formulario es válido, queremos mostrar un Snackbar
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')));
-                      singUp();
+                      await singUp();
+                      if (userCredential != null) {
+                        print(userCredential);
+                        User? user = userCredential.user;
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushNamed(
+                          context,
+                          '/register/preferences',
+                          arguments: {'user': user},
+                        );
+                      }
                     }
                     showDialog(
+                        //Se va a usar para mostrar errores como usuario ya registrado
                         context: context,
                         builder: (context) {
-                          String mailValue = emailCtrl.text;
-                          String passValue = passwordCtrl.text;
-
                           return AlertDialog(
-                            content: Text("email: $mailValue pass: $passValue"),
+                            content: Text("Bienvenido a Speak Easy"),
                           );
                         });
                   },
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Color.fromRGBO(0, 90, 194, 1),
                       minimumSize: const Size(200, 50)),
                   child: const Text("Registrarme"),
                 ),
@@ -259,7 +278,8 @@ class _FormRegisterState extends State<FormRegister> {
 
   Future singUp() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailCtrl.text.trim(),
         password: passwordCtrl.text.trim(),
       );
