@@ -36,11 +36,11 @@ class AppBar extends StatelessWidget {
   }
 }
 
-class OnBoarding extends StatefulWidget {
-  const OnBoarding({super.key});
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
 
   @override
-  State<OnBoarding> createState() => _OnBoardingState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class Description {
@@ -50,7 +50,7 @@ class Description {
   Description(this.img, this.text, this.color);
 }
 
-class _OnBoardingState extends State<OnBoarding> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentPage = 0;
 
   List<Description> descriptions = [

@@ -1,9 +1,9 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "../../widgets/form_input.dart";
+// import '../../widgets/Inputs/text_input.dart';
 
-class FormScreen extends StatelessWidget {
-  const FormScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class FormScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, "/login");
               },
-              child: Text("Iniciar sesión"))
+              child: const Text("Iniciar sesión"))
         ],
       ),
       body: Center(
@@ -36,7 +36,6 @@ class FormScreen extends StatelessWidget {
               Text(
                 "¡Estamos felices de que seas parte!",
                 style: TextStyle(fontSize: 35, color: Colors.black),
-                textAlign: TextAlign.center,
               ),
               FormRegister()
             ],
@@ -77,6 +76,7 @@ class _FormRegisterState extends State<FormRegister> {
 
   @override
   void initState() {
+    super.initState();
     _passwordHidden = true;
     _confirmPasswordHidden = true;
     userCredential = null;
