@@ -1,5 +1,5 @@
 import 'dart:io';
-// import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,7 +12,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   
-  // Funcion que muestra una segunda vista del perfil
+  // Funcion que muestra la pantlla de 'preferencias de usuario'
   
   void _secondView(){
     Navigator.of(context).push(
@@ -21,11 +21,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return Scaffold(
               
           appBar:  AppBar(
-            title: const Text('Perfil'),
+            title: const Text('Preferencias'),
             leading: IconButton(
-             icon: const Icon(
-                Icons.arrow_back,
-                color:  Colors.white,
+            icon: const Icon(
+            Icons.arrow_back,
+            color:  Colors.white,
              ),
              onPressed: () {},
         ),
@@ -48,48 +48,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 FocusScope.of(context).unfocus();
             },
             child: ListView(
-                children: [
+                    children: [
                     Center(
                     child: Stack(
-                        children: [
+                    children: [
                     Container(
                         width: 56,
                         height: 56,
                         decoration:  BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey),
-                            shape:  BoxShape.circle,
-                            image: const DecorationImage( 
-                            image:  AssetImage ('assets/avatarPerfil.jpeg')
-                            )
+                        border: Border.all(width: 1, color: Colors.grey),
+                        shape:  BoxShape.circle,
+                        image: const DecorationImage( 
+                        image:  AssetImage ('assets/avatarPerfil.jpeg')
+                        )
                         ),       
                     ),
-/////////////////// Codigo para cambiar la imagen de perfil, en la screen de otro usuario no va este codigo.
-///
-                    // Positioned(
-                    //   bottom: 0,
-                    //   right: 0,
-                      
-                    //   child: Container(
-                    //     height: 20,
-                    //     width: 20,
-                    //     decoration: BoxDecoration(
-                    //       shape: BoxShape.rectangle,
-                    //       borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    //       border: Border.all(
-                    //         width: 1,
-                    //         color: const Color.fromRGBO(0, 90, 194, 0.5),
-                    //       ),
-                    //       color: const Color.fromRGBO(255, 255, 255, 1),
-                    //     ),
-                       
-                    //    child: IconButton(
-                    //    onPressed: getImage, icon: const Icon(
-                    //         Icons.edit), 
-                    //          color: const Color.fromRGBO(0, 148, 175, 1),
-                    //          ),
-                    //    )
-                    // )
-                   ],
+                 ],
                ),
             ),
 
@@ -137,34 +111,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style:   TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold,),
             ),
             ),
-
-        ]
-      ),
-    ),
-  )
-
-
-      
-      );
-        
-        }
+            ],
+           ),
+          ),
         ),
+       );
+      },
+    ),
       
+  );
+}
+
+
+
+
+
+
+
+String imageURL = '';
+// Funcion para elegir imagen de la galeria y subirla a firestore. Revisar.
+void pickUploadImage() async {
+    final image = await ImagePicker().pickImage(
+        source: ImageSource.gallery
     );
-  }
-
-// Picker manager para seleccionar fotos de la galeria
-File? _image;
-
-Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(image == null ) return;
-
-    final imageTemporary = File(image.path);
-
-    setState(() {
-      _image = imageTemporary;
-    });
+    Reference ref = FirebaseStorage.instance.ref().child('perfilPic hardcodeado prueba');
+   await ref.putFile(File(image!.path));
+   ref.getDownloadURL().then((value){
+    print(value);
+   });
 }
 
   @override
@@ -174,10 +148,10 @@ return  Scaffold(
          appBar:  AppBar(
             title: const Text('Mi perfil'),
             leading: IconButton(
-             icon: const Icon(
-                Icons.arrow_back,
-                color:  Colors.white,
-             ),
+            icon: const Icon(
+            Icons.arrow_back,
+            color:  Colors.white,
+            ),
              onPressed: () {},
         ),
         actions: [
@@ -188,13 +162,15 @@ return  Scaffold(
                 ),
                 onPressed:  (_secondView), 
                 )
-        ],
-    ),
-    body:  Container(
-        padding: const EdgeInsets.only(left: 15, top:58, right: 15),
-        child: GestureDetector(
+          ],
+      ),
+        body:  Container(
+            padding: const EdgeInsets.only(left: 15, top:58, right: 15),
+            child: GestureDetector(
             onTap: () {
-                FocusScope.of(context).unfocus();
+                // FocusScope.of(context).unfocus();
+                // pickUploadImage sube la imagen de perifl a firebase. Revisar
+               pickUploadImage();
             },
             child: ListView(
                 children: [
@@ -205,10 +181,11 @@ return  Scaffold(
                         width: 56,
                         height: 56,
                         decoration:  BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey),
-                            shape:  BoxShape.circle,
-                            image: const DecorationImage( 
-                            image:  AssetImage ('assets/avatarPerfil.jpeg')
+                        border: Border.all(width: 1, color: Colors.grey),
+                        shape:  BoxShape.circle,
+                        image: const DecorationImage( 
+                        image:  AssetImage ('assets/avatarPerfil.jpeg')
+                        
                             )
                         ),       
                     ),
@@ -220,23 +197,16 @@ return  Scaffold(
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          border: Border.all(
-                            width: 1,
-                            color: const Color.fromRGBO(0, 90, 194, 0.5),
-                          ),
-                          color: const Color.fromRGBO(255, 255, 255, 1),
+                        shape: BoxShape.rectangle,
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                        border: Border.all(
+                        width: 1,
+                        color: const Color.fromRGBO(0, 90, 194, 0.5),
+                        ),
+                        color: const Color.fromRGBO(255, 255, 255, 1),
                         ),
                        
-                       child: IconButton(
-                    
-                        onPressed: getImage, icon: const Icon(
-                            Icons.edit), 
-                             color: const Color.fromRGBO(0, 148, 175, 1),
-                             
-                             
-                             ),
+                      
                        
                         
                         )
@@ -291,19 +261,15 @@ return  Scaffold(
             ),
             ),
 
-        ]
-      ),
-    ),
-  )
+           ],
+         ),
+       ),
+     )
 
-);
-
-
+   );
 
   }
-
 }
-
 
 
 
