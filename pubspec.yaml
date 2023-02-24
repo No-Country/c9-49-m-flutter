@@ -36,10 +36,13 @@ dependencies:
   firebase_core: ^2.6.1
   firebase_auth: ^4.2.8
   google_sign_in: ^5.4.4
+  cloud_firestore: ^4.3.2
+
+  # Stream Chat
+  stream_chat_flutter: ^5.0.0
 
   image_picker: ^0.8.6+1
   path_provider: ^2.0.12
-  cloud_firestore: ^4.3.2
 
 dev_dependencies:
   flutter_test:

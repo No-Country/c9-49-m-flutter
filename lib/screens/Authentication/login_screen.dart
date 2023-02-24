@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
 import '../../services/auth_service.dart';
+import '../../services/init_stream_chat.dart';
 
 // Screens:
 import './forgot_pw_screen.dart';
@@ -57,12 +59,15 @@ class _LoginFormState extends State<LoginForm> {
           password: passwordController.text,
         );
         if (user != null) {
-          String token = await user.getIdToken();
-          String uid = user.uid;
+          await initStreamChat(
+              firebaseUser: user,
+              // ignore: use_build_context_synchronously
+              client: stream.StreamChat.of(context).client);
+
+          // ignore: use_build_context_synchronously
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(userId: uid, token: token);
+            return HomeScreen(user: user);
           }));
-          // Navigator.pushNamed(context, '/home');
         }
       } on FirebaseAuthException catch (e) {
         print(e);

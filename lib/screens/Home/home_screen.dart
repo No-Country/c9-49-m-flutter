@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 import './connect_screen.dart';
 import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  String userId;
-  String token;
-  HomeScreen({super.key, required this.userId, required this.token});
+  final firebase.User user;
+  const HomeScreen({super.key, required this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentPage = 0;
-  var pages = [
+  // @override
+  // void initState() {
+  //   final result =
+  //       widget.client.queryUsers(filter: Filter.equal('role', 'user'));
+  //   print(result);
+  //   super.initState();
+  // }
+
+  int currentPage = 1;
+  final pages = const [
     [ChatScreen()],
     [ConnectScreen()],
     [ProfileScreen()],
   ];
-
-  @override
-  void initState() {
-    print('id: ' + widget.userId);
-    print('token: ' + widget.token);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

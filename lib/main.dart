@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import "package:stream_chat_flutter/stream_chat_flutter.dart";
+// import 'package:firebase_auth/firebase_auth.dart';
 
 // SCREENS:
 import "./screens/Onboarding/intro_screen.dart";
@@ -19,14 +20,23 @@ Future<void> main() async {
     appId: "1:1062828650314:web:c6dee7dbf7b98412bb9bb3",
   ));
 
-  runApp(const MyApp());
+  final client = StreamChatClient(
+    '6gdnp9syk79d',
+    logLevel: Level.INFO,
+  );
+
+  runApp(MyApp(client: client));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.client});
+
+  final StreamChatClient client;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false, // eliminar banda 'debug' borde sup
       title: 'SpeakEasy',
       routes: {
@@ -36,6 +46,10 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
       },
+      builder: (context, child) => StreamChat(
+        client: client,
+        child: child,
+      ),
     );
   }
 }
