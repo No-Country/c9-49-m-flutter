@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Authentication/register_screen9.dart';
+
 import 'package:flutter_application_1/screens/Home/home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -131,37 +131,9 @@ void pickUploadImage() async {
   @override
   Widget build(BuildContext context) {
       
-return  Scaffold(
-         appBar:  AppBar( 
-          backgroundColor:Colors.transparent ,
-          elevation: 0,
-            // title: const Text('Mi perfil'),
-            
-              leading: IconButton(
-            icon: const Icon(
-            Icons.arrow_back,
-            color:  Colors.black,
-             ),
-             onPressed: () {
-              Navigator.push(
-                context, MaterialPageRoute(builder: (context) {
-                  // return const HomeScreen();
-                  return const RegisterScreen9();
-                },)
-              );
-             },
-        ),
-        actions: [
-            IconButton(
-                icon: const Icon(
-                Icons.settings,
-                color: Color.fromRGBO(0, 90, 194, 1),
-                ),
-                onPressed:  (_secondView), 
-                )
-          ],
-      ),
-        body:  Container(
+return  
+
+  Container(
             padding: const EdgeInsets.only(left: 15, top:58, right: 15),
             child: GestureDetector(
             onTap: () {
@@ -261,14 +233,11 @@ return  Scaffold(
            ],
          ),
        ),
-     )
+     );
 
-   );
-
-  }
 }
 
-
+}
 
 
 

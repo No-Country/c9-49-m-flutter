@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../widgets/Inputs/text_input.dart';
+import '../../widgets/Inputs/email_input.dart';
 import '../../widgets/Buttons/primary_button.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           const SizedBox(
             height: 20.0,
           ),
-          TextInput(
+          EmailInput(
               label: "Email",
               hintText: "nombre@gmail.com",
               controller: emailController),

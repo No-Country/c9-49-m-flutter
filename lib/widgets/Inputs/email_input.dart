@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 
-class TextInput extends StatelessWidget {
+class EmailInput extends StatelessWidget {
   final String label;
   final String hintText;
   final TextEditingController controller;
 
-  const TextInput(
+  const EmailInput(
       {super.key,
       required this.label,
       required this.hintText,
@@ -14,7 +14,7 @@ class TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.emailAddress,
       controller: controller,
       decoration: InputDecoration(
           labelText: label,
@@ -34,6 +34,11 @@ class TextInput extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return "Este campo no puede estar vacío";
+        }
+        if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(value)) {
+          return "Ingrese un email valido por favor";
         }
         return null;
       },
