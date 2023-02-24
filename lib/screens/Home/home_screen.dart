@@ -6,6 +6,14 @@ import './connect_screen.dart';
 import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
 
+class Page {
+  final Widget screen;
+  final String title;
+  final Icon action;
+
+  const Page({required this.screen, required this.title, required this.action});
+}
+
 class HomeScreen extends StatefulWidget {
   final firebase.User user;
   const HomeScreen({super.key, required this.user});
@@ -24,21 +32,69 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   int currentPage = 1;
-  final pages = const [
-    [ChatScreen()],
-    [ConnectScreen()],
-    [ProfileScreen()],
+  final List<Page> pages = const [
+    Page(
+      screen: ChatScreen(),
+      title: "Conversaciones",
+      action: Icon(
+        Icons.add,
+        color: Color.fromRGBO(0, 90, 194, 1),
+        size: 25.0,
+      ),
+    ),
+    Page(
+      screen: ConnectScreen(),
+      title: "Buscar compañeros",
+      action: Icon(
+        Icons.add,
+        color: Color.fromRGBO(0, 90, 194, 1),
+        size: 25.0,
+      ),
+    ),
+    Page(
+      screen: ProfileScreen(),
+      title: "",
+      action: Icon(
+        Icons.settings,
+        color: Color.fromRGBO(0, 90, 194, 1),
+        size: 25.0,
+      ),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final page = pages[currentPage];
+    final pageTitle = page.title;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 49, 128, 189),
-        title: Text("Speak easy $currentPage"),
-        elevation: 5,
-      ),
-      body: PageView(children: pages[currentPage]),
+          leading: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 25.0,
+          ),
+          title: Text(
+            pageTitle,
+            style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w500,
+                color: Color.fromRGBO(0, 90, 194, 1)),
+          ),
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 20),
+              child: const Icon(
+                Icons.add,
+                color: Color.fromRGBO(0, 90, 194, 1),
+                size: 25.0,
+              ),
+            )
+          ],
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          elevation: 0),
+      body: page.screen,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (index) {
