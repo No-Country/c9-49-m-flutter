@@ -37,6 +37,7 @@ dependencies:
   firebase_auth: ^4.2.8
   google_sign_in: ^5.4.4
   cloud_firestore: ^4.3.2
+  firebase_storage: ^11.0.14
 
   # Stream Chat
   stream_chat_flutter: ^5.0.0

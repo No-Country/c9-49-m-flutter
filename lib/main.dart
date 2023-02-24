@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:stream_chat_flutter/stream_chat_flutter.dart";
-// import 'package:firebase_auth/firebase_auth.dart';
 
 // SCREENS:
 import "./screens/Onboarding/intro_screen.dart";
 import "./screens/Onboarding/onboarding_screen.dart";
-import "./screens/Home/home_screen.dart";
+import './screens/Profile/profile_screen.dart';
 import "./screens/Authentication/login_screen.dart";
 import "./screens/Authentication/register_screen.dart";
 
@@ -45,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/onboarding": (context) => const OnboardingScreen(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
+        "/profile": (context) => const ProfileScreen(),
       },
       builder: (context, child) => StreamChat(
         client: client,
