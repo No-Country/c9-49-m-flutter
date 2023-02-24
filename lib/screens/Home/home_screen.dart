@@ -95,24 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.white,
           elevation: 0),
       body: page.screen,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentPage,
-        onTap: (index) {
-          setState(() {
-            currentPage = index;
-          });
-        },
-        backgroundColor: const Color.fromARGB(255, 49, 128, 189),
-        selectedItemColor: Colors.white.withOpacity(1),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.forum_outlined), label: 'Mensajes'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.spatial_audio_off_outlined), label: 'Conectar'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined), label: 'Perfil'),
-        ],
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        color: const Color.fromRGBO(176, 178, 182, 1),
+        child: BottomNavigationBar(
+          elevation: 0,
+          currentIndex: currentPage,
+          onTap: (index) {
+            setState(() {
+              currentPage = index;
+            });
+          },
+          backgroundColor: const Color.fromRGBO(176, 178, 182, 1),
+          selectedItemColor: const Color.fromRGBO(0, 90, 194, 1),
+          unselectedItemColor: Colors.white,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.forum_outlined), label: 'Mensajes'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.spatial_audio_off_outlined),
+                label: 'Conectar'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle_outlined), label: 'Perfil'),
+          ],
+        ),
       ),
     );
   }
