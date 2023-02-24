@@ -51,7 +51,7 @@ class _PasswordInputState extends State<PasswordInput> {
           )),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Please enter some text";
+          return "Este campo no puede estar vacío";
         }
         return null;
       },
