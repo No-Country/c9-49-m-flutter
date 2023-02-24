@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Authentication/register_screen9.dart';
+import 'package:flutter_application_1/screens/Home/home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -21,24 +23,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return Scaffold(
               
           appBar:  AppBar(
-            title: const Text('Preferencias'),
-            leading: IconButton(
-            icon: const Icon(
-            Icons.arrow_back,
-            color:  Colors.white,
-             ),
-             onPressed: () {},
-        ),
-
-        actions: [
-            IconButton(
-                icon: const Icon(
-                Icons.settings,
-                color: Colors.white,
-                ),
-                onPressed:  (_secondView), 
-                )
-        ],
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+      
     ),
 
     body:  Container(
@@ -145,20 +132,30 @@ void pickUploadImage() async {
   Widget build(BuildContext context) {
       
 return  Scaffold(
-         appBar:  AppBar(
-            title: const Text('Mi perfil'),
-            leading: IconButton(
+         appBar:  AppBar( 
+          backgroundColor:Colors.transparent ,
+          elevation: 0,
+            // title: const Text('Mi perfil'),
+            
+              leading: IconButton(
             icon: const Icon(
             Icons.arrow_back,
-            color:  Colors.white,
-            ),
-             onPressed: () {},
+            color:  Colors.black,
+             ),
+             onPressed: () {
+              Navigator.push(
+                context, MaterialPageRoute(builder: (context) {
+                  // return const HomeScreen();
+                  return const RegisterScreen9();
+                },)
+              );
+             },
         ),
         actions: [
             IconButton(
                 icon: const Icon(
                 Icons.settings,
-                color: Colors.white,
+                color: Color.fromRGBO(0, 90, 194, 1),
                 ),
                 onPressed:  (_secondView), 
                 )

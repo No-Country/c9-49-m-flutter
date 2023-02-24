@@ -13,10 +13,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentPage = 0;
-  var pages = [
-    [ChatScreen()],
-    [ConnectScreen()],
-    [ProfileScreen()],
+  var  pages = [
+    [ const ChatScreen()],
+    [ const ConnectScreen()],
+    [ const ProfileScreen()],
   ];
 
   @override
