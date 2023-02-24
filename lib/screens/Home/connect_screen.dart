@@ -5,11 +5,15 @@ class ConnectScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Container(
-        color: Colors.pink,
-        child: const Center(
-          child: Text('Conectando', style: TextStyle(fontSize: 25),),
+    return Container(
+      color: Colors.white,
+      child: const Center(
+        child: Text(
+          'No hay nadie conectado en este momento :(',
+          style: TextStyle(fontSize: 25),
+          textAlign: TextAlign.center,
         ),
-      );
+      ),
+    );
   }
 }
