@@ -8,6 +8,7 @@ import "package:flutter_application_1/screens/Onboarding/Steps/personal_info_ste
 import "package:flutter_application_1/screens/Onboarding/Steps/target_lang_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_description_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_hobbies_step.dart";
+import "package:flutter_application_1/utils/userdata.utils.dart";
 
 import "../../types/user_form_data.dart";
 
@@ -57,7 +58,7 @@ class _MyFormWidgetState extends State<MyFormWidget> {
         "levelTarget": levelTarget,
         "userDescription": userDescription,
         "hobbies": hobbies,
-        "image": ""
+        "image": UserDataUtils.getUserImage(name)
       };
 
       await db
@@ -67,7 +68,7 @@ class _MyFormWidgetState extends State<MyFormWidget> {
                 // ignore: avoid_print
                 print("Document added"),
                 MyFormWidget.navigatorKey.currentState?.pushNamed(
-                  '/home',
+                  '/login',
                 )
               });
     }

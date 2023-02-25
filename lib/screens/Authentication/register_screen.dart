@@ -22,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.black),
                   elevation: MaterialStateProperty.all(0)),
               onPressed: () {
-                Navigator.pushNamed(context, "/userpreferences");
+                Navigator.pushNamed(context, "/login");
               },
               child: const Text("Iniciar sesión"))
         ],
