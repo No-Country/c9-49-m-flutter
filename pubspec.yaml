@@ -1,4 +1,5 @@
-name: flutter_application_1
+name: flutter_application_1 
+#TODO: CAMBIAR NOMBRE DE APP
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -39,7 +40,10 @@ dependencies:
 
   image_picker: ^0.8.6+1
   path_provider: ^2.0.12
-  cloud_firestore: ^4.3.2
+  cloud_firestore: ^4.4.3
+  intl: ^0.17.0
+  flutter_svg:
+
 
 dev_dependencies:
   flutter_test:

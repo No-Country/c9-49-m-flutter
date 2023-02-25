@@ -1,3 +1,4 @@
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 // import '../../widgets/Inputs/text_input.dart';
@@ -21,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.black),
                   elevation: MaterialStateProperty.all(0)),
               onPressed: () {
-                Navigator.pushNamed(context, "/login");
+                Navigator.pushNamed(context, "/userpreferences");
               },
               child: const Text("Iniciar sesión"))
         ],
@@ -35,7 +36,8 @@ class RegisterScreen extends StatelessWidget {
             children: const [
               Text(
                 "¡Estamos felices de que seas parte!",
-                style: TextStyle(fontSize: 35, color: Colors.black),
+                style: TextStyle(fontSize: 32, color: Colors.black),
+                textAlign: TextAlign.center,
               ),
               FormRegister()
             ],
@@ -61,7 +63,6 @@ class _FormRegisterState extends State<FormRegister> {
   //   content: Text('Yay! A SnackBar!'),
   // );
 
-  final nameCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   final confirmPasswordCtrl = TextEditingController();
@@ -95,44 +96,16 @@ class _FormRegisterState extends State<FormRegister> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: 'Ingrese su nombre',
-                      labelStyle: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      hintText: 'Chat Lingo',
-                      hintStyle: const TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
-                  controller: nameCtrl,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
                       labelText: 'Ingrese su mail',
-                      labelStyle: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
                       hintText: 'chat_lingo@gmail.com',
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
                       hintStyle: const TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
+                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -168,17 +141,16 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Ingrese un password',
-                      hintStyle: const TextStyle(color: Colors.black),
-                      labelStyle: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
                       hintText: 'Minimo 8 caracteres',
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
+                      hintStyle: const TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
+                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -208,17 +180,16 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelText: 'Confirme el password',
-                      labelStyle: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                      ),
                       hintText: 'Repita el password',
+                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+                      labelStyle: const TextStyle(
+                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
                       hintStyle: const TextStyle(color: Colors.black),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(5),
+                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -244,31 +215,47 @@ class _FormRegisterState extends State<FormRegister> {
                       // Si el formulario es válido, queremos mostrar un Snackbar
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')));
-                      await singUp();
+                      try {
+                        await singUp();
+                      } catch (e) {
+                        if (e
+                            .toString()
+                            .contains("email address is already in use")) {
+                          showDialog(
+                              //Se va a usar para mostrar errores como usuario ya registrado
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text(
+                                      "Ya existe un usuario con ese email"),
+                                );
+                              });
+                        }
+                        return;
+                      }
                       if (userCredential != null) {
-                        print(userCredential);
                         User? user = userCredential.user;
+                        //user.uid and user.email
+                        final userInDb = <String, dynamic>{
+                          "id": user?.uid,
+                          "email": user?.email
+                        };
+                        //Xa7Dt7RMrMaVVZCk8JwVoVS1ADB3
+                        //Xa7Dt7RMrMaVVZCk8JwVoVS1ADB3
                         // ignore: use_build_context_synchronously
-                        Navigator.pushNamed(
-                          context,
-                          '/register/preferences',
-                          arguments: {'user': user},
-                        );
+                        Navigator.pushNamed(context, '/userpreferences',
+                            arguments: userInDb);
+                        //TODO: Limpiar form
                       }
                     }
-                    showDialog(
-                        //Se va a usar para mostrar errores como usuario ya registrado
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            content: Text("Bienvenido a Speak Easy"),
-                          );
-                        });
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: Color.fromRGBO(0, 90, 194, 1),
-                      minimumSize: const Size(200, 50)),
-                  child: const Text("Registrarme"),
+                      minimumSize: const Size(180, 40)),
+                  child: const Text(
+                    "REGISTRARME",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
               )
             ],
@@ -284,7 +271,7 @@ class _FormRegisterState extends State<FormRegister> {
         password: passwordCtrl.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 }

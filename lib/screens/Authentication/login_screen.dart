@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
         if (user != null) {
           Navigator.pushNamed(context, '/onboarding');
         }
-      } on FirebaseAuthException catch (e) {
+      } on FirebaseAuthException {
         showDialog(
           context: context,
           builder: (context) => const AlertDialog(

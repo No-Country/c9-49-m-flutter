@@ -16,7 +16,7 @@ class AuthService {
         password: password,
       );
       user = userCredential.user;
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       rethrow;
     }
     return user;

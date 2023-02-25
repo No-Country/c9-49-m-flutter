@@ -17,9 +17,9 @@ class TextInput extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
           labelText: label,
+          hintText: hintText,
           labelStyle: const TextStyle(
               color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
-          hintText: hintText,
           hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.6)),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
@@ -28,7 +28,7 @@ class TextInput extends StatelessWidget {
           ),
           focusedBorder: const OutlineInputBorder(
             borderSide:
-                BorderSide(width: 2, color: Color.fromARGB(98, 0, 238, 1)),
+                BorderSide(width: 3, color: Color.fromARGB(255, 0, 0, 0)),
           )),
       validator: (value) {
         if (value!.isEmpty) {
