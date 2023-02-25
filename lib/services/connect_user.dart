@@ -12,7 +12,7 @@ Future<StreamChatClient> connectUserToChat(
   final user = User(id: uid, extraData: {
     "name": "Tomas Salina",
     "image": UserDataUtils.getUserImage("Tomas Salina"),
-    "email": email
+    "email": email,
   });
   await client.connectUser(user, client.devToken(uid).rawValue);
 
