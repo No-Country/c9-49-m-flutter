@@ -1,6 +1,7 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:flutter_application_1/widgets/Loaders/circle_loader.dart";
 // import '../../widgets/Inputs/text_input.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -213,8 +214,8 @@ class _FormRegisterState extends State<FormRegister> {
                     // el formulario no es válido.
                     if (_formKey.currentState!.validate()) {
                       // Si el formulario es válido, queremos mostrar un Snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')));
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //     const SnackBar(content: Text('Processing Data')));
                       try {
                         await singUp();
                       } catch (e) {
@@ -234,18 +235,19 @@ class _FormRegisterState extends State<FormRegister> {
                         return;
                       }
                       if (userCredential != null) {
+                        // ignore: use_build_context_synchronously
+                        showCircleLoader(context);
+
                         User? user = userCredential.user;
                         //user.uid and user.email
                         final userInDb = <String, dynamic>{
                           "id": user?.uid,
                           "email": user?.email
                         };
-                        //Xa7Dt7RMrMaVVZCk8JwVoVS1ADB3
-                        //Xa7Dt7RMrMaVVZCk8JwVoVS1ADB3
+
                         // ignore: use_build_context_synchronously
                         Navigator.pushNamed(context, '/userpreferences',
                             arguments: userInDb);
-                        //TODO: Limpiar form
                       }
                     }
                   },

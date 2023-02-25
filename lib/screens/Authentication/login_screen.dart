@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/widgets/Loaders/circle_loader.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
@@ -58,8 +59,10 @@ class _LoginFormState extends State<LoginForm> {
           email: emailController.text,
           password: passwordController.text,
         );
-        //TODO: traer usuario de la bd
+
         if (user != null) {
+          // ignore: use_build_context_synchronously
+          showCircleLoader(context);
           await connectUserToChat(
               firebaseUser: user,
               // ignore: use_build_context_synchronously
@@ -149,8 +152,8 @@ class _LoginFormState extends State<LoginForm> {
                     text: "INICIAR SESION",
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')));
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(content: Text('Processing Data')));
                         await signIn();
                       }
                     }),
