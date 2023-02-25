@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "394657296539",
-    "project_id": "mobiles-apps-7ac45",
-    "storage_bucket": "mobiles-apps-7ac45.appspot.com"
+    "project_number": "1062828650314",
+    "project_id": "speak-easy-no-country-c78ba",
+    "storage_bucket": "speak-easy-no-country-c78ba.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:394657296539:android:9495173e9215c836d0563e",
+        "mobilesdk_app_id": "1:1062828650314:android:1a989c92174d7c39bb9bb3",
         "android_client_info": {
-          "package_name": "com.example.flutter_application_1"
+          "package_name": "speak.easy.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "394657296539-ejknp7ctcvn1klm8igaab296huuh4b7h.apps.googleusercontent.com",
+          "client_id": "1062828650314-5fe7i5f46955ep91f4slj4r1e8lm0kmn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCXgy1pmOdNYuEzPmBE9N0Ftlaa5Hvbzo4"
+          "current_key": "AIzaSyBDm0bGC6rTjcdJw1LmV4oM0b84TUr9S7k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "394657296539-ejknp7ctcvn1klm8igaab296huuh4b7h.apps.googleusercontent.com",
+              "client_id": "1062828650314-5fe7i5f46955ep91f4slj4r1e8lm0kmn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
