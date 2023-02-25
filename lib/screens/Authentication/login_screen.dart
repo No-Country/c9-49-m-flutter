@@ -5,7 +5,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
 import '../../services/auth_service.dart';
-import '../../services/init_stream_chat.dart';
+import '../../services/connect_user.dart';
 
 // Screens:
 import './forgot_pw_screen.dart';
@@ -59,7 +59,7 @@ class _LoginFormState extends State<LoginForm> {
           password: passwordController.text,
         );
         if (user != null) {
-          await initStreamChat(
+          await connectUserToChat(
               firebaseUser: user,
               // ignore: use_build_context_synchronously
               client: stream.StreamChat.of(context).client);
