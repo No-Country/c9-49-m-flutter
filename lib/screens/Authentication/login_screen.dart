@@ -58,6 +58,7 @@ class _LoginFormState extends State<LoginForm> {
           email: emailController.text,
           password: passwordController.text,
         );
+        //TODO: traer usuario de la bd
         if (user != null) {
           await connectUserToChat(
               firebaseUser: user,

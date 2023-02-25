@@ -7,6 +7,7 @@ Future<StreamChatClient> connectUserToChat(
     {required firebase.User firebaseUser,
     required StreamChatClient client}) async {
   var uid = firebaseUser.uid;
+  //TODO: Pasar usuario de la bd al connect
   // var token = await firebaseUser.getIdToken();
   var email = firebaseUser.email;
   final user = User(id: uid, extraData: {
