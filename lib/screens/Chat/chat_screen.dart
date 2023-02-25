@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+
+// Pages
+import './channel_page.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ChannelListPage();
+    return Container(
+      color: Colors.white,
+      child: const ChannelListPage(),
+    );
   }
 }
 
@@ -40,24 +46,48 @@ class _ChannelListPageState extends State<ChannelListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: StreamChannelListView(
-        controller: _listController,
-        itemBuilder: _channelTileBuilder,
-        onChannelTap: (channel) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return StreamChannel(
-                  channel: channel,
-                  child: const ChannelPage(),
-                );
-              },
+    return StreamChannelListView(
+      controller: _listController,
+      itemBuilder: _channelTileBuilder,
+      emptyBuilder: _emptyBuilder,
+      onChannelTap: (channel) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return StreamChannel(
+                channel: channel,
+                child: const ChannelPage(),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _emptyBuilder(BuildContext context) {
+    return Center(
+      child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 10.0),
+              child: const Icon(
+                Icons.chat,
+                size: 80.0,
+                color: Color.fromRGBO(0, 90, 194, 1),
+              ),
             ),
-          );
-        },
-      ),
+            const Text(
+              'Comienza a chatear',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ]),
     );
   }
 
@@ -160,27 +190,6 @@ class _ChannelListPageState extends State<ChannelListPage> {
             ),
           ),
       ],
-    );
-  }
-}
-
-class ChannelPage extends StatelessWidget {
-  const ChannelPage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const StreamChannelHeader(),
-      body: Column(
-        children: const <Widget>[
-          Expanded(
-            child: StreamMessageListView(),
-          ),
-          StreamMessageInput(),
-        ],
-      ),
     );
   }
 }

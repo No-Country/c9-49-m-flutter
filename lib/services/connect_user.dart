@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 import '../utils/userdata.utils.dart';
 
-Future<StreamChatClient> initStreamChat(
+Future<StreamChatClient> connectUserToChat(
     {required firebase.User firebaseUser,
     required StreamChatClient client}) async {
   var uid = firebaseUser.uid;
