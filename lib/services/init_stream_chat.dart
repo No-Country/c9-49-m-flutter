@@ -10,7 +10,7 @@ Future<StreamChatClient> initStreamChat(
   // var token = await firebaseUser.getIdToken();
   var email = firebaseUser.email;
   final user = User(id: uid, extraData: {
-    "name": "Tomas Salina",
+    "name": "Agus",
     "image": UserDataUtils.getUserImage("Tomas Salina"),
     "email": email
   });
