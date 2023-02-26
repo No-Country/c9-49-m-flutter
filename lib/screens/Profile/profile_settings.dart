@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Authentication/login_screen.dart';
 // import '../../widgets/Buttons/primary_button.dart';
 
 class ProfileSettings extends StatefulWidget {
@@ -12,13 +11,15 @@ class ProfileSettings extends StatefulWidget {
 
 class _ProfileSettingsState extends State<ProfileSettings> {
     final String name = 'Agus';
-  final String country = 'Cordoba, Argentina';
+    final String country = 'Cordoba, Argentina';
+    // final flag = 
+                  
   @override
   Widget build(BuildContext context) {
  
 return  Container(
     color: Colors.white,
-            padding: const EdgeInsets.only(left: 15, top:16, right: 15),
+            padding: const EdgeInsets.only(top:0),
              child: GestureDetector(
             // onTap: () {
             //     // FocusScope.of(context).unfocus();
@@ -72,60 +73,52 @@ return  Container(
             padding: const  EdgeInsets.only(top: 8),
               
             child: 
-        Text(name, textAlign: TextAlign.center, style: const TextStyle(fontWeight:FontWeight.w400, fontFamily:'roboto',fontSize: 15, fontStyle: FontStyle.normal )),
+          Text(name, textAlign: TextAlign.center, style: const TextStyle(fontWeight:FontWeight.w400, fontFamily:'roboto',fontSize: 15, fontStyle: FontStyle.normal )),
             ),
-        Container (
+          Container (
             padding: const EdgeInsets.only(top: 14),
             child: const Icon( Icons.emoji_flags, size: 18,),
             ),
 
-           Padding(
+          Padding(
             padding: const  EdgeInsets.all(10.0),
             child:  Text(  country, textAlign: TextAlign.center,
             style: const TextStyle(color: Colors.black, fontSize: 11.0, fontWeight: FontWeight.w200),
             ),
             ),
+            const Padding(padding:EdgeInsets.only(bottom: 40)),
         
-            Row(
+             
+           
+          const  ListTile(
+          
+            title:  Text('Notificaciones', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+            leading: Icon(Icons.notifications_none, color: Color.fromRGBO(0, 90, 194, 1), size: 20,),),
+           // onTap: () {
               
-              children: const [
-                 SizedBox(
-                  width: 30,
-                  height: 20,
-                  child:  Icon(Icons.notifications_none),
-                 ),  Text('Notificaciones'),
-                 ],
-            ),
-            Row(
-              children: const [
-                 SizedBox(
-                  width: 30,
-                  height: 20,
-                  child:  Icon(Icons.lock_outline),
-                 ), 
-                  Text('Privacidad'),
-                  ],
-            ),
-            
-              Row(
-              children: const [
-                 SizedBox(
-                  width: 30,
-                  height: 20,
-                  child:  Icon(Icons.help_outline),
-                 ),  Text('Información'),
-                 
-              ],
-            ),
-
-
-        
-
+            // },
+             const  ListTile(
+            title:  Text('Privacidad', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+            leading: Icon(Icons.lock_outline, color: Color.fromRGBO(0, 90, 194, 1),size: 20,), ),
+            // onTap: () {
+              
+            // },
+               const  ListTile(
+            title:  Text('Información', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+            leading: Icon(Icons.help_outline, color: Color.fromRGBO(0, 90, 194, 1), size: 20,),),
+            // onTap: () {
+              
+            // },
+            const Padding(padding:EdgeInsets.only(bottom: 32)),
 
             Container(
               alignment: Alignment.center,
               child: ElevatedButton( 
-              onPressed: () {},
+              onPressed: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const LoginScreen();
+                  }));
+              },
               style: 
               TextButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -138,21 +131,16 @@ return  Container(
                color: Color.fromRGBO(230, 230, 230, 1),
               fontSize: 14,
              fontWeight: FontWeight.w500,
-          )),
-    ),    
+            )),
+            ),    
                     
-              ),
-            
-                ],
             ),
             
-             ),
+          ],
+         ),
+            
+      ),
              
-  );
-  
-
-
-  
-
+    );
   }
 }

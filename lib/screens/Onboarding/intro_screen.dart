@@ -24,7 +24,7 @@ class IntroScreen extends StatelessWidget {
             children: [
               Expanded(
                 flex: 10,
-                child: Image.asset("../assets/landing/1.png"),
+                child: Image.asset("assets/landing/1.png"),
               ),
             ],
           ),

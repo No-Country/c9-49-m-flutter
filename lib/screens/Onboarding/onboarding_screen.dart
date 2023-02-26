@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 70, 0, 0),
       color: descriptions[currentPage].color,
       child: Column(
         children: [
@@ -87,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Text(
                 descriptions[currentPage].text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 25.0,
                     decoration: TextDecoration.none),

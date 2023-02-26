@@ -1,4 +1,5 @@
-name: flutter_application_1
+name: flutter_application_1 
+#TODO: CAMBIAR NOMBRE DE APP
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -31,19 +32,19 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-
   # Firebase
   firebase_core: ^2.6.1
   firebase_auth: ^4.2.8
   google_sign_in: ^5.4.4
   cloud_firestore: ^4.3.2
   firebase_storage: ^11.0.14
-
   # Stream Chat
   stream_chat_flutter: ^5.0.0
-
   image_picker: ^0.8.6+1
   path_provider: ^2.0.12
+  intl: ^0.17.0
+  flutter_svg:
+
 
 dev_dependencies:
   flutter_test:

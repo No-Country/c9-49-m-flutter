@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-import './connect_screen.dart';
+import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
 
@@ -60,14 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     const Page(
 // ProfileSetting para poder maquetar provisoriamente, luego volver a :
-// screen: ProfileScreen(user: widget.user)
+// screen: ProfileScreen(user: widget.user),
       screen: ProfileSettings(),
       title: "",
       action: 
         Icon(
-        Icons.settings, 
+        Icons.settings_outlined, 
         color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0, 
+        size: 20, 
       ), 
     ),
   ];
