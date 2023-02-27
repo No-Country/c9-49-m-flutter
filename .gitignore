@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/flutter,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter,windows
-
+TODO.txt
 ### Flutter ###
 # Flutter/Dart/Pub related
 **/doc/api/
