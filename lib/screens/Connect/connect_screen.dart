@@ -28,7 +28,11 @@ class _UserListPageState extends State<UserListPage> {
     client: StreamChat.of(context).client,
     limit: 25,
     filter: Filter.and(
-      [Filter.notEqual('id', StreamChat.of(context).currentUser!.id)],
+      [
+        Filter.notEqual('id', StreamChat.of(context).currentUser!.id),
+        Filter.equal('role', 'user'),
+        // Filter.notEqual('dashboard_user', true)
+      ],
     ),
     sort: [
       const SortOption(

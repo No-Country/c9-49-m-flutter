@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
-import '../Profile/profile_screen.dart';
 
 class Page {
   final Widget screen;
@@ -55,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 25.0,
         ),
       ),
-      Page(
+      const Page(
 // ProfileSetting para poder maquetar provisoriamente, luego volver a :
-        screen: ProfileScreen(user: widget.user),
-        // screen: ProfileSettings(),
+        // screen: ProfileScreen(user: widget.user),
+        screen: ProfileSettings(),
         title: "",
-        action: const Icon(
+        action: Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
           size: 20,
