@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/services/user_service.dart';
+import 'package:flutter_application_1/widgets/Loaders/circle_loader.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
@@ -16,6 +18,9 @@ import '../../widgets/Inputs/email_input.dart';
 import "../../widgets/Inputs/password_input.dart";
 import "../../widgets/Texts/title.dart";
 import '../../widgets/Buttons/primary_button.dart';
+
+// Types:
+import '../../types/user_info.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -43,6 +48,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final AuthService _authService = AuthService();
+  final UserService _userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +60,37 @@ class _LoginFormState extends State<LoginForm> {
     //  Login function
     Future<void> signIn() async {
       try {
-        User? user = await _authService.loginWithEmailAndPassword(
+        User? loggedUser = await _authService.loginWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
-        if (user != null) {
+
+        if (loggedUser != null) {
+          // ignore: use_build_context_synchronously
+          showCircleLoader(context);
+          final userInDB = await _userService.getInfo(userId: loggedUser.uid);
+
+          final name = userInDB.get('name');
+          final image = userInDB.get('image');
+          final nativeLanguage = userInDB.get('nativeLanguage');
+          final targetLanguage = userInDB.get('targetLanguage');
+
+          final userInfo = UserCustomInfo(
+              id: loggedUser.uid,
+              name: name,
+              email: loggedUser.email ?? '',
+              image: image,
+              nativeLanguage: nativeLanguage,
+              targetLanguage: targetLanguage);
+
           await connectUserToChat(
-              firebaseUser: user,
+              userInfo: userInfo,
               // ignore: use_build_context_synchronously
               client: stream.StreamChat.of(context).client);
 
           // ignore: use_build_context_synchronously
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(user: user);
+            return HomeScreen(user: userInfo);
           }));
         }
       } on FirebaseAuthException catch (e) {
@@ -148,8 +172,8 @@ class _LoginFormState extends State<LoginForm> {
                     text: "INICIAR SESION",
                     onPressed: () async {
                       if (formKey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')));
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(content: Text('Processing Data')));
                         await signIn();
                       }
                     }),

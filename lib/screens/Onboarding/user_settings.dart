@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
-
 //Steps
 import "package:flutter_application_1/screens/Onboarding/Steps/lang_level_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/native_lang_step.dart";
@@ -50,7 +49,7 @@ class _MyFormWidgetState extends State<MyFormWidget> {
       final hobbies = formData.hobbies;
 
       final newUser = {
-        "first": name,
+        "name": name,
         "born": born,
         "gender": gender,
         "nativeLanguage": nativeLanguage,

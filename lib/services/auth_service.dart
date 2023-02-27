@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,5 +39,10 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> logout({required stream.StreamChatClient streamClient}) async {
+    await _auth.signOut();
+    await streamClient.disconnectUser();
   }
 }

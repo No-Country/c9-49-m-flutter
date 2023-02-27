@@ -1,12 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
+// Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
+
+// Types:
+import '../../types/user_info.dart';
 
 class Page {
   final Widget screen;
@@ -17,7 +20,7 @@ class Page {
 }
 
 class HomeScreen extends StatefulWidget {
-  final firebase.User user;
+  final UserCustomInfo user;
   const HomeScreen({super.key, required this.user});
 
   @override
@@ -25,56 +28,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void initState() {
-  //   final result =
-  //       widget.client.queryUsers(filter: Filter.equal('role', 'user'));
-  //   print(result);
-  //   super.initState();
-  // }
-
   int currentPage = 1;
-  
 
   @override
-  
   Widget build(BuildContext context) {
-    final List<Page> pages =  [
-   const Page(
-      screen: ChatScreen(),
-      title: "Conversaciones",
-      action: Icon(
-        Icons.add,
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0,
+    final List<Page> pages = [
+      const Page(
+        screen: ChatScreen(),
+        title: "Conversaciones",
+        action: Icon(
+          Icons.add,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 25.0,
+        ),
       ),
-    ),
-   const Page(
-      screen: ConnectScreen(),
-      title: "Buscar compañeros",
-      action: Icon(
-        Icons.add,
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0,
+      const Page(
+        screen: ConnectScreen(),
+        title: "Buscar compañeros",
+        action: Icon(
+          Icons.add,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 25.0,
+        ),
       ),
-    ),
-    const Page(
+      Page(
 // ProfileSetting para poder maquetar provisoriamente, luego volver a :
-// screen: ProfileScreen(user: widget.user),
-      screen: ProfileSettings(),
-      title: "",
-      action: 
-        Icon(
-        Icons.settings_outlined, 
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 20, 
-      ), 
-    ),
-  ];
+        screen: ProfileScreen(user: widget.user),
+        // screen: ProfileSettings(),
+        title: "",
+        action: const Icon(
+          Icons.settings_outlined,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 20,
+        ),
+      ),
+    ];
     final page = pages[currentPage];
     final pageTitle = page.title;
     final actionIcon = page.action;
-    
 
     return Scaffold(
       appBar: AppBar(
@@ -92,10 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             Container(
-              margin: const EdgeInsets.only(right: 20),
-          
-              child: actionIcon
-            )
+                margin: const EdgeInsets.only(right: 20), child: actionIcon)
           ],
           centerTitle: true,
           backgroundColor: Colors.white,
