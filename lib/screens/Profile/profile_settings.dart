@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login_screen.dart';
 // import '../../widgets/Buttons/primary_button.dart';
+import '../../data/languages.dart';
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({super.key});
@@ -21,12 +22,7 @@ return  Container(
     color: Colors.white,
             padding: const EdgeInsets.only(top:0),
              child: GestureDetector(
-            // onTap: () {
-            //     // FocusScope.of(context).unfocus();
-            //     // pickUploadImage sube la imagen de perifl a firebase. Revisar
-            //   //  pickUploadImage();
-               
-            // },
+      
             
             child: ListView(
                 children: [

@@ -22,6 +22,7 @@ Future<void> main() async {
       projectId: "speak-easy-no-country-c78ba",
       messagingSenderId: "1062828650314",
       appId: "1:1062828650314:web:c6dee7dbf7b98412bb9bb3",
+      storageBucket: 'speak-easy-no-country-c78ba.appspot.com'
     ));
   } else {
     await Firebase.initializeApp();
