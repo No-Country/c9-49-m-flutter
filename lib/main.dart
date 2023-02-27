@@ -28,7 +28,7 @@ Future<void> main() async {
   }
 
   final client = StreamChatClient(
-    '6gdnp9syk79d',
+    'x493v62y5yth',
     logLevel: Level.INFO,
   );
 
