@@ -43,6 +43,28 @@ class _UserListPageState extends State<UserListPage> {
     return RefreshIndicator(
       onRefresh: () => _userListController.refresh(),
       child: StreamUserListView(
+        onUserTap: (user) async {
+          final client = StreamChat.of(context).client;
+
+          final channel = client.channel(
+            'messaging',
+            extraData: {
+              'name': '${user.id} | ${client.state.currentUser!.id}',
+              'members': [user.id, client.state.currentUser!.id],
+            },
+          );
+
+          await channel.watch();
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => StreamChannel(
+                channel: channel,
+                child: const ChannelPage(),
+              ),
+            ),
+          );
+        },
         controller: _userListController,
       ),
     );

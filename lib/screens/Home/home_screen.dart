@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
@@ -31,40 +33,43 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   int currentPage = 1;
-  final List<Page> pages = const [
-    Page(
-      screen: ChatScreen(),
-      title: "Conversaciones",
-      action: Icon(
-        Icons.add,
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0,
-      ),
-    ),
-    Page(
-      screen: ConnectScreen(),
-      title: "Buscar compañeros",
-      action: Icon(
-        Icons.add,
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0,
-      ),
-    ),
-    Page(
-      screen: ProfileScreen(),
-      title: "",
-      action: Icon(
-        Icons.settings,
-        color: Color.fromRGBO(0, 90, 194, 1),
-        size: 25.0,
-      ),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Page> pages = [
+      const Page(
+        screen: ChatScreen(),
+        title: "Conversaciones",
+        action: Icon(
+          Icons.add,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 25.0,
+        ),
+      ),
+      const Page(
+        screen: ConnectScreen(),
+        title: "Buscar compañeros",
+        action: Icon(
+          Icons.add,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 25.0,
+        ),
+      ),
+      Page(
+// ProfileSetting para poder maquetar provisoriamente, luego volver a :
+        screen: ProfileScreen(user: widget.user),
+        // screen: ProfileSettings(),
+        title: "",
+        action: const Icon(
+          Icons.settings_outlined,
+          color: Color.fromRGBO(0, 90, 194, 1),
+          size: 20,
+        ),
+      ),
+    ];
     final page = pages[currentPage];
     final pageTitle = page.title;
+    final actionIcon = page.action;
 
     return Scaffold(
       appBar: AppBar(
@@ -82,13 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: const Icon(
-                Icons.add,
-                color: Color.fromRGBO(0, 90, 194, 1),
-                size: 25.0,
-              ),
-            )
+                margin: const EdgeInsets.only(right: 20), child: actionIcon)
           ],
           centerTitle: true,
           backgroundColor: Colors.white,

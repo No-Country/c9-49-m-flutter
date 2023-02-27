@@ -30,15 +30,25 @@ class ChannelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const StreamChannelHeader(),
+      appBar: StreamChannelHeader(
+        onBackPressed: () async {
+          final channel = StreamChannel.of(context).channel;
+
+          final messages = channel.state!.channelState.messages;
+
+          if (messages == null || messages.isEmpty) {
+            await channel.delete();
+          }
+
+          Navigator.pop(context);
+        },
+      ),
       body: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Expanded(
-            child: StreamMessageListView(
-              messageBuilder: _messageBuilder,
-            ),
+            child: StreamMessageListView(),
           ),
-          const StreamMessageInput(),
+          StreamMessageInput(),
         ],
       ),
     );
