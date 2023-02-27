@@ -1,6 +1,7 @@
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase;
-import "package:cloud_firestore/cloud_firestore.dart";
+
+// Types:
+import '../../types/user_info.dart';
 
 class UserInDB {
   final String name;
@@ -16,30 +17,30 @@ class UserInDB {
 }
 
 Future<StreamChatClient> connectUserToChat(
-    {required firebase.User firebaseUser,
+    {required UserCustomInfo userInfo,
     required StreamChatClient client}) async {
-  final userRef =
-      FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid);
+  // final userRef =
+  //     FirebaseFirestore.instance.collection('users').doc(firebaseUser.uid);
 
-  final userInDb = await userRef.get();
-  final name = userInDb.get('name');
-  final image = userInDb.get('image');
-  final nativeLanguage = userInDb.get('nativeLanguage');
-  final targetLanguage = userInDb.get('targetLanguage');
+  // final userInDb = await userRef.get();
+  // final name = userInDb.get('name');
+  // final image = userInDb.get('image');
+  // final nativeLanguage = userInDb.get('nativeLanguage');
+  // final targetLanguage = userInDb.get('targetLanguage');
 
-  var uid = firebaseUser.uid;
-  // var token = await firebaseUser.getIdToken();
-  // var email = firebaseUser.email;}
-  print("$name,$image,$nativeLanguage,$targetLanguage");
+  // var uid = firebaseUser.uid;
+  // // var token = await firebaseUser.getIdToken();
+  // // var email = firebaseUser.email;}
+  // print("$name,$image,$nativeLanguage,$targetLanguage");
 
-  final user = User(id: uid, extraData: {
-    "name": name,
-    "targetLanguage": targetLanguage,
-    "image": image,
-    "nativeLanguage": nativeLanguage,
-    "email": firebaseUser.email
+  final data = User(id: userInfo.id, extraData: {
+    "name": userInfo.name,
+    "email": userInfo.email,
+    "image": userInfo.image,
+    "nativeLanguage": userInfo.nativeLanguage,
+    "targetLanguage": userInfo.targetLanguage,
   });
-  await client.connectUser(user, client.devToken(uid).rawValue);
+  await client.connectUser(data, client.devToken(userInfo.id).rawValue);
 
   return client;
 }

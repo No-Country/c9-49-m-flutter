@@ -3,9 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
+// Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
+
+// Types:
+import '../../types/user_info.dart';
 
 class Page {
   final Widget screen;
@@ -16,7 +20,7 @@ class Page {
 }
 
 class HomeScreen extends StatefulWidget {
-  final firebase.User user;
+  final UserCustomInfo user;
   const HomeScreen({super.key, required this.user});
 
   @override
@@ -24,14 +28,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void initState() {
-  //   final result =
-  //       widget.client.queryUsers(filter: Filter.equal('role', 'user'));
-  //   print(result);
-  //   super.initState();
-  // }
-
   int currentPage = 1;
 
   @override

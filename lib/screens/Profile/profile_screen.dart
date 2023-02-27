@@ -4,6 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// Types:
+import '../../types/user_info.dart';
+
 class Language {
   final String name;
   final int level;
@@ -13,32 +16,19 @@ class Language {
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.user});
 
-  final User user;
+  final UserCustomInfo user;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final String name = 'Agus';
-  final String country = 'Cordoba, Argentina';
-  final List<Language> languages = const [
-    Language(name: 'español', level: 4),
-    Language(name: 'Italiano', level: 3),
-    Language(name: 'Frances', level: 2)
-  ];
-
-  final String description =
-      "Hola a todos! Mi nombre es Florencia y estoy aprendiendo italiano y francés. \n\nMe encantaría hacer amigos de otros países, conocer distintas culturas y practicar un idioma distinto.";
-  final hobbies = [
-    'Deportes',
-    'Viajar',
-    ' Leer',
-    'Peliculas',
-    'Salir con amigos',
-    'Comer'
-  ];
-  final flag = [];
+  @override
+  void initState() {
+    print("HOLAA");
+    print(widget.user.name);
+    super.initState();
+  }
 
 // Funcion que muestra la pantlla de 'preferencias de usuario'
   void _secondView() {
@@ -65,6 +55,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String name = widget.user.name;
+    final String image = widget.user.image;
+    const String country = 'Cordoba, Argentina';
+    // const List<Language> languages = const [
+    //   Language(name: 'español', level: 4),
+    //   Language(name: 'Italiano', level: 3),
+    //   Language(name: 'Frances', level: 2)
+    // ];
+
+    const String description =
+        "Hola a todos! Mi nombre es Florencia y estoy aprendiendo italiano y francés. \n\nMe encantaría hacer amigos de otros países, conocer distintas culturas y practicar un idioma distinto.";
+    const hobbies = [
+      'Deportes',
+      'Viajar',
+      ' Leer',
+      'Peliculas',
+      'Salir con amigos',
+      'Comer'
+    ];
+
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(left: 15, top: 16, right: 15),
@@ -85,8 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       decoration: BoxDecoration(
                           border: Border.all(width: 1, color: Colors.grey),
                           shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              image: AssetImage('assets/avatarPerfil.jpeg'))),
+                          image: DecorationImage(
+                              // image:  AssetImage('assets/avatarPerfil.jpeg'))),
+                              image: NetworkImage(image))),
                     )),
                 Positioned(
                     bottom: 1,
