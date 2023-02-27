@@ -57,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       Page(
 // ProfileSetting para poder maquetar provisoriamente, luego volver a :
-        screen: ProfileScreen(user: widget.user),
-        // screen: ProfileSettings(),
+        // screen: ProfileScreen(user: widget.user),
+        screen: ProfileSettings(),
         title: "",
         action: const Icon(
           Icons.settings_outlined,

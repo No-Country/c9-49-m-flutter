@@ -30,7 +30,6 @@ Future<StreamChatClient> connectUserToChat(
   var uid = firebaseUser.uid;
   // var token = await firebaseUser.getIdToken();
   // var email = firebaseUser.email;}
-  print("$name,$image,$nativeLanguage,$targetLanguage");
 
   final user = User(id: uid, extraData: {
     "name": name,
