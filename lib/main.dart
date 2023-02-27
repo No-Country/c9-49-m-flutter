@@ -18,17 +18,17 @@ Future<void> main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: "AIzaSyCgbvaQflUG-Vw7iK_11MI0HfoNSo7a6s4",
-      projectId: "speak-easy-no-country-c78ba",
-      messagingSenderId: "1062828650314",
-      appId: "1:1062828650314:web:c6dee7dbf7b98412bb9bb3",
-    ));
+            apiKey: "AIzaSyCgbvaQflUG-Vw7iK_11MI0HfoNSo7a6s4",
+            projectId: "speak-easy-no-country-c78ba",
+            messagingSenderId: "1062828650314",
+            appId: "1:1062828650314:web:c6dee7dbf7b98412bb9bb3",
+            storageBucket: 'speak-easy-no-country-c78ba.appspot.com'));
   } else {
     await Firebase.initializeApp();
   }
 
   final client = StreamChatClient(
-    '6gdnp9syk79d',
+    'x493v62y5yth',
     logLevel: Level.INFO,
   );
 
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         "/onboarding": (context) => const OnboardingScreen(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
-        "/profile": (context) => const ProfileScreen(),
+        // "/profile": (context) => const ProfileScreen(),
         "/userpreferences": (context) => const MyFormWidget()
       },
       builder: (context, child) => StreamChat(
