@@ -12,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro'),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         actions: [
           ElevatedButton(
@@ -115,7 +115,7 @@ class _FormRegisterState extends State<FormRegister> {
                   controller: emailCtrl,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
+                      return "Ingrese su mail porfavor";
                     }
                     if (!RegExp(
                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -142,7 +142,7 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      labelText: 'Ingrese un password',
+                      labelText: 'Ingrese una contraseña',
                       hintText: 'Minimo 8 caracteres',
                       suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelStyle: const TextStyle(
@@ -159,8 +159,17 @@ class _FormRegisterState extends State<FormRegister> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
+                      return "Ingrese una contraseña";
                     }
+                    if (!RegExp(r"^.{8,}$").hasMatch(value)) {
+                      return "Su contraseña debe tener al menos 8 caracteres";
+                    }
+                    if (!RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$")
+                        .hasMatch(value)) {
+                      //ingresa
+                      return "El password debe contener letras y numeros";
+                    }
+
                     return null;
                   },
                 ),
@@ -181,7 +190,7 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      labelText: 'Confirme el password',
+                      labelText: 'Confirme su contraseña',
                       hintText: 'Repita el password',
                       suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelStyle: const TextStyle(
@@ -198,7 +207,7 @@ class _FormRegisterState extends State<FormRegister> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
+                      return "Vuelva a ingresar su contraseña porfavor";
                     } else if (value != passwordCtrl.text) {
                       return "La contraseñas no coiciden";
                     }
