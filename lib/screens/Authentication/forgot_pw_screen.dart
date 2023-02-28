@@ -51,7 +51,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        iconTheme: const IconThemeData(color: LightModeColors.blackColor),
+        leading: const SizedBox(),
         title: Text(
           'Recuperar contraseña',
           style: TextStyle(
@@ -91,7 +91,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             },
             child: const Text(
               "Volver a inicio de sesión",
-              style: TextStyle(color: LightModeColors.grayColor),
+              style: TextStyle(
+                  color: LightModeColors.grayColor,
+                  fontWeight: FontWeight.normal),
             ),
           ),
           const SizedBox(
