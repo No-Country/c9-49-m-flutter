@@ -26,7 +26,7 @@ Future<void> showErrorDialog(BuildContext context,
                 ],
               ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: Column(
                   children: [
                     Text(
