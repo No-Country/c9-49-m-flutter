@@ -141,8 +141,9 @@ class PersonalInfoStep extends StatelessWidget {
                 onPressed: () {
                   if (formData.gender == "") {
                     showErrorDialog(context,
-                        titleText: 'Género',
-                        descriptionText: 'Elige un género porfavor');
+                        titleText: 'Elige un género',
+                        descriptionText:
+                            'Para continuar necesitamos que selecciones una opción.');
                   }
                   if (Form.of(context).validate()) {
                     Form.of(context).save();
