@@ -29,7 +29,24 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(
+        title: const Text("Login"),
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        actions: [
+          ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  elevation: MaterialStateProperty.all(0)),
+              onPressed: () {
+                Navigator.pushNamed(context, "/register");
+              },
+              child: const Text("Registrarme"))
+        ],
+      ),
       body: const LoginForm(),
     );
   }
