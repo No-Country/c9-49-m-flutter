@@ -5,19 +5,50 @@ Future<void> showErrorDialog(BuildContext context,
   return showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(
-          titleText,
-          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 25),
-          textAlign: TextAlign.center,
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
         ),
-        titleTextStyle: TextStyle(color: Colors.white),
-        content: Text(
-          descriptionText,
-          style: TextStyle(color: Color.fromARGB(255, 148, 0, 0), fontSize: 18),
-          textAlign: TextAlign.center,
+        backgroundColor: Colors.white,
+        child: Container(
+          width: MediaQuery.of(context).size.width - 5,
+          padding: const EdgeInsets.all(0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                child: Column(
+                  children: [
+                    Text(
+                      titleText,
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Text(
+                      descriptionText,
+                      style: const TextStyle(fontSize: 16.0),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16.0),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        contentTextStyle: TextStyle(color: Colors.white),
       );
     },
   );
