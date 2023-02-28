@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import './colors_theme.dart';
 
 const TextTheme appTextTheme = TextTheme(
   // Headings:
-  headlineLarge: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500),
+  headlineLarge: TextStyle(
+      fontSize: 24.0,
+      fontWeight: FontWeight.w500,
+      color: LightModeColors.blackColor),
   headlineMedium: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal),
   headlineSmall: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
   // Text
