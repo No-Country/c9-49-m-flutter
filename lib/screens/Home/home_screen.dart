@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: "Buscar compañeros",
         action: const Icon(
-          Icons.add,
+          Icons.search,
           color: Color.fromRGBO(0, 90, 194, 1),
           size: 25.0,
         ),
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         action: Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
-          size: 20,
+          size: 25.0,
         ),
       ),
     ];
@@ -68,11 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 25.0,
-          ),
+          leading: const SizedBox(),
           title: Text(
             pageTitle,
             style: const TextStyle(
