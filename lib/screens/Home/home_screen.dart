@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 // Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
-import '../Profile/profile_screen.dart';
 
 // Types:
-import '../../types/user_info.dart';
+import '../../types/user.dart';
 
 class Page {
   final Widget screen;
@@ -20,7 +17,7 @@ class Page {
 }
 
 class HomeScreen extends StatefulWidget {
-  final UserCustomInfo user;
+  final UserInDB user;
   const HomeScreen({super.key, required this.user});
 
   @override
@@ -42,24 +39,24 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 25.0,
         ),
       ),
-      const Page(
-        screen: ConnectScreen(),
+      Page(
+        screen: ConnectScreen(
+          user: widget.user,
+        ),
         title: "Buscar compañeros",
-        action: Icon(
-          Icons.add,
+        action: const Icon(
+          Icons.search,
           color: Color.fromRGBO(0, 90, 194, 1),
           size: 25.0,
         ),
       ),
-      Page(
-// ProfileSetting para poder maquetar provisoriamente, luego volver a :
-        screen: ProfileScreen(user: widget.user),
-        // screen: ProfileSettings(),
+      const Page(
+        screen: ProfileSettings(),
         title: "",
-        action: const Icon(
+        action: Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
-          size: 20,
+          size: 25.0,
         ),
       ),
     ];
@@ -69,11 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 25.0,
-          ),
+          leading: const SizedBox(),
           title: Text(
             pageTitle,
             style: const TextStyle(

@@ -39,7 +39,9 @@ class UserHobbiesStep extends StatelessWidget {
       return ElevatedButton(
         onPressed: () => {onChangeHobbie(element)},
         style: ElevatedButton.styleFrom(
-            backgroundColor: isInHobbies ? Colors.green : Colors.grey),
+            backgroundColor: isInHobbies ? Colors.green : Colors.grey,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
         child: Text(capitalize(element)),
       );
     });
@@ -71,11 +73,12 @@ class UserHobbiesStep extends StatelessWidget {
           }
         },
         style: ElevatedButton.styleFrom(
-          fixedSize: const Size(150, 50),
-        ),
+            fixedSize: const Size(120, 40),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
         child: const Text(
           'Finalizar',
-          style: TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: 20),
         ),
       ),
     ]);

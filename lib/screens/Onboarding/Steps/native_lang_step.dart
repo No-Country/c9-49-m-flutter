@@ -82,8 +82,7 @@ class NativeLangStep extends StatelessWidget {
       );
     }).toList();
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return ListView(
       children: [
         const SizedBox(
           height: 30,
@@ -106,22 +105,26 @@ class NativeLangStep extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        ElevatedButton(
-          onPressed: () {
-            if (Form.of(context).validate()) {
-              Form.of(context).save();
-              pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(150, 50),
-          ),
-          child: const Text(
-            'Continuar',
-            style: TextStyle(fontSize: 25),
+        Container(
+          padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
+          child: ElevatedButton(
+            onPressed: () {
+              if (Form.of(context).validate()) {
+                Form.of(context).save();
+                pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+                fixedSize: const Size(100, 50),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20))),
+            child: const Text(
+              'Continuar',
+              style: TextStyle(fontSize: 25),
+            ),
           ),
         ),
       ],

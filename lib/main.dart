@@ -1,4 +1,3 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:stream_chat_flutter/stream_chat_flutter.dart";
@@ -12,6 +11,9 @@ import './screens/Profile/profile_screen.dart';
 import "./screens/Authentication/login_screen.dart";
 import "./screens/Authentication/register_screen.dart";
 import "./screens/Home/home_screen.dart";
+
+// Theme:
+import './theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme: ThemeData.dark(),
+      theme: lightTheme,
       debugShowCheckedModeBanner: false, // eliminar banda 'debug' borde sup
       title: 'SpeakEasy',
       navigatorKey: MyFormWidget.navigatorKey,
