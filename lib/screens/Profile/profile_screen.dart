@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 // Types:
-import '../../types/user_info.dart';
+import '../../types/user.dart';
 
 class Language {
   final String name;
@@ -16,21 +16,13 @@ class Language {
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.user});
 
-  final UserCustomInfo user;
+  final UserInDB user;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
-    print("HOLAA");
-    print(widget.user.name);
-    super.initState();
-  }
-
-// Funcion que muestra la pantlla de 'preferencias de usuario'
   void _secondView() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -64,16 +56,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //   Language(name: 'Frances', level: 2)
     // ];
 
-    const String description =
-        "Hola a todos! Mi nombre es Florencia y estoy aprendiendo italiano y francés. \n\nMe encantaría hacer amigos de otros países, conocer distintas culturas y practicar un idioma distinto.";
-    const hobbies = [
-      'Deportes',
-      'Viajar',
-      ' Leer',
-      'Peliculas',
-      'Salir con amigos',
-      'Comer'
-    ];
+    final String description = widget.user.userDescription;
+    final List<dynamic> hobbies = widget.user.hobbies;
 
     return Container(
       color: Colors.white,

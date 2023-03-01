@@ -1,12 +1,13 @@
 import "package:flutter/material.dart";
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/services/user_service.dart';
+import 'package:flutter_application_1/theme/colors_theme.dart';
 import 'package:flutter_application_1/widgets/Loaders/circle_loader.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
 import '../../services/auth_service.dart';
+import '../../services/user_service.dart';
 import '../../services/connect_user.dart';
 
 // Screens:
@@ -16,11 +17,9 @@ import '../Home/home_screen.dart';
 // Widgets:
 import '../../widgets/Inputs/email_input.dart';
 import "../../widgets/Inputs/password_input.dart";
-import "../../widgets/Texts/title.dart";
 import '../../widgets/Buttons/primary_button.dart';
-
-// Types:
-import '../../types/user_info.dart';
+import '../../widgets/Buttons/google_button.dart';
+import '../../widgets/Modals/errors_preferences_modal.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,8 +31,43 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final Color backgroundColor = Theme.of(context).colorScheme.background;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        actions: [
+          Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                          const EdgeInsets.all(20.0)),
+                      overlayColor:
+                          MaterialStateProperty.all<Color>(backgroundColor),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(backgroundColor),
+                      elevation: MaterialStateProperty.all(0)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  child: Text(
+                    "REGISTRARSE",
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).colorScheme.primary),
+                  )))
+        ],
+        iconTheme: const IconThemeData(color: LightModeColors.blackColor),
+        backgroundColor: backgroundColor,
+        elevation: 0,
+      ),
       body: const LoginForm(),
     );
   }
@@ -66,41 +100,26 @@ class _LoginFormState extends State<LoginForm> {
         );
 
         if (loggedUser != null) {
+          final userInDb =
+              await _userService.findById(uid: loggedUser.uid.toString());
+          print(userInDb);
           // ignore: use_build_context_synchronously
           showCircleLoader(context);
-          final userInDB = await _userService.getInfo(userId: loggedUser.uid);
-
-          final name = userInDB.get('name');
-          final image = userInDB.get('image');
-          final nativeLanguage = userInDB.get('nativeLanguage');
-          final targetLanguage = userInDB.get('targetLanguage');
-
-          final userInfo = UserCustomInfo(
-              id: loggedUser.uid,
-              name: name,
-              email: loggedUser.email ?? '',
-              image: image,
-              nativeLanguage: nativeLanguage,
-              targetLanguage: targetLanguage);
-
           await connectUserToChat(
-              userInfo: userInfo,
+              userInDB: userInDb,
               // ignore: use_build_context_synchronously
               client: stream.StreamChat.of(context).client);
 
           // ignore: use_build_context_synchronously
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(user: userInfo);
+            return HomeScreen(user: userInDb);
           }));
         }
       } on FirebaseAuthException catch (e) {
         print(e);
-        showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-            content: Text("Usuario o contraseña incorrectos"),
-          ),
-        );
+        showErrorDialog(context,
+            titleText: "Upps!",
+            descriptionText: "Usuario o contraseña incorrectos");
       }
     }
 
@@ -125,72 +144,93 @@ class _LoginFormState extends State<LoginForm> {
       }
     }
 
-    return Padding(
-        padding: const EdgeInsets.all(24.0),
+    return Container(
+        color: Theme.of(context).colorScheme.background,
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 36.0),
         child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const AppTitle(text: "¡Bienvenido otra vez!"),
-              const SizedBox(
-                height: 50.0,
-              ),
-              EmailInput(
-                  label: "Email",
-                  hintText: "example@gmail.com",
-                  controller: emailController),
-              const SizedBox(
-                height: 15.0,
-              ),
-              PasswordInput(
-                label: "Contraseña",
-                hintText: "Minimo 8 caracteres",
-                controller: passwordController,
-              ),
-              const SizedBox(
-                height: 18.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const ForgotPasswordScreen();
-                  }));
-                },
-                child: const Text(
-                  "¿Olvidaste tu contraseña?",
-                  style: TextStyle(color: Colors.blue),
+            key: formKey,
+            child: ListView(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '¡Te damos la bienvenida!',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                      textAlign: TextAlign.left,
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Center(
+                      child: Container(
+                        width: 122,
+                        height: 122,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/logos/logo.png'))),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    EmailInput(
+                        label: "Email",
+                        hintText: "example@gmail.com",
+                        controller: emailController),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    PasswordInput(
+                      label: "Contraseña",
+                      hintText: "Minimo 8 caracteres",
+                      controller: passwordController,
+                    ),
+                    const SizedBox(
+                      height: 18.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const ForgotPasswordScreen();
+                        }));
+                      },
+                      child: const Text(
+                        "¿Olvidaste tu contraseña?",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: PrimaryButton(
+                          text: "INICIAR SESION",
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //     const SnackBar(content: Text('Processing Data')));
+                              await signIn();
+                            }
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: GoogleButton(
+                          text: "INICIAR SESION CON GOOGLE",
+                          onPressed: () async {
+                            await signInWithGoogle();
+                          }),
+                    )
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 32.0,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: PrimaryButton(
-                    text: "INICIAR SESION",
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //     const SnackBar(content: Text('Processing Data')));
-                        await signIn();
-                      }
-                    }),
-              ),
-              const SizedBox(
-                height: 32.0,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: PrimaryButton(
-                    text: "GOOGLE",
-                    onPressed: () async {
-                      await signInWithGoogle();
-                    }),
-              )
-            ],
-          ),
-        ));
+              ],
+            )));
   }
 }

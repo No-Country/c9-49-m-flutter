@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase;
-import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 // Screens:
 import '../Connect/connect_screen.dart';
@@ -9,18 +6,18 @@ import '../Chat/chat_screen.dart';
 import '../Profile/profile_screen.dart';
 
 // Types:
-import '../../types/user_info.dart';
+import '../../types/user.dart';
 
 class Page {
   final Widget screen;
   final String title;
-  final Icon action;
+  final Widget icon;
 
-  const Page({required this.screen, required this.title, required this.action});
+  const Page({required this.screen, required this.title, required this.icon});
 }
 
 class HomeScreen extends StatefulWidget {
-  final UserCustomInfo user;
+  final UserInDB user;
   const HomeScreen({super.key, required this.user});
 
   @override
@@ -36,44 +33,38 @@ class _HomeScreenState extends State<HomeScreen> {
       const Page(
         screen: ChatScreen(),
         title: "Conversaciones",
-        action: Icon(
-          Icons.add,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
-        ),
-      ),
-      const Page(
-        screen: ConnectScreen(),
-        title: "Buscar compañeros",
-        action: Icon(
-          Icons.add,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
+        icon: SizedBox(
+          width: 25.0,
+          height: 25.0,
         ),
       ),
       Page(
-// ProfileSetting para poder maquetar provisoriamente, luego volver a :
+        screen: ConnectScreen(
+          user: widget.user,
+        ),
+        title: "Buscar compañeros",
+        icon: const SizedBox(
+          width: 25.0,
+          height: 25.0,
+        ),
+      ),
+      Page(
         screen: ProfileScreen(user: widget.user),
-        // screen: ProfileSettings(),
         title: "",
-        action: const Icon(
+        icon: const Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
-          size: 20,
+          size: 25.0,
         ),
       ),
     ];
     final page = pages[currentPage];
     final pageTitle = page.title;
-    final actionIcon = page.action;
+    final actionIcon = page.icon;
 
     return Scaffold(
       appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 25.0,
-          ),
+          leading: const SizedBox(),
           title: Text(
             pageTitle,
             style: const TextStyle(
