@@ -67,8 +67,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
+            children: const [
+              Text(
                 "Ingresa tu mail",
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.left,

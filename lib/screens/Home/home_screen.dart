@@ -5,6 +5,9 @@ import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
 
+// Types:
+import '../../types/user.dart';
+
 class Page {
   final Widget screen;
   final String title;
@@ -14,7 +17,7 @@ class Page {
 }
 
 class HomeScreen extends StatefulWidget {
-  final firebase.User user;
+  final UserInDB user;
   const HomeScreen({super.key, required this.user});
 
   @override
@@ -22,14 +25,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void initState() {
-  //   final result =
-  //       widget.client.queryUsers(filter: Filter.equal('role', 'user'));
-  //   print(result);
-  //   super.initState();
-  // }
-
   int currentPage = 1;
 
   @override
@@ -44,11 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 25.0,
         ),
       ),
-      const Page(
-        screen: ConnectScreen(),
+      Page(
+        screen: ConnectScreen(
+          user: widget.user,
+        ),
         title: "Buscar compañeros",
-        action: Icon(
-          Icons.add,
+        action: const Icon(
+          Icons.search,
           color: Color.fromRGBO(0, 90, 194, 1),
           size: 25.0,
         ),
@@ -61,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         action: Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
-          size: 20,
+          size: 25.0,
         ),
       ),
     ];
@@ -71,11 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: 25.0,
-          ),
+          leading: const SizedBox(),
           title: Text(
             pageTitle,
             style: const TextStyle(
