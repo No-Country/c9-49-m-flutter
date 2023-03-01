@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 
 // Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
+import '../Profile/profile_screen.dart';
 
 // Types:
 import '../../types/user.dart';
@@ -11,9 +11,9 @@ import '../../types/user.dart';
 class Page {
   final Widget screen;
   final String title;
-  final Icon action;
+  final Widget icon;
 
-  const Page({required this.screen, required this.title, required this.action});
+  const Page({required this.screen, required this.title, required this.icon});
 }
 
 class HomeScreen extends StatefulWidget {
@@ -33,10 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       const Page(
         screen: ChatScreen(),
         title: "Conversaciones",
-        action: Icon(
-          Icons.add,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
+        icon: SizedBox(
+          width: 25.0,
+          height: 25.0,
         ),
       ),
       Page(
@@ -44,16 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
           user: widget.user,
         ),
         title: "Buscar compañeros",
-        action: const Icon(
-          Icons.search,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
+        icon: const SizedBox(
+          width: 25.0,
+          height: 25.0,
         ),
       ),
-      const Page(
-        screen: ProfileSettings(),
+      Page(
+        screen: ProfileScreen(user: widget.user),
         title: "",
-        action: Icon(
+        icon: const Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
           size: 25.0,
@@ -62,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     final page = pages[currentPage];
     final pageTitle = page.title;
-    final actionIcon = page.action;
+    final actionIcon = page.icon;
 
     return Scaffold(
       appBar: AppBar(
