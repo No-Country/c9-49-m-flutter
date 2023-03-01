@@ -7,6 +7,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 
 // Services:
 import '../../services/auth_service.dart';
+import '../../services/user_service.dart';
 import '../../services/connect_user.dart';
 
 // Screens:
@@ -18,6 +19,7 @@ import '../../widgets/Inputs/email_input.dart';
 import "../../widgets/Inputs/password_input.dart";
 import '../../widgets/Buttons/primary_button.dart';
 import '../../widgets/Buttons/google_button.dart';
+import '../../widgets/Modals/errors_preferences_modal.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -80,6 +82,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final AuthService _authService = AuthService();
+  final UserService _userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -91,32 +94,32 @@ class _LoginFormState extends State<LoginForm> {
     //  Login function
     Future<void> signIn() async {
       try {
-        User? user = await _authService.loginWithEmailAndPassword(
+        User? loggedUser = await _authService.loginWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
 
-        if (user != null) {
+        if (loggedUser != null) {
+          final userInDb =
+              await _userService.findById(uid: loggedUser.uid.toString());
+          print(userInDb);
           // ignore: use_build_context_synchronously
           showCircleLoader(context);
           await connectUserToChat(
-              firebaseUser: user,
+              userInDB: userInDb,
               // ignore: use_build_context_synchronously
               client: stream.StreamChat.of(context).client);
 
           // ignore: use_build_context_synchronously
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(user: user);
+            return HomeScreen(user: userInDb);
           }));
         }
       } on FirebaseAuthException catch (e) {
         print(e);
-        showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-            content: Text("Usuario o contraseña incorrectos"),
-          ),
-        );
+        showErrorDialog(context,
+            titleText: "Upps!",
+            descriptionText: "Usuario o contraseña incorrectos");
       }
     }
 

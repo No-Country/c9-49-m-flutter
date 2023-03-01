@@ -2,48 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../Chat/channel_page.dart';
+import '../../types/user.dart';
 
 class ConnectScreen extends StatelessWidget {
-  const ConnectScreen({super.key});
+  final UserInDB user;
+
+  const ConnectScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: const UserListPage(),
+      child: UserListPage(
+        user: user,
+      ),
     );
   }
 }
 
 class UserListPage extends StatefulWidget {
-  const UserListPage({Key? key}) : super(key: key);
+  const UserListPage({Key? key, required this.user}) : super(key: key);
+
+  final UserInDB user;
 
   @override
   State<UserListPage> createState() => _UserListPageState();
 }
 
 class _UserListPageState extends State<UserListPage> {
-  late final StreamUserListController _userListController =
-      StreamUserListController(
-    client: StreamChat.of(context).client,
-    limit: 25,
-    filter: Filter.and(
-      [
-        Filter.notEqual('id', StreamChat.of(context).currentUser!.id),
-        Filter.equal('role', 'user'),
-        // Filter.notEqual('dashboard_user', true)
-      ],
-    ),
-    sort: [
-      const SortOption(
-        'name',
-        direction: 1,
-      ),
-    ],
-  );
-
   @override
   Widget build(BuildContext context) {
+    late final StreamUserListController _userListController =
+        StreamUserListController(
+      client: StreamChat.of(context).client,
+      limit: 25,
+      filter: Filter.and(
+        [
+          Filter.notEqual('id', StreamChat.of(context).currentUser!.id),
+          Filter.equal('role', 'user'),
+          Filter.or([
+            Filter.equal('targetLanguage', widget.user.targetLanguage),
+            Filter.equal('nativeLanguage', widget.user.targetLanguage)
+          ])
+        ],
+      ),
+      sort: [
+        const SortOption(
+          'last_seen',
+          direction: SortOption.ASC,
+        ),
+      ],
+    );
+
     return RefreshIndicator(
       onRefresh: () => _userListController.refresh(),
       child: StreamUserListView(
