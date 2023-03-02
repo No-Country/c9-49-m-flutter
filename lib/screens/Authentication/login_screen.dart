@@ -123,26 +123,26 @@ class _LoginFormState extends State<LoginForm> {
       }
     }
 
-    Future<void> signInWithGoogle() async {
-      try {
-        User? user = await _authService.loginWithGoogle();
-        if (user != null) {
-          showDialog(
-            context: context,
-            builder: (context) => const AlertDialog(
-              content: Text("Logueado con google"),
-            ),
-          );
-        }
-      } catch (e) {
-        showDialog(
-          context: context,
-          builder: (context) => const AlertDialog(
-            content: Text("No se pudo conectar con Google"),
-          ),
-        );
-      }
-    }
+    // Future<void> signInWithGoogle() async {
+    //   try {
+    //     User? user = await _authService.loginWithGoogle();
+    //     if (user != null) {
+    //       showDialog(
+    //         context: context,
+    //         builder: (context) => const AlertDialog(
+    //           content: Text("Logueado con google"),
+    //         ),
+    //       );
+    //     }
+    //   } catch (e) {
+    //     showDialog(
+    //       context: context,
+    //       builder: (context) => const AlertDialog(
+    //         content: Text("No se pudo conectar con Google"),
+    //       ),
+    //     );
+    //   }
+    // }
 
     return Container(
         color: Theme.of(context).colorScheme.background,
@@ -217,17 +217,6 @@ class _LoginFormState extends State<LoginForm> {
                             }
                           }),
                     ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: GoogleButton(
-                          text: "INICIAR SESION CON GOOGLE",
-                          onPressed: () async {
-                            await signInWithGoogle();
-                          }),
-                    )
                   ],
                 ),
               ],
