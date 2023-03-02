@@ -9,14 +9,6 @@ import '../Profile/profile_screen.dart';
 // Types:
 import '../../types/user.dart';
 
-class Page {
-  final Widget screen;
-  final String title;
-  final Widget icon;
-
-  const Page({required this.screen, required this.title, required this.icon});
-}
-
 class HomeScreen extends StatefulWidget {
   final UserInDB user;
   const HomeScreen({super.key, required this.user});
@@ -30,59 +22,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Page> pages = [
-      const Page(
-        screen: ChatScreen(),
-        title: "Conversaciones",
-        icon: SizedBox(
-          width: 25.0,
-          height: 25.0,
-        ),
+    final List<Widget> pages = [
+      const ChatScreen(),
+      ConnectScreen(
+        user: widget.user,
       ),
-      Page(
-        screen: ConnectScreen(
-          user: widget.user,
-        ),
-        title: "Buscar compañeros",
-        icon: const SizedBox(
-          width: 25.0,
-          height: 25.0,
-        ),
-      ),
-    const  Page(
-        // screen: ProfileScreen(user: widget.user),
-        screen: ProfileSettings(),
-        title: "",
-        icon: const  Icon(
-          Icons.settings_outlined,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          // color: Colors.white,
-          size: 25.0,
-        ),
-      ),
+      ProfileScreen(user: widget.user),
     ];
     final page = pages[currentPage];
-    final pageTitle = page.title;
-    final actionIcon = page.icon;
 
     return Scaffold(
-      appBar: AppBar(
-          leading: const SizedBox(),
-          title: Text(
-            pageTitle,
-            style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-                color: Color.fromRGBO(0, 90, 194, 1)),
-          ),
-          actions: [
-            Container(
-                margin: const EdgeInsets.only(right: 20), child: actionIcon)
-          ],
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0),
-      body: page.screen,
+      body: page,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         color: const Color.fromRGBO(176, 178, 182, 1),

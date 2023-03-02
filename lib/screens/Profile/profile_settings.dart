@@ -25,122 +25,115 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+        body: Container(
       color: Colors.white,
       padding: const EdgeInsets.only(top: 0),
-      child: GestureDetector(
-        // onTap: () {
-        //     // FocusScope.of(context).unfocus();
-        //     // pickUploadImage sube la imagen de perifl a firebase. Revisar
-        //   //  pickUploadImage();
-
-        // },
-
-        child: ListView(
-          children: [
-            Center(
-              child: Stack(
-                children: [
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.grey),
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            image: AssetImage('assets/avatarPerfil.jpeg'))),
-                  ),
-                  Positioned(
-                      bottom: 1,
-                      right: 2.2,
-                      child: Container(
-                        height: 11,
-                        width: 11,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3)),
-                          border: Border.all(
-                            width: 1,
-                            color: const Color.fromRGBO(0, 90, 194, 0.5),
-                          ),
-                          color: const Color.fromRGBO(255, 255, 255, 1),
+      child: ListView(
+        children: [
+          Center(
+            child: Stack(
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey),
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                          image: AssetImage('assets/avatarPerfil.jpeg'))),
+                ),
+                Positioned(
+                    bottom: 1,
+                    right: 2.2,
+                    child: Container(
+                      height: 11,
+                      width: 11,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(3)),
+                        border: Border.all(
+                          width: 1,
+                          color: const Color.fromRGBO(0, 90, 194, 0.5),
                         ),
-                      ))
-                ],
-              ),
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                      ),
+                    ))
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'roboto',
-                      fontSize: 15,
-                      fontStyle: FontStyle.normal)),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 14),
-              child: const Icon(
-                Icons.emoji_flags,
-                size: 18,
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                country,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(name,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w200),
-              ),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'roboto',
+                    fontSize: 15,
+                    fontStyle: FontStyle.normal)),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 14),
+            child: const Icon(
+              Icons.emoji_flags,
+              size: 18,
             ),
-            const Padding(padding: EdgeInsets.only(bottom: 40)),
+          ),
 
-            const ListTile(
-              title: Text(
-                'Notificaciones',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-              leading: Icon(
-                Icons.notifications_none,
-                color: Color.fromRGBO(0, 90, 194, 1),
-                size: 20,
-              ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              country,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 11.0,
+                  fontWeight: FontWeight.w200),
             ),
-            // onTap: () {
+          ),
+          const Padding(padding: EdgeInsets.only(bottom: 40)),
 
-            // },
-            const ListTile(
-              title: Text(
-                'Privacidad',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-              leading: Icon(
-                Icons.lock_outline,
-                color: Color.fromRGBO(0, 90, 194, 1),
-                size: 20,
-              ),
+          const ListTile(
+            title: Text(
+              'Notificaciones',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
-            // onTap: () {
+            leading: Icon(
+              Icons.notifications_none,
+              color: Color.fromRGBO(0, 90, 194, 1),
+              size: 20,
+            ),
+          ),
+          // onTap: () {
 
-            // },
-            const ListTile(
-              title: Text(
-                'Información',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
-              leading: Icon(
-                Icons.help_outline,
-                color: Color.fromRGBO(0, 90, 194, 1),
-                size: 20,
-              ),
+          // },
+          const ListTile(
+            title: Text(
+              'Privacidad',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
-            // onTap: () {
+            leading: Icon(
+              Icons.lock_outline,
+              color: Color.fromRGBO(0, 90, 194, 1),
+              size: 20,
+            ),
+          ),
+          // onTap: () {
+
+          // },
+          const ListTile(
+            title: Text(
+              'Información',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            ),
+            leading: Icon(
+              Icons.help_outline,
+              color: Color.fromRGBO(0, 90, 194, 1),
+              size: 20,
+            ),
+          ),
+          // onTap: () {
 
             // },
        
