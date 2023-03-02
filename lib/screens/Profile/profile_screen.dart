@@ -25,13 +25,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  bool settingsIsOpened = false;
+
   void _openSettings() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return const ProfileSettings();
-    }));
+    setState(() {
+      settingsIsOpened = true;
+    });
   }
 
-  String imageURL = '';
+  void _closeSettings() {
+    setState(() {
+      settingsIsOpened = false;
+    });
+  }
 
   void pickUploadImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -54,7 +60,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          leading: const SizedBox(),
+          leading: settingsIsOpened
+              ? IconButton(
+                  onPressed: _closeSettings,
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ))
+              : const SizedBox(),
           title: const Text(
             "Perfil",
             style: TextStyle(
@@ -62,162 +75,168 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontWeight: FontWeight.w500,
                 color: Color.fromRGBO(0, 90, 194, 1)),
           ),
-          actions: [
-            Container(
-                margin: const EdgeInsets.only(right: 20),
-                child: IconButton(
-                    onPressed: _openSettings,
-                    icon: const Icon(
-                      Icons.settings_outlined,
-                      color: Color.fromRGBO(0, 90, 194, 1),
-                      size: 25.0,
-                    )))
-          ],
+          actions: settingsIsOpened
+              ? null
+              : [
+                  Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      child: IconButton(
+                          onPressed: _openSettings,
+                          icon: const Icon(
+                            Icons.settings_outlined,
+                            color: Color.fromRGBO(0, 90, 194, 1),
+                            size: 25.0,
+                          )))
+                ],
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0),
-      body: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.only(left: 15, top: 16, right: 15),
-        child: ListView(
-          children: [
-            Center(
-              child: Stack(
+      body: settingsIsOpened
+          ? const ProfileSettings()
+          : Container(
+              color: Colors.white,
+              padding: const EdgeInsets.only(left: 15, top: 16, right: 15),
+              child: ListView(
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                        // FocusScope.of(context).unfocus();
-                        // pickUploadImage sube la imagen de perifl a firebase. Revisar
-                        pickUploadImage();
-                      },
-                      child: Container(
-                        width: 56,
-                        height: 56,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.grey),
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                // image:  AssetImage('assets/avatarPerfil.jpeg'))),
-                                image: NetworkImage(image))),
-                      )),
-                  Positioned(
-                      bottom: 1,
-                      right: 2.2,
-                      child: Container(
-                        height: 11,
-                        width: 11,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3)),
-                          border: Border.all(
-                            width: 1,
-                            color: const Color.fromRGBO(0, 90, 194, 0.5),
+                  Center(
+                    child: Stack(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              // FocusScope.of(context).unfocus();
+                              // pickUploadImage sube la imagen de perifl a firebase. Revisar
+                              pickUploadImage();
+                            },
+                            child: Container(
+                              width: 56,
+                              height: 56,
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(width: 1, color: Colors.grey),
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      // image:  AssetImage('assets/avatarPerfil.jpeg'))),
+                                      image: NetworkImage(image))),
+                            )),
+                        Positioned(
+                            bottom: 1,
+                            right: 2.2,
+                            child: Container(
+                              height: 11,
+                              width: 11,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(3)),
+                                border: Border.all(
+                                  width: 1,
+                                  color: const Color.fromRGBO(0, 90, 194, 0.5),
+                                ),
+                                color: const Color.fromRGBO(255, 255, 255, 1),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text(name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'roboto',
+                            fontSize: 15,
+                            fontStyle: FontStyle.normal)),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 14),
+                    child: const Icon(
+                      Icons.emoji_flags,
+                      size: 18,
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      country,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.w200),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(32.0),
+                    child: Text(
+                      'Español      Italiano      Frances',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      description,
+                      style:
+                          const TextStyle(color: Colors.black, fontSize: 14.0),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Intereses y aficiones',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Builder(builder: (context) {
+                    return Row(
+                      children: [
+                        Container(
+                          width: 78,
+                          height: 21,
+                          margin: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(227, 227, 227, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
                           ),
-                          color: const Color.fromRGBO(255, 255, 255, 1),
+                          child: const Text(
+                            'Deportes',
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ))
+                        Container(
+                          width: 78,
+                          height: 21,
+                          margin: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            color: Color.fromRGBO(227, 227, 227, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: const Text(
+                            'Deportes',
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w400),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    );
+                  })
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'roboto',
-                      fontSize: 15,
-                      fontStyle: FontStyle.normal)),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 14),
-              child: const Icon(
-                Icons.emoji_flags,
-                size: 18,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                country,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.w200),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(32.0),
-              child: Text(
-                'Español      Italiano      Frances',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                description,
-                style: const TextStyle(color: Colors.black, fontSize: 14.0),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Intereses y aficiones',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Builder(builder: (context) {
-              return Row(
-                children: [
-                  Container(
-                    width: 78,
-                    height: 21,
-                    margin: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(227, 227, 227, 1),
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: const Text(
-                      'Deportes',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    width: 78,
-                    height: 21,
-                    margin: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(227, 227, 227, 1),
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: const Text(
-                      'Deportes',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              );
-            })
-          ],
-        ),
-      ),
     );
   }
 }
