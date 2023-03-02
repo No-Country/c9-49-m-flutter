@@ -102,15 +102,10 @@ class _LoginFormState extends State<LoginForm> {
         if (loggedUser != null) {
           final userInDb =
               await _userService.findById(uid: loggedUser.uid.toString());
-          print(userInDb);
-          // ignore: use_build_context_synchronously
           showCircleLoader(context);
           await connectUserToChat(
-              userInDB: userInDb,
-              // ignore: use_build_context_synchronously
-              client: stream.StreamChat.of(context).client);
+              userInDB: userInDb, client: stream.StreamChat.of(context).client);
 
-          // ignore: use_build_context_synchronously
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return HomeScreen(user: userInDb);
           }));

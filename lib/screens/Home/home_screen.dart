@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 
+// Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
+import '../Profile/profile_screen.dart';
 
 // Types:
 import '../../types/user.dart';
-
-class Page {
-  final Widget screen;
-  final String title;
-  final Icon action;
-
-  const Page({required this.screen, required this.title, required this.action});
-}
 
 class HomeScreen extends StatefulWidget {
   final UserInDB user;
@@ -29,61 +22,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Page> pages = [
-      const Page(
-        screen: ChatScreen(),
-        title: "Conversaciones",
-        action: Icon(
-          Icons.add,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
-        ),
+    final List<Widget> pages = [
+      const ChatScreen(),
+      ConnectScreen(
+        user: widget.user,
       ),
-      Page(
-        screen: ConnectScreen(
-          user: widget.user,
-        ),
-        title: "Buscar compañeros",
-        action: const Icon(
-          Icons.search,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
-        ),
-      ),
-      const Page(
-// ProfileSetting para poder maquetar provisoriamente, luego volver a :
-        // screen: ProfileScreen(user: widget.user),
-        screen: ProfileSettings(),
-        title: "",
-        action: Icon(
-          Icons.settings_outlined,
-          color: Color.fromRGBO(0, 90, 194, 1),
-          size: 25.0,
-        ),
-      ),
+      ProfileScreen(user: widget.user),
     ];
     final page = pages[currentPage];
-    final pageTitle = page.title;
-    final actionIcon = page.action;
 
     return Scaffold(
-      appBar: AppBar(
-          leading: const SizedBox(),
-          title: Text(
-            pageTitle,
-            style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500,
-                color: Color.fromRGBO(0, 90, 194, 1)),
-          ),
-          actions: [
-            Container(
-                margin: const EdgeInsets.only(right: 20), child: actionIcon)
-          ],
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0),
-      body: page.screen,
+      body: page,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         color: const Color.fromRGBO(176, 178, 182, 1),

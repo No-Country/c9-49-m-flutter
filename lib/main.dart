@@ -7,10 +7,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import "./screens/Onboarding/intro_screen.dart";
 import "./screens/Onboarding/onboarding_screen.dart";
 import "./screens/Onboarding/user_settings.dart";
-import './screens/Profile/profile_screen.dart';
 import "./screens/Authentication/login_screen.dart";
 import "./screens/Authentication/register_screen.dart";
-import "./screens/Home/home_screen.dart";
 
 // Theme:
 import './theme/theme.dart';
