@@ -1,5 +1,7 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import 'package:flutter_application_1/theme/colors_theme.dart';
+
 import "package:flutter/material.dart";
 import "package:flutter_application_1/widgets/Loaders/circle_loader.dart";
 import "./../../widgets/Inputs/password_input.dart";
@@ -12,12 +14,15 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Registro',
-          style: TextStyle(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, "/");
+          },
         ),
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
+        elevation: 0,
         actions: [
           ElevatedButton(
               style: ButtonStyle(
@@ -29,24 +34,35 @@ class RegisterScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, "/login");
               },
-              child: const Text("Iniciar sesión"))
+              child: const Text(
+                "INICIAR SESIÓN",
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Color.fromARGB(255, 34, 90, 187),
+                    fontSize: 14),
+              ))
         ],
       ),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(25, 18, 0, 0),
+              child: const Text(
                 "¡Estamos felices de que seas parte!",
-                style: TextStyle(fontSize: 32, color: Colors.black),
-                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.start,
               ),
-              FormRegister()
-            ],
-          ),
+            ),
+            const FormRegister()
+          ],
         ),
       ),
     );
@@ -104,7 +120,7 @@ class _FormRegisterState extends State<FormRegister> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: 'Ingrese su mail',
-                    hintText: 'chat_lingo@gmail.com',
+                    hintText: 'ejemplo@gmail.com',
                     suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                     labelStyle: const TextStyle(
                         color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
@@ -222,11 +238,11 @@ class _FormRegisterState extends State<FormRegister> {
                     }
                   },
                   style: TextButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 90, 194, 1),
-                      minimumSize: const Size(180, 40)),
+                      backgroundColor: const Color.fromRGBO(0, 90, 194, 1),
+                      minimumSize: const Size(175, 40)),
                   child: const Text(
                     "REGISTRARME",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ),
               )

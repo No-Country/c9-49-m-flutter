@@ -49,13 +49,16 @@ class LangLevelStep extends StatelessWidget {
                         width: strokeSide),
                   ),
                   elevation: 0,
-                  fixedSize: const Size(100, 60)),
+                  fixedSize: const Size(100, 50)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     capitalize(element),
-                    style: const TextStyle(fontSize: 25, color: Colors.black),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal),
                     textAlign: TextAlign.start,
                   ),
                   isSelected

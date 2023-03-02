@@ -51,7 +51,10 @@ class TargetLangStep extends StatelessWidget {
                 const SizedBox(width: 25),
                 Text(
                   language['name']!,
-                  style: const TextStyle(fontSize: 30, color: Colors.black),
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal),
                   textAlign: TextAlign.start,
                 ),
               ],
@@ -87,10 +90,13 @@ class TargetLangStep extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        const Text(
-          "Elegí el idioma que quieras aprender",
-          style: TextStyle(fontSize: 35),
-          textAlign: TextAlign.center,
+        Container(
+          padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+          child: const Text(
+            "Elegí el idioma que quieras aprender",
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.start,
+          ),
         ),
         const SizedBox(
           height: 25,
@@ -106,7 +112,7 @@ class TargetLangStep extends StatelessWidget {
           height: 10,
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
+          padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
           child: ElevatedButton(
             onPressed: () {
               if (formData.nativeLanguage == formData.targetLanguage) {

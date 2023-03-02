@@ -113,7 +113,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 descriptions[currentPage].text,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
+                    fontFamily: 'Roboto',
                     color: Colors.black,
+                    fontWeight: FontWeight.w600,
                     fontSize: 25.0,
                     decoration: TextDecoration.none),
               )
