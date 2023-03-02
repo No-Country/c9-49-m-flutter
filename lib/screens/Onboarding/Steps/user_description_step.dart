@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_application_1/data/languages.dart";
 import "package:flutter_application_1/types/user_form_data.dart";
+import "package:flutter_application_1/widgets/Buttons/primary_button.dart";
 import "package:flutter_svg/flutter_svg.dart";
 
 class UserDecriptionStep extends StatelessWidget {
@@ -48,7 +49,8 @@ class UserDecriptionStep extends StatelessWidget {
               style: const TextStyle(fontSize: 18),
             ),
           ),
-          ElevatedButton(
+          PrimaryButton(
+            text: 'Continuar',
             onPressed: () {
               if (Form.of(context).validate()) {
                 Form.of(context).save();
@@ -58,14 +60,6 @@ class UserDecriptionStep extends StatelessWidget {
                 );
               }
             },
-            style: ElevatedButton.styleFrom(
-                fixedSize: const Size(120, 40),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            child: const Text(
-              'Continuar',
-              style: TextStyle(fontSize: 20),
-            ),
           ),
         ],
       ),

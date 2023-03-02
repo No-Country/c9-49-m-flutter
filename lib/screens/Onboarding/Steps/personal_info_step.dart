@@ -3,6 +3,7 @@ import 'package:flutter_application_1/utils/has_legal_age.dart';
 import "package:flutter_application_1/widgets/Modals/errors_preferences_modal.dart";
 import "package:intl/intl.dart";
 import "../../../types/user_form_data.dart";
+import "../../../widgets/Buttons/primary_button.dart";
 
 class PersonalInfoStep extends StatelessWidget {
   final UserFormData formData;
@@ -35,6 +36,7 @@ class PersonalInfoStep extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: InputDecoration(
                     labelText: 'Nombre',
                     labelStyle: const TextStyle(
@@ -55,7 +57,14 @@ class PersonalInfoStep extends StatelessWidget {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Por favor ingrese su nombre';
+                  } else if (RegExp(r'\d+').hasMatch(value)) {
+                    return 'Su nombre no puede contener números';
+                  } else if (!RegExp(
+                          r'^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+\s+[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$')
+                      .hasMatch(value)) {
+                    return 'Ingrese su nombre y apellido';
                   }
+
                   return null;
                 },
               ),
@@ -91,12 +100,14 @@ class PersonalInfoStep extends StatelessWidget {
 
                   onChangeBorn(DateFormat('dd-MM-yyyy').format(newDate));
                 },
-                onChanged: (value) {},
                 validator: (value) {
+                  print(value);
+
                   if (value!.isEmpty) {
                     return 'Por favor ingrese su fecha de nacimiento';
-                  }
-                  if (!hasLegalAge(value)) {
+                  } else if (!RegExp(r'\d+').hasMatch(value)) {
+                    return "Ingrese la fecha en formato dd-mm-aaaa";
+                  } else if (!hasLegalAge(value)) {
                     return 'Debes ser mayor a 18 años para utilizar la aplicación';
                   }
                   return null;
@@ -137,7 +148,8 @@ class PersonalInfoStep extends StatelessWidget {
               const SizedBox(
                 height: 35,
               ),
-              ElevatedButton(
+              PrimaryButton(
+                text: 'Continuar',
                 onPressed: () {
                   if (formData.gender == "") {
                     showErrorDialog(context,
@@ -153,14 +165,6 @@ class PersonalInfoStep extends StatelessWidget {
                     );
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(120, 40),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                child: const Text(
-                  'Continuar',
-                  style: TextStyle(fontSize: 20),
-                ),
               ),
             ],
           ),
