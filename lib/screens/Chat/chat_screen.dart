@@ -52,23 +52,39 @@ class _ChannelListPageState extends State<ChannelListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamChannelListView(
-      controller: _listController,
-      itemBuilder: _channelTileBuilder,
-      emptyBuilder: _emptyBuilder,
-      onChannelTap: (channel) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return StreamChannel(
-                channel: channel,
-                child: const ChannelPage(),
+    return Scaffold(
+        appBar: AppBar(
+            leading: const SizedBox(),
+            title: const Text(
+              "Conversaciones",
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(0, 90, 194, 1)),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0),
+        body: Container(
+          color: Colors.white,
+          child: StreamChannelListView(
+            controller: _listController,
+            itemBuilder: _channelTileBuilder,
+            emptyBuilder: _emptyBuilder,
+            onChannelTap: (channel) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return StreamChannel(
+                      channel: channel,
+                      child: const ChannelPage(),
+                    );
+                  },
+                ),
               );
             },
           ),
-        );
-      },
-    );
+        ));
   }
 
   Widget _emptyBuilder(BuildContext context) {
