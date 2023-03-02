@@ -123,27 +123,6 @@ class _LoginFormState extends State<LoginForm> {
       }
     }
 
-    // Future<void> signInWithGoogle() async {
-    //   try {
-    //     User? user = await _authService.loginWithGoogle();
-    //     if (user != null) {
-    //       showDialog(
-    //         context: context,
-    //         builder: (context) => const AlertDialog(
-    //           content: Text("Logueado con google"),
-    //         ),
-    //       );
-    //     }
-    //   } catch (e) {
-    //     showDialog(
-    //       context: context,
-    //       builder: (context) => const AlertDialog(
-    //         content: Text("No se pudo conectar con Google"),
-    //       ),
-    //     );
-    //   }
-    // }
-
     return Container(
         color: Theme.of(context).colorScheme.background,
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 36.0),
@@ -211,8 +190,6 @@ class _LoginFormState extends State<LoginForm> {
                           text: "INICIAR SESION",
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     const SnackBar(content: Text('Processing Data')));
                               await signIn();
                             }
                           }),
