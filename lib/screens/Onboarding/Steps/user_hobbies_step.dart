@@ -62,7 +62,7 @@ class UserHobbiesStep extends StatelessWidget {
         spacing: 10,
         children: hobbiesButtons.map((button) => button).toList(),
       ),
-      SizedBox(
+      const SizedBox(
         height: 80,
       ),
       ElevatedButton(
