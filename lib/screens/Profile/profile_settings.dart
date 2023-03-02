@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/login_screen.dart';
-// import '../../widgets/Buttons/primary_button.dart';
-// import '../../data/languages.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as stream;
 import "./../../../utils/formating_strings.dart";
+import "package:flutter_svg/flutter_svg.dart";
 
 // Services:
 import '../../services/auth_service.dart';
 
+// Types:
+import '../../types/user.dart';
+
 class ProfileSettings extends StatefulWidget {
-  const ProfileSettings({super.key});
+  const ProfileSettings({super.key, required this.user});
+
+  final UserInDB user;
 
   @override
   State<ProfileSettings> createState() => _ProfileSettingsState();
@@ -17,22 +21,20 @@ class ProfileSettings extends StatefulWidget {
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   final AuthService _authService = AuthService();
-  final String name = 'Agus';
-  final String country = 'Cordoba, Argentina';
-  // final flag =
-// final String title;
 
   @override
   Widget build(BuildContext context) {
+    final String name = widget.user.name;
+    final String image = widget.user.image;
+    const String country = 'Cordoba, Argentina';
+
     return Scaffold(
       body: Container(
         color: Colors.white,
-        padding: const EdgeInsets.only(top: 0),
+        padding: const EdgeInsets.only(top: 15.0),
         child: ListView(
           children: [
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+            Center(
               child: Stack(
                 children: [
                   Container(
@@ -41,59 +43,48 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.grey),
                         shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            image: AssetImage('assets/avatarPerfil.jpeg'))),
+                        image: DecorationImage(image: NetworkImage(image))),
                   ),
                   Positioned(
                       bottom: 1,
                       right: 2.2,
-                      child: Container(
-                        height: 11,
-                        width: 11,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(3)),
-                          border: Border.all(
-                            width: 1,
-                            color: const Color.fromRGBO(0, 90, 194, 0.5),
-                          ),
-                          color: const Color.fromRGBO(255, 255, 255, 1),
-                        ),
+                      child: SvgPicture.asset(
+                        'assets/editAvatar.svg',
+                        height: 15,
+                        width: 15,
                       ))
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 4),
               child: Text(name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'roboto',
                       fontSize: 15,
                       fontStyle: FontStyle.normal)),
             ),
             Container(
               padding: const EdgeInsets.only(top: 14),
-              child: const Icon(
-                Icons.emoji_flags,
-                size: 18,
+              child: SvgPicture.asset(
+                'assets/flags/argentina.svg',
+                height: 14,
+                width: 18,
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+            const Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 20.0),
               child: Text(
                 country,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                     color: Colors.black,
                     fontSize: 11.0,
-                    fontWeight: FontWeight.w200),
+                    fontWeight: FontWeight.w300),
               ),
             ),
-            const Padding(padding: EdgeInsets.only(bottom: 40)),
 
             const ListTile(
               title: Text(

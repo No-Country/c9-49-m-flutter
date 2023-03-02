@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.white,
           elevation: 0),
       body: settingsIsOpened
-          ? const ProfileSettings()
+          ? ProfileSettings(user: widget.user)
           : Container(
               color: Colors.white,
               padding:
@@ -150,7 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       Border.all(width: 1, color: Colors.grey),
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                      // image:  AssetImage('assets/avatarPerfil.jpeg'))),
                                       image: NetworkImage(image))),
                             )),
                         Positioned(
@@ -165,11 +164,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(name,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.bold,
                             fontFamily: 'roboto',
                             fontSize: 15,
                             fontStyle: FontStyle.normal)),
@@ -183,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: EdgeInsets.only(top: 5.0, bottom: 20.0),
                     child: Text(
                       country,
                       textAlign: TextAlign.center,
@@ -193,8 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontWeight: FontWeight.w300),
                     ),
                   ),
-                  Center(
-                      child: Row(children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text(nativeLangText,
                         style: const TextStyle(
                           color: Colors.black,
@@ -235,9 +233,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ],
                     )
-                  ])),
+                  ]),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
                       description,
                       style:
@@ -245,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    padding: EdgeInsets.only(top: 28.0, bottom: 16.0),
                     child: Text(
                       'Intereses y aficiones',
                       textAlign: TextAlign.start,
