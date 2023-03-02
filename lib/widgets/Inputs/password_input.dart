@@ -70,7 +70,7 @@ class _PasswordInputState extends State<PasswordInput> {
         if (value!.isEmpty) {
           return "Este campo no puede estar vacío";
         }
-        if (passwordRegExp.hasMatch(value)) {
+        if (!passwordRegExp.hasMatch(value)) {
           return 'Debe contener 8 caracteres, números y letras';
         }
         return null;

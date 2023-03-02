@@ -56,7 +56,7 @@ class _EmailInputState extends State<EmailInput> {
         if (value!.isEmpty) {
           return "Este campo no puede estar vacío";
         }
-        if (emailRegExp.hasMatch(value)) {
+        if (!emailRegExp.hasMatch(value)) {
           return "Ingrese un email valido por favor";
         }
         return null;
