@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void pickUploadImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     Reference ref =
-        FirebaseStorage.instance.ref().child('perfilPic hardcodeado prueba');
+        FirebaseStorage.instance.ref().child('');
     await ref.putFile(File(image!.path));
     ref.getDownloadURL().then((value) async {
       print(value);
@@ -60,13 +60,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final List<dynamic> hobbies = widget.user.hobbies;
 
     return Container(
+      
       color: Colors.white,
       padding: const EdgeInsets.only(left: 15, top: 16, right: 15),
       child: ListView(
+        
         children: [
           Center(
             child: Stack(
               children: [
+              
                 GestureDetector(
                     onTap: () {
                       // FocusScope.of(context).unfocus();
@@ -104,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Padding(
+            
             padding: const EdgeInsets.only(top: 8),
             child: Text(name,
                 textAlign: TextAlign.center,
@@ -120,12 +124,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               size: 18,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
+        const  Padding(
+            padding:  EdgeInsets.all(10.0),
             child: Text(
               country,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style:  TextStyle(
                   color: Colors.black,
                   fontSize: 11.0,
                   fontWeight: FontWeight.w200),
@@ -146,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             child: Text(
-              description,
+             description,
               style: const TextStyle(color: Colors.black, fontSize: 14.0),
             ),
           ),
@@ -163,6 +167,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Builder(builder: (context) {
+
+            // HACER EL MAP PARA TRAER LOS HOBBIES
+
+         
+
+           
+              
+            //  Iterable<dynamic>  hobbies.map((e) => e);
+  // Map<String, dynamic> ;
+  //      hobbies.map((e) => e)
+
             return Row(
               children: [
                 Container(
@@ -189,6 +204,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   child: const Text(
                     'Deportes',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                 Container(
+                  width: 78,
+                  height: 21,
+                  margin: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(227, 227, 227, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: const Text(
+                    'Leer',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                 Container(
+                  width: 78,
+                  height: 21,
+                  margin: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(227, 227, 227, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: const Text(
+                    'Viajes',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                 Container(
+                  width: 78,
+                  height: 21,
+                  margin: const EdgeInsets.all(10),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(227, 227, 227, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: const Text(
+                    'Salir con amigos',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                     textAlign: TextAlign.center,
                   ),

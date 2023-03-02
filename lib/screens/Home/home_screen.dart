@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 
 // Screens:
 import '../Connect/connect_screen.dart';
@@ -48,12 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 25.0,
         ),
       ),
-      Page(
-        screen: ProfileScreen(user: widget.user),
+    const  Page(
+        // screen: ProfileScreen(user: widget.user),
+        screen: ProfileSettings(),
         title: "",
-        icon: const Icon(
+        icon: const  Icon(
           Icons.settings_outlined,
           color: Color.fromRGBO(0, 90, 194, 1),
+          // color: Colors.white,
           size: 25.0,
         ),
       ),
