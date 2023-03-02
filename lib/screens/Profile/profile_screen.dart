@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import "package:flutter_svg/flutter_svg.dart";
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:uuid/uuid.dart';
 import 'dart:io';
 
 // Screen:
@@ -32,7 +34,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  FirebaseStorage storage = FirebaseStorage.instance;
   bool settingsIsOpened = false;
+  String _imageUrl = '';
 
   void _openSettings() {
     setState(() {
@@ -46,13 +50,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  void pickUploadImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    Reference ref = FirebaseStorage.instance.ref().child('');
-    await ref.putFile(File(image!.path));
-    ref.getDownloadURL().then((value) async {
-      print(value);
-    });
+  Future<String> uploadImage(File file) async {
+    try {
+      UploadTask uploadTask;
+      // Genera un ID único para la imagen
+      String fileName = const Uuid().v1();
+
+      // Crea una referencia a la ubicación donde quieres guardar la imagen en Firebase Storage
+      Reference ref = storage.ref().child('images/$fileName');
+
+      if (kIsWeb) {
+        print('IS WEB');
+        TaskSnapshot taskSnapshot = await ref.putData(await file.readAsBytes());
+        String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        return downloadUrl;
+      } else {
+        TaskSnapshot taskSnapshot = await ref.putFile(file);
+        String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+        return downloadUrl;
+      }
+    } catch (e) {
+      print(e.toString());
+      return '';
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      String downloadUrl = await uploadImage(File(pickedFile.path));
+
+      setState(() {
+        _imageUrl = downloadUrl;
+        print(_imageUrl);
+      });
+    }
   }
 
   @override
@@ -140,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              pickUploadImage();
+                              _pickImage();
                             },
                             child: Container(
                               width: 56,
