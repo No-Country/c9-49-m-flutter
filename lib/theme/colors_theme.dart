@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class LightModeColors {
   static const Color primaryColor = Color.fromRGBO(0, 90, 194, 1);
-  static const Color secondaryColor = Color.fromRGBO(98, 0, 238, 1);
+  static const Color secondaryColor = Color.fromRGBO(110, 254, 87, 1);
   static const Color accentColor = Color.fromRGBO(0, 148, 175, 1);
   static const Color errorColor = Color.fromRGBO(128, 26, 26, 9);
   static const Color backgroundColor = Color.fromRGBO(255, 255, 255, 1);

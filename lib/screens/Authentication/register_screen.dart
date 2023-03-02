@@ -2,6 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:flutter_application_1/widgets/Loaders/circle_loader.dart";
+import "./../../widgets/Inputs/password_input.dart";
 // import '../../widgets/Inputs/text_input.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -11,7 +12,10 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro'),
+        title: const Text(
+          'Registro',
+          style: TextStyle(color: Colors.black),
+        ),
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         actions: [
@@ -69,6 +73,7 @@ class _FormRegisterState extends State<FormRegister> {
   final confirmPasswordCtrl = TextEditingController();
   bool _passwordHidden = true;
   bool _confirmPasswordHidden = true;
+  String? _errorText = null;
 
   @override
   void dispose() {
@@ -96,22 +101,24 @@ class _FormRegisterState extends State<FormRegister> {
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
-                      labelText: 'Ingrese su mail',
-                      hintText: 'chat_lingo@gmail.com',
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
-                      labelStyle: const TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
-                      hintStyle: const TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
+                    labelText: 'Ingrese su mail',
+                    hintText: 'chat_lingo@gmail.com',
+                    suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+                    labelStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
+                    hintStyle: const TextStyle(color: Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 3, color: Color.fromARGB(98, 0, 238, 1)),
+                    ),
+                  ),
                   controller: emailCtrl,
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -120,60 +127,19 @@ class _FormRegisterState extends State<FormRegister> {
                     if (!RegExp(
                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value)) {
-                      return "Ingrese un mail valido porfavor";
+                      return "Ingrese un mail valido por favor";
                     }
                     return null;
                   },
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: TextFormField(
-                  controller: passwordCtrl,
-                  obscureText: _passwordHidden,
-                  decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: (Icon(_passwordHidden
-                            ? Icons.visibility
-                            : Icons.visibility_off)),
-                        onPressed: () {
-                          setState(() {
-                            _passwordHidden = !_passwordHidden;
-                          });
-                        },
-                      ),
-                      labelText: 'Ingrese una contraseña',
-                      hintText: 'Minimo 8 caracteres',
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
-                      labelStyle: const TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
-                      hintStyle: const TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Ingrese una contraseña";
-                    }
-                    if (!RegExp(r"^.{8,}$").hasMatch(value)) {
-                      return "Su contraseña debe tener al menos 8 caracteres";
-                    }
-                    if (!RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$")
-                        .hasMatch(value)) {
-                      //ingresa
-                      return "El password debe contener letras y numeros";
-                    }
-
-                    return null;
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: PasswordInput(
+                    controller: passwordCtrl,
+                    hintText: 'Ingrese una contraseña',
+                    label: 'Ingrese una contraseña',
+                  )),
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: TextFormField(
@@ -203,11 +169,11 @@ class _FormRegisterState extends State<FormRegister> {
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+                            width: 3, color: Color.fromARGB(98, 0, 238, 1)),
                       )),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Vuelva a ingresar su contraseña porfavor";
+                      return "Vuelva a ingresar su contraseña por favor";
                     } else if (value != passwordCtrl.text) {
                       return "La contraseñas no coiciden";
                     }
@@ -219,12 +185,7 @@ class _FormRegisterState extends State<FormRegister> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () async {
-                    // devolverá true si el formulario es válido, o falso si
-                    // el formulario no es válido.
                     if (_formKey.currentState!.validate()) {
-                      // Si el formulario es válido, queremos mostrar un Snackbar
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(content: Text('Processing Data')));
                       try {
                         await singUp();
                       } catch (e) {

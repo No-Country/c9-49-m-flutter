@@ -14,6 +14,7 @@ class TextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
       controller: controller,
       decoration: InputDecoration(
@@ -29,7 +30,7 @@ class TextInput extends StatelessWidget {
           ),
           focusedBorder: const OutlineInputBorder(
             borderSide:
-                BorderSide(width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+                BorderSide(width: 2, color: Color.fromARGB(98, 0, 238, 1)),
           )),
       validator: (value) {
         if (value!.isEmpty) {

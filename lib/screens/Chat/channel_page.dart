@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-// class ChannelPage extends StatelessWidget {
-//   const ChannelPage({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const StreamChannelHeader(),
-//       body: Column(
-//         children: const <Widget>[
-//           Expanded(
-//             child: StreamMessageListView(),
-//           ),
-//           StreamMessageInput(),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class ChannelPage extends StatelessWidget {
   const ChannelPage({
     Key? key,
@@ -29,11 +8,16 @@ class ChannelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final channel = StreamChannel.of(context).channel;
+
+    final currentUser = channel.state?.currentUserMember;
+    final targetUser = channel.state?.members
+        .firstWhere((member) => member.userId != currentUser?.userId)
+        .user;
+
     return Scaffold(
       appBar: StreamChannelHeader(
         onBackPressed: () async {
-          final channel = StreamChannel.of(context).channel;
-
           final messages = channel.state!.channelState.messages;
 
           if (messages == null || messages.isEmpty) {
@@ -42,6 +26,10 @@ class ChannelPage extends StatelessWidget {
 
           Navigator.pop(context);
         },
+        title: Text(
+          targetUser!.name,
+          style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: const <Widget>[

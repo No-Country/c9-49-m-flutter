@@ -10,6 +10,9 @@ import '../../theme/colors_theme.dart';
 // Types:
 import '../../types/user.dart';
 
+// Data:
+import '../../data/languages.dart';
+
 class ConnectScreen extends StatelessWidget {
   final UserInDB user;
 
@@ -67,8 +70,17 @@ class _UserListPageState extends State<UserListPage> {
         itemBuilder: (context, users, index, defaultWidget) {
           final User user = users[index];
           final name = user.name;
-          final nativeLanguage = user.extraData['nativeLanguage'].toString();
-          final targetLanguage = user.extraData['targetLanguage'].toString();
+
+          final nativeLang = user.extraData['nativeLanguage'].toString();
+          final nativeLangText = languages
+              .firstWhere((lang) => lang["code"] == nativeLang)['name']
+              .toString();
+
+          final targetLang = user.extraData['targetLanguage'].toString();
+          final targetLangText = languages
+              .firstWhere((lang) => lang["code"] == targetLang)['name']
+              .toString();
+
           final isOnline = user.online;
 
           return ListTile(
@@ -108,12 +120,12 @@ class _UserListPageState extends State<UserListPage> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: isOnline
-                        ? const Color.fromRGBO(110, 254, 87, 1)
+                        ? LightModeColors.secondaryColor
                         : LightModeColors.grayColor,
                   ),
                 ),
                 const SizedBox(
-                  width: 8.0,
+                  width: 12.0,
                 ),
                 Text(
                   name,
@@ -123,7 +135,7 @@ class _UserListPageState extends State<UserListPage> {
                   width: 8.0,
                 ),
                 Row(children: [
-                  Text(nativeLanguage,
+                  Text(nativeLangText,
                       style: const TextStyle(
                           fontSize: 13.0, color: LightModeColors.grayColor)),
                   const SizedBox(
@@ -137,7 +149,7 @@ class _UserListPageState extends State<UserListPage> {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  Text(targetLanguage,
+                  Text(targetLangText,
                       style: const TextStyle(
                           fontSize: 13.0, color: LightModeColors.blackColor))
                 ])

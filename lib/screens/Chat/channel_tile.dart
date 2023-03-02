@@ -10,6 +10,10 @@ class ChannelTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = channel.state?.currentUserMember;
+    final targetUser = channel.state?.members
+        .firstWhere((member) => member.userId != currentUser?.userId)
+        .user;
     final lastMessage = channel.state?.messages.reversed.firstWhere(
       (message) => !message.isDeleted,
     );
@@ -28,9 +32,9 @@ class ChannelTile extends StatelessWidget {
               )),
           title: Container(
               margin: const EdgeInsets.only(bottom: 4.0),
-              child: StreamChannelName(
-                channel: channel,
-                textStyle: const TextStyle(
+              child: Text(
+                targetUser?.name ?? '',
+                style: const TextStyle(
                     color: Color.fromRGBO(22, 30, 46, 1), fontSize: 14.0),
               )),
           subtitle: ChannelListTileSubtitle(
