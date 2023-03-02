@@ -11,7 +11,6 @@ class PrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onPressed(),
       style: TextButton.styleFrom(
-        fixedSize: const Size(120, 40),
         backgroundColor: const Color.fromRGBO(0, 90, 194, 1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
