@@ -26,10 +26,16 @@ class PersonalInfoStep extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        const Text(
-          "Actualiza tus datos personales para mejores recomendaciones",
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
-          textAlign: TextAlign.center,
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+          child: const Text(
+            "Actualiza tus datos personales para mejores recomendaciones",
+            style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto'),
+            textAlign: TextAlign.start,
+          ),
         ),
         Container(
           padding: const EdgeInsets.all(20),

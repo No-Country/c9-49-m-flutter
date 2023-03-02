@@ -134,10 +134,13 @@ class _LoginFormState extends State<LoginForm> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '¡Te damos la bienvenida!',
-                      style: Theme.of(context).textTheme.headlineLarge,
-                      textAlign: TextAlign.left,
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '¡Te damos la bienvenida!',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                     const SizedBox(
                       height: 30.0,
