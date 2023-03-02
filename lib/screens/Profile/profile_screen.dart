@@ -18,6 +18,9 @@ import '../../data/languages.dart';
 // Theme:
 import '../../theme/colors_theme.dart';
 
+//Service:
+import "../../services/user_service.dart";
+
 class Language {
   final String name;
   final int level;
@@ -28,13 +31,15 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.user});
 
   final UserInDB user;
-
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   FirebaseStorage storage = FirebaseStorage.instance;
+  UserService userService = UserService();
   bool settingsIsOpened = false;
   String _imageUrl = '';
 
@@ -75,13 +80,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImage(String uid) async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       String downloadUrl = await uploadImage(File(pickedFile.path));
-
+      await userService.updateImg(image: downloadUrl, uid: uid);
       setState(() {
         _imageUrl = downloadUrl;
         print(_imageUrl);
@@ -91,8 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String uid = widget.user.id;
     final String name = widget.user.name;
-    final String image = widget.user.image;
+    final String image = _imageUrl != "" ? _imageUrl : widget.user.image;
     const String country = 'Cordoba, Argentina';
 
     final String nativeLang = widget.user.nativeLanguage;
@@ -173,8 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Stack(
                       children: [
                         GestureDetector(
-                            onTap: () {
-                              _pickImage();
+                            onTap: () async {
+                              await _pickImage(uid);
                             },
                             child: Container(
                               width: 56,

@@ -1,9 +1,18 @@
+import 'dart:ffi';
+
 import "package:cloud_firestore/cloud_firestore.dart";
 
 // Types:
 import '../types/user.dart';
 
 class UserService {
+  Future<void> updateImg({required String uid, required String image}) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .update({"image": image});
+  }
+
   Future<UserInDB> findById({
     required String uid,
   }) async {
