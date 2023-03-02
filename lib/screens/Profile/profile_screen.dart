@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import "package:flutter_svg/flutter_svg.dart";
 import 'dart:io';
 
 // Screen:
@@ -8,6 +9,12 @@ import './profile_settings.dart';
 
 // Types:
 import '../../types/user.dart';
+
+// Data:
+import '../../data/languages.dart';
+
+// Theme:
+import '../../theme/colors_theme.dart';
 
 class Language {
   final String name;
@@ -41,8 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void pickUploadImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    Reference ref =
-        FirebaseStorage.instance.ref().child('');
+    Reference ref = FirebaseStorage.instance.ref().child('');
     await ref.putFile(File(image!.path));
     ref.getDownloadURL().then((value) async {
       print(value);
@@ -55,8 +61,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final String image = widget.user.image;
     const String country = 'Cordoba, Argentina';
 
+    final String nativeLang = widget.user.nativeLanguage;
+    final nativeLangText = languages
+        .firstWhere((lang) => lang["code"] == nativeLang)['name']
+        .toString();
+
+    final String targetLang = widget.user.targetLanguage;
+    final targetLangText = languages
+        .firstWhere((lang) => lang["code"] == targetLang)['name']
+        .toString();
+
+    final String levelTarget = widget.user.levelTarget;
+    final double levelTargetWidth = levelTarget == "principiante"
+        ? 2.0
+        : levelTarget == "elemental"
+            ? 5.0
+            : levelTarget == "intermedio"
+                ? 10.0
+                : 15.0;
+
     final String description = widget.user.userDescription;
-    // final List<dynamic> hobbies = widget.user.hobbies;
+
+    final List<dynamic> hobbies = widget.user.hobbies;
+    Iterable<Container> hobbiesBoxes = hobbies.map((hobby) {
+      return Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: const Color.fromRGBO(227, 227, 227, 1)),
+          padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 5.0),
+          child: Text(hobby,
+              style: const TextStyle(
+                  fontSize: 12.0, color: Color.fromRGBO(32, 32, 32, 1))));
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -95,7 +131,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ? const ProfileSettings()
           : Container(
               color: Colors.white,
-              padding: const EdgeInsets.only(left: 15, top: 16, right: 15),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
               child: ListView(
                 children: [
                   Center(
@@ -103,8 +140,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              // FocusScope.of(context).unfocus();
-                              // pickUploadImage sube la imagen de perifl a firebase. Revisar
                               pickUploadImage();
                             },
                             child: Container(
@@ -121,19 +156,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Positioned(
                             bottom: 1,
                             right: 2.2,
-                            child: Container(
-                              height: 11,
-                              width: 11,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(3)),
-                                border: Border.all(
-                                  width: 1,
-                                  color: const Color.fromRGBO(0, 90, 194, 0.5),
-                                ),
-                                color: const Color.fromRGBO(255, 255, 255, 1),
-                              ),
+                            child: SvgPicture.asset(
+                              'assets/editAvatar.svg',
+                              height: 15,
+                              width: 15,
                             ))
                       ],
                     ),
@@ -150,9 +176,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(top: 14),
-                    child: const Icon(
-                      Icons.emoji_flags,
-                      size: 18,
+                    child: SvgPicture.asset(
+                      'assets/flags/argentina.svg',
+                      height: 14,
+                      width: 18,
                     ),
                   ),
                   const Padding(
@@ -163,23 +190,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 11.0,
-                          fontWeight: FontWeight.w200),
+                          fontWeight: FontWeight.w300),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(32.0),
-                    child: Text(
-                      'Español      Italiano      Frances',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Center(
+                      child: Row(children: [
+                    Text(nativeLangText,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                        )),
+                    const SizedBox(
+                      width: 15.0,
                     ),
-                  ),
+                    Container(
+                      color: LightModeColors.secondaryColor,
+                      width: 15.0,
+                      height: 3.0,
+                    ),
+                    const SizedBox(
+                      width: 15.0,
+                    ),
+                    Text(targetLangText,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                        )),
+                    const SizedBox(
+                      width: 15.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          color: LightModeColors.secondaryColor,
+                          width: levelTargetWidth,
+                          height: 3.0,
+                        ),
+                        Container(
+                          color: const Color.fromRGBO(194, 194, 194, 1),
+                          width: 15.0 - levelTargetWidth,
+                          height: 3.0,
+                        ),
+                      ],
+                    )
+                  ])),
                   Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
                       description,
                       style:
@@ -187,7 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
                       'Intereses y aficiones',
                       textAlign: TextAlign.start,
@@ -198,42 +256,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ),
-                  Builder(builder: (context) {
-                    return Row(
-                      children: [
-                        Container(
-                          width: 78,
-                          height: 21,
-                          margin: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(227, 227, 227, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: const Text(
-                            'Deportes',
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          width: 78,
-                          height: 21,
-                          margin: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(227, 227, 227, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: const Text(
-                            'Deportes',
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    );
-                  })
+                  Wrap(
+                      spacing: 7.0,
+                      runSpacing: 7.0,
+                      children: hobbiesBoxes.map((hobby) => hobby).toList())
                 ],
               ),
             ),
