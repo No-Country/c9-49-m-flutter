@@ -7,6 +7,7 @@ import "package:flutter_application_1/screens/Onboarding/Steps/personal_info_ste
 import "package:flutter_application_1/screens/Onboarding/Steps/target_lang_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_description_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_hobbies_step.dart";
+import "package:flutter_application_1/utils/has_legal_age.dart";
 import "package:flutter_application_1/utils/userdata.utils.dart";
 
 import "../../types/user_form_data.dart";
@@ -80,6 +81,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
   }
 
   void onChangeBorn(value) {
+    if (!hasLegalAge(value)) {
+      print(value);
+    }
     setState(() {
       formData.born = value;
     });

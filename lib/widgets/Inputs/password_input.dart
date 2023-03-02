@@ -34,6 +34,7 @@ class _PasswordInputState extends State<PasswordInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       keyboardType: TextInputType.emailAddress,
       obscureText: _passwordHidden,
@@ -68,11 +69,15 @@ class _PasswordInputState extends State<PasswordInput> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Este campo no puede estar vacío";
+          return "Ingrese una contraseña";
         }
         if (!passwordRegExp.hasMatch(value)) {
           return 'Debe contener 8 caracteres, números y letras';
         }
+        if (!passwordRegExp.hasMatch(value)) {
+          return 'Debe contener 8 caracteres, números y letras';
+        }
+
         return null;
       },
       onChanged: _validatePassword,
