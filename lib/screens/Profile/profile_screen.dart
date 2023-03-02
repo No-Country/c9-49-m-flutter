@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
+// Screen:
+import './profile_settings.dart';
 
 // Types:
 import '../../types/user.dart';
@@ -22,18 +25,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  void _secondView() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          return const Text('Cerrar sesion');
-        },
-      ),
-    );
+  void _openSettings() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return const ProfileSettings();
+    }));
   }
 
   String imageURL = '';
-// Funcion para elegir imagen de la galeria y subirla a firestore. Revisar.
+
   void pickUploadImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     Reference ref =
@@ -67,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
                 margin: const EdgeInsets.only(right: 20),
                 child: IconButton(
-                    onPressed: _secondView,
+                    onPressed: _openSettings,
                     icon: const Icon(
                       Icons.settings_outlined,
                       color: Color.fromRGBO(0, 90, 194, 1),
