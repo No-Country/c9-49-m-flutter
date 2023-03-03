@@ -12,14 +12,16 @@ import '../../services/connect_user.dart';
 
 // Screens:
 import './forgot_pw_screen.dart';
-import './welcome_screen.dart';
+import '../Home/home_screen.dart';
 
 // Widgets:
 import '../../widgets/Inputs/email_input.dart';
 import "../../widgets/Inputs/password_input.dart";
 import '../../widgets/Buttons/primary_button.dart';
-import '../../widgets/Buttons/google_button.dart';
 import '../../widgets/Modals/errors_preferences_modal.dart';
+
+// Utils:
+import '../../utils/show_welcome_loader.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -100,14 +102,14 @@ class _LoginFormState extends State<LoginForm> {
         );
 
         if (loggedUser != null) {
+          showWelcomeLoader(context);
           final userInDB =
               await _userService.findById(uid: loggedUser.uid.toString());
-          showCircleLoader(context);
           await connectUserToChat(
               userInDB: userInDB, client: stream.StreamChat.of(context).client);
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return WelcomeScreen(userInDB: userInDB);
+            return HomeScreen(user: userInDB);
           }));
         }
       } on FirebaseAuthException catch (e) {
