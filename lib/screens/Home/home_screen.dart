@@ -4,7 +4,6 @@ import 'package:flutter_application_1/screens/Profile/profile_settings.dart';
 // Screens:
 import '../Connect/connect_screen.dart';
 import '../Chat/chat_screen.dart';
-import '../Profile/profile_screen.dart';
 
 // Types:
 import '../../types/user.dart';
