@@ -12,7 +12,7 @@ import '../../services/connect_user.dart';
 
 // Screens:
 import './forgot_pw_screen.dart';
-import '../Home/home_screen.dart';
+import './welcome_screen.dart';
 
 // Widgets:
 import '../../widgets/Inputs/email_input.dart';
@@ -100,14 +100,14 @@ class _LoginFormState extends State<LoginForm> {
         );
 
         if (loggedUser != null) {
-          final userInDb =
+          final userInDB =
               await _userService.findById(uid: loggedUser.uid.toString());
           showCircleLoader(context);
           await connectUserToChat(
-              userInDB: userInDb, client: stream.StreamChat.of(context).client);
+              userInDB: userInDB, client: stream.StreamChat.of(context).client);
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(user: userInDb);
+            return WelcomeScreen(userInDB: userInDB);
           }));
         }
       } on FirebaseAuthException catch (e) {
@@ -138,19 +138,19 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 34.0,
                     ),
                     Center(
                       child: Container(
-                        width: 122,
-                        height: 122,
+                        width: 155,
+                        height: 94,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage('assets/logos/logo.png'))),
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 56.0,
                     ),
                     EmailInput(
                         label: "Email",
