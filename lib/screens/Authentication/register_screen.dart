@@ -1,7 +1,10 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
+import 'package:flutter_application_1/theme/colors_theme.dart';
+
 import "package:flutter/material.dart";
 import "package:flutter_application_1/widgets/Loaders/circle_loader.dart";
+import "./../../widgets/Inputs/password_input.dart";
 // import '../../widgets/Inputs/text_input.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -11,9 +14,15 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro'),
-        iconTheme: IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, "/");
+          },
+        ),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
+        elevation: 0,
         actions: [
           ElevatedButton(
               style: ButtonStyle(
@@ -25,24 +34,35 @@ class RegisterScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, "/login");
               },
-              child: const Text("Iniciar sesión"))
+              child: const Text(
+                "INICIAR SESIÓN",
+                style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Color.fromARGB(255, 34, 90, 187),
+                    fontSize: 14),
+              ))
         ],
       ),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(25, 18, 0, 0),
+              child: const Text(
                 "¡Estamos felices de que seas parte!",
-                style: TextStyle(fontSize: 32, color: Colors.black),
-                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.start,
               ),
-              FormRegister()
-            ],
-          ),
+            ),
+            const FormRegister()
+          ],
         ),
       ),
     );
@@ -69,6 +89,7 @@ class _FormRegisterState extends State<FormRegister> {
   final confirmPasswordCtrl = TextEditingController();
   bool _passwordHidden = true;
   bool _confirmPasswordHidden = true;
+  String? _errorText = null;
 
   @override
   void dispose() {
@@ -96,75 +117,45 @@ class _FormRegisterState extends State<FormRegister> {
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                 child: TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
-                      labelText: 'Ingrese su mail',
-                      hintText: 'chat_lingo@gmail.com',
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
-                      labelStyle: const TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
-                      hintStyle: const TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
+                    labelText: 'Ingrese su mail',
+                    hintText: 'ejemplo@gmail.com',
+                    suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
+                    labelStyle: const TextStyle(
+                        color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
+                    hintStyle: const TextStyle(color: Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          width: 1, color: Color.fromARGB(98, 0, 238, 1)),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 3, color: Color.fromARGB(98, 0, 238, 1)),
+                    ),
+                  ),
                   controller: emailCtrl,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
+                      return "Ingrese su mail porfavor";
                     }
                     if (!RegExp(
                             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(value)) {
-                      return "Ingrese un mail valido porfavor";
+                      return "Ingrese un mail valido por favor";
                     }
                     return null;
                   },
                 ),
               ),
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: TextFormField(
-                  controller: passwordCtrl,
-                  obscureText: _passwordHidden,
-                  decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: (Icon(_passwordHidden
-                            ? Icons.visibility
-                            : Icons.visibility_off)),
-                        onPressed: () {
-                          setState(() {
-                            _passwordHidden = !_passwordHidden;
-                          });
-                        },
-                      ),
-                      labelText: 'Ingrese un password',
-                      hintText: 'Minimo 8 caracteres',
-                      suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
-                      labelStyle: const TextStyle(
-                          color: Color.fromRGBO(0, 0, 0, 0.87), fontSize: 16.0),
-                      hintStyle: const TextStyle(color: Colors.black),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            width: 1, color: Color.fromARGB(98, 0, 238, 1)),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
-                      )),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please enter some text";
-                    }
-                    return null;
-                  },
-                ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: PasswordInput(
+                    controller: passwordCtrl,
+                    hintText: 'Ingrese una contraseña',
+                    label: 'Ingrese una contraseña',
+                  )),
               Container(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: TextFormField(
@@ -181,7 +172,7 @@ class _FormRegisterState extends State<FormRegister> {
                           });
                         },
                       ),
-                      labelText: 'Confirme el password',
+                      labelText: 'Confirme su contraseña',
                       hintText: 'Repita el password',
                       suffixIconColor: const Color.fromARGB(255, 0, 0, 0),
                       labelStyle: const TextStyle(
@@ -194,11 +185,11 @@ class _FormRegisterState extends State<FormRegister> {
                       ),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
-                            width: 3, color: Color.fromARGB(255, 0, 0, 0)),
+                            width: 3, color: Color.fromARGB(98, 0, 238, 1)),
                       )),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Please enter some text";
+                      return "Vuelva a ingresar su contraseña por favor";
                     } else if (value != passwordCtrl.text) {
                       return "La contraseñas no coiciden";
                     }
@@ -210,12 +201,7 @@ class _FormRegisterState extends State<FormRegister> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () async {
-                    // devolverá true si el formulario es válido, o falso si
-                    // el formulario no es válido.
                     if (_formKey.currentState!.validate()) {
-                      // Si el formulario es válido, queremos mostrar un Snackbar
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(content: Text('Processing Data')));
                       try {
                         await singUp();
                       } catch (e) {
@@ -252,11 +238,11 @@ class _FormRegisterState extends State<FormRegister> {
                     }
                   },
                   style: TextButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 90, 194, 1),
-                      minimumSize: const Size(180, 40)),
+                      backgroundColor: const Color.fromRGBO(0, 90, 194, 1),
+                      minimumSize: const Size(175, 40)),
                   child: const Text(
                     "REGISTRARME",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 ),
               )

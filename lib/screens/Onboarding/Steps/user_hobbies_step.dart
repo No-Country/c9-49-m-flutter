@@ -2,7 +2,9 @@ import "package:flutter/material.dart";
 import "package:flutter_application_1/data/languages.dart";
 import "package:flutter_application_1/types/user_form_data.dart";
 import "package:flutter_application_1/utils/formating_strings.dart";
+import "package:flutter_application_1/widgets/Buttons/primary_button.dart";
 import "package:flutter_svg/flutter_svg.dart";
+import "./../../../utils/show_welcome_loader.dart";
 
 class UserHobbiesStep extends StatelessWidget {
   final UserFormData formData;
@@ -39,7 +41,9 @@ class UserHobbiesStep extends StatelessWidget {
       return ElevatedButton(
         onPressed: () => {onChangeHobbie(element)},
         style: ElevatedButton.styleFrom(
-            backgroundColor: isInHobbies ? Colors.green : Colors.grey),
+            backgroundColor: isInHobbies ? Colors.green : Colors.grey,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
         child: Text(capitalize(element)),
       );
     });
@@ -60,23 +64,22 @@ class UserHobbiesStep extends StatelessWidget {
         spacing: 10,
         children: hobbiesButtons.map((button) => button).toList(),
       ),
-      SizedBox(
+      const SizedBox(
         height: 80,
       ),
-      ElevatedButton(
-        onPressed: () {
+      PrimaryButton(
+        text: 'Finalizar',
+        onPressed: () async {
           if (Form.of(context).validate()) {
             Form.of(context).save();
-            saveFormData();
+            await saveFormData();
+            // ignore: use_build_context_synchronously
+            showWelcomeLoader(context);
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushNamed(context, "/login");
+            });
           }
         },
-        style: ElevatedButton.styleFrom(
-          fixedSize: const Size(150, 50),
-        ),
-        child: const Text(
-          'Finalizar',
-          style: TextStyle(fontSize: 25),
-        ),
       ),
     ]);
   }

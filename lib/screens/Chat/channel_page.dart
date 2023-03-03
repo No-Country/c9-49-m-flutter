@@ -1,26 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/ConnectProfile/ConnectProfile.dart';
+import 'package:flutter_application_1/services/user_service.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-
-// class ChannelPage extends StatelessWidget {
-//   const ChannelPage({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const StreamChannelHeader(),
-//       body: Column(
-//         children: const <Widget>[
-//           Expanded(
-//             child: StreamMessageListView(),
-//           ),
-//           StreamMessageInput(),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class ChannelPage extends StatelessWidget {
   const ChannelPage({
@@ -29,11 +12,17 @@ class ChannelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final channel = StreamChannel.of(context).channel;
+    final UserService userService = UserService();
+
+    final currentUser = channel.state?.currentUserMember;
+    final targetUser = channel.state?.members
+        .firstWhere((member) => member.userId != currentUser?.userId)
+        .user;
+
     return Scaffold(
       appBar: StreamChannelHeader(
         onBackPressed: () async {
-          final channel = StreamChannel.of(context).channel;
-
           final messages = channel.state!.channelState.messages;
 
           if (messages == null || messages.isEmpty) {
@@ -41,6 +30,18 @@ class ChannelPage extends StatelessWidget {
           }
 
           Navigator.pop(context);
+        },
+        title: Text(
+          targetUser!.name,
+          style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+        ),
+        onImageTap: () async {
+          final targetUserInDb = await userService.findById(uid: targetUser.id);
+
+          // ignore: use_build_context_synchronously
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ConnectProfile(user: targetUserInDb);
+          }));
         },
       ),
       body: Column(

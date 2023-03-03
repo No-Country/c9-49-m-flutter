@@ -12,7 +12,7 @@ class UserFormData {
       {this.name = '',
       this.born = '',
       this.gender = '',
-      this.nativeLanguage = 'es',
+      this.nativeLanguage = '',
       this.targetLanguage = '',
       this.levelTarget = 'principiante',
       this.userDescription = '',

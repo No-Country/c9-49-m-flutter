@@ -1,6 +1,6 @@
-import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import "package:flutter_application_1/screens/ConnectProfile/ConnectProfile.dart";
 import "package:stream_chat_flutter/stream_chat_flutter.dart";
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -8,10 +8,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import "./screens/Onboarding/intro_screen.dart";
 import "./screens/Onboarding/onboarding_screen.dart";
 import "./screens/Onboarding/user_settings.dart";
-import './screens/Profile/profile_screen.dart';
 import "./screens/Authentication/login_screen.dart";
 import "./screens/Authentication/register_screen.dart";
-import "./screens/Home/home_screen.dart";
+
+// Theme:
+import './theme/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +27,8 @@ Future<void> main() async {
   } else {
     await Firebase.initializeApp();
   }
-
   final client = StreamChatClient(
-    'x493v62y5yth',
+    'qsu5mx4mgzxy',
     logLevel: Level.INFO,
   );
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme: ThemeData.dark(),
+      theme: lightTheme,
       debugShowCheckedModeBanner: false, // eliminar banda 'debug' borde sup
       title: 'SpeakEasy',
       navigatorKey: MyFormWidget.navigatorKey,
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
         // "/profile": (context) => const ProfileScreen(),
-        "/userpreferences": (context) => const MyFormWidget()
+        "/userpreferences": (context) => const MyFormWidget(),
       },
       builder: (context, child) => StreamChat(
         client: client,

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_application_1/data/languages.dart";
 import "package:flutter_application_1/types/user_form_data.dart";
+import "package:flutter_application_1/widgets/Buttons/primary_button.dart";
 import "./../../../utils/formating_strings.dart";
 
 class LangLevelStep extends StatelessWidget {
@@ -49,13 +50,16 @@ class LangLevelStep extends StatelessWidget {
                         width: strokeSide),
                   ),
                   elevation: 0,
-                  fixedSize: const Size(100, 60)),
+                  fixedSize: const Size(100, 50)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     capitalize(element),
-                    style: const TextStyle(fontSize: 25, color: Colors.black),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal),
                     textAlign: TextAlign.start,
                   ),
                   isSelected
@@ -112,7 +116,8 @@ class LangLevelStep extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: levelButtons.map((button) => button).toList()),
         ),
-        ElevatedButton(
+        PrimaryButton(
+          text: 'Continuar',
           onPressed: () {
             if (Form.of(context).validate()) {
               Form.of(context).save();
@@ -122,14 +127,7 @@ class LangLevelStep extends StatelessWidget {
               );
             }
           },
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(150, 50),
-          ),
-          child: const Text(
-            'Continuar',
-            style: TextStyle(fontSize: 25),
-          ),
-        ),
+        )
       ],
     );
   }

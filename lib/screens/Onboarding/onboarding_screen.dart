@@ -2,7 +2,13 @@ import "package:flutter/material.dart";
 
 class AppBar extends StatelessWidget {
   final int currentPage;
-  const AppBar({super.key, required this.currentPage});
+  final Color colorButtons;
+  final Function setCurrentPage;
+  const AppBar(
+      {super.key,
+      required this.currentPage,
+      required this.colorButtons,
+      required this.setCurrentPage});
 
   @override
   Widget build(BuildContext context) {
@@ -10,24 +16,29 @@ class AppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: colorButtons,
+              side: BorderSide.none,
+              elevation: 0),
           onPressed: () {
-            Navigator.pop(context);
+            setCurrentPage(currentPage - 1);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
             size: 40,
           ),
-          label: Text(""),
+          label: const Text(""),
         ),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(0, 0, 0, 0)),
+                backgroundColor: colorButtons,
+                side: BorderSide.none,
+                elevation: 0),
             onPressed: () {
               Navigator.pushNamed(context, '/register');
             },
-            child: Text(
+            child: const Text(
               "OMITIR",
               style: TextStyle(color: Colors.black, fontSize: 20),
             ))
@@ -53,20 +64,31 @@ class Description {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentPage = 0;
 
-  List<Description> descriptions = [
-    Description(
-        "assets/landing/2.png",
-        "Aprendé un nuevo idioma. Lorem ipsum dolor sit amet consectetur",
-        Color.fromRGBO(180, 240, 170, 1)),
-    Description(
-        "assets/landing/3.png",
-        "Corem ipsum dolor sit amet, consectetur adipiscing elit.",
-        Color.fromRGBO(235, 241, 159, 1)),
-    Description(
-        "assets/landing/4.png",
-        "Corem ipsum dolor sit amet, consectetur adipiscing elit.",
-        Color.fromRGBO(241, 212, 212, 1)),
+  // ignore: non_constant_identifier_names
+  List<Color> colorsPages = [
+    const Color.fromRGBO(180, 240, 170, 1),
+    const Color.fromRGBO(235, 241, 159, 1),
+    const Color.fromRGBO(241, 212, 212, 1),
   ];
+
+  List<Description> descriptions = [
+    Description("assets/landing/2.png", "Aprendé un nuevo idioma",
+        const Color.fromRGBO(180, 240, 170, 1)),
+    Description("assets/landing/3.png", "Practicá con nativos de todo el mundo",
+        const Color.fromRGBO(235, 241, 159, 1)),
+    Description("assets/landing/4.png", "Y conocé nuevas personas",
+        const Color.fromRGBO(241, 212, 212, 1)),
+  ];
+
+  void setCurrentPage(page) {
+    if (currentPage == 0) {
+      Navigator.pushNamed(context, '/');
+    } else {
+      setState(() {
+        currentPage = page;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +97,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       color: descriptions[currentPage].color,
       child: Column(
         children: [
-          AppBar(currentPage: currentPage),
+          AppBar(
+              currentPage: currentPage,
+              colorButtons: colorsPages[currentPage],
+              setCurrentPage: setCurrentPage),
           Column(
             children: [
               Row(children: [
@@ -88,21 +113,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 descriptions[currentPage].text,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
+                    fontFamily: 'Roboto',
                     color: Colors.black,
+                    fontWeight: FontWeight.w600,
                     fontSize: 25.0,
                     decoration: TextDecoration.none),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-                  backgroundColor: Colors.transparent,
-                  side: BorderSide(
-                    width: 2,
+                  padding: const EdgeInsets.fromLTRB(30, 15, 30, 15),
+                  backgroundColor: colorsPages[currentPage],
+                  side: const BorderSide(
+                    width: 1,
                   )),
               onPressed: () {
                 if (currentPage + 1 == descriptions.length) {
@@ -115,7 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               child: Text(
                 currentPage == 2 ? "REGISTRARME" : "CONTINUAR",
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                style: const TextStyle(color: Colors.black, fontSize: 20),
               ))
         ],
       ),

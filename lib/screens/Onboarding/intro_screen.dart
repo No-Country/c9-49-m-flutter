@@ -48,6 +48,7 @@ class IntroScreen extends StatelessWidget {
                     child: const Text(
                       "REGISTRARME",
                       style: TextStyle(
+                        fontFamily: 'Roboto',
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

@@ -7,6 +7,7 @@ import "package:flutter_application_1/screens/Onboarding/Steps/personal_info_ste
 import "package:flutter_application_1/screens/Onboarding/Steps/target_lang_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_description_step.dart";
 import "package:flutter_application_1/screens/Onboarding/Steps/user_hobbies_step.dart";
+import "package:flutter_application_1/utils/has_legal_age.dart";
 import "package:flutter_application_1/utils/userdata.utils.dart";
 
 import "../../types/user_form_data.dart";
@@ -66,9 +67,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
           .set({...newUser, ...arguments}).then((value) => {
                 // ignore: avoid_print
                 print("Document added"),
-                MyFormWidget.navigatorKey.currentState?.pushNamed(
-                  '/login',
-                )
               });
     }
   }
@@ -80,6 +78,9 @@ class _MyFormWidgetState extends State<MyFormWidget> {
   }
 
   void onChangeBorn(value) {
+    if (!hasLegalAge(value)) {
+      print(value);
+    }
     setState(() {
       formData.born = value;
     });
@@ -128,7 +129,17 @@ class _MyFormWidgetState extends State<MyFormWidget> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            pageController.previousPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+      ),
       body: Form(
         key: formKey,
         child: PageView(

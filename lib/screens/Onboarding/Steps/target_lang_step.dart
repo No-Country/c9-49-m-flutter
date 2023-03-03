@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter_application_1/data/languages.dart';
 import 'package:flutter_application_1/types/user_form_data.dart';
+import 'package:flutter_application_1/widgets/Modals/errors_preferences_modal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import "./../../../widgets/Buttons/primary_button.dart";
 
 class TargetLangStep extends StatelessWidget {
   final UserFormData formData;
@@ -50,7 +52,10 @@ class TargetLangStep extends StatelessWidget {
                 const SizedBox(width: 25),
                 Text(
                   language['name']!,
-                  style: const TextStyle(fontSize: 30, color: Colors.black),
+                  style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal),
                   textAlign: TextAlign.start,
                 ),
               ],
@@ -81,16 +86,18 @@ class TargetLangStep extends StatelessWidget {
       );
     }).toList();
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return ListView(
       children: [
         const SizedBox(
           height: 30,
         ),
-        const Text(
-          "Elegí el idioma que quieras aprender",
-          style: TextStyle(fontSize: 35),
-          textAlign: TextAlign.center,
+        Container(
+          padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+          child: const Text(
+            "Elegí el idioma que quieras aprender",
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.start,
+          ),
         ),
         const SizedBox(
           height: 25,
@@ -105,26 +112,33 @@ class TargetLangStep extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        ElevatedButton(
-          onPressed: () {
-            if (Form.of(context).validate()) {
-              Form.of(context).save();
-              pageController.nextPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            fixedSize: const Size(150, 50),
-          ),
-          child: const Text(
-            'Continuar',
-            style: TextStyle(fontSize: 25),
+        Container(
+          padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
+          child: PrimaryButton(
+            onPressed: () {
+              if (formData.targetLanguage.isEmpty) {
+                showErrorDialog(context,
+                    titleText: 'Idioma',
+                    descriptionText: 'Elige su idioma nativo por favor');
+              } else if (formData.nativeLanguage == formData.targetLanguage) {
+                showErrorDialog(context,
+                    titleText: 'Idioma',
+                    descriptionText:
+                        'El idioma el cual pongas como objetivo aprender no puede ser el mismo que tu idioma nativo');
+
+                return;
+              } else if (Form.of(context).validate()) {
+                Form.of(context).save();
+                pageController.nextPage(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+            text: "Continuar",
           ),
         ),
       ],
     );
-    ;
   }
 }
