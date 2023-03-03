@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/ConnectProfile/ConnectProfile.dart';
+import 'package:flutter_application_1/services/user_service.dart';
+import 'package:flutter_application_1/types/user.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -10,6 +13,8 @@ class ChannelTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserService userServices = UserService();
+
     final currentUser = channel.state?.currentUserMember;
     final targetUser = channel.state?.members
         .firstWhere((member) => member.userId != currentUser?.userId)
@@ -29,6 +34,15 @@ class ChannelTile extends StatelessWidget {
               margin: const EdgeInsets.only(right: 4.0),
               child: StreamChannelAvatar(
                 channel: channel,
+                onTap: () async {
+                  final UserInDB targetUserDB =
+                      await userServices.findById(uid: targetUser!.id);
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ConnectProfile(user: targetUserDB);
+                  }));
+                },
               )),
           title: Container(
               margin: const EdgeInsets.only(bottom: 4.0),

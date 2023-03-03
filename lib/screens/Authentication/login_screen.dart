@@ -108,9 +108,11 @@ class _LoginFormState extends State<LoginForm> {
           await connectUserToChat(
               userInDB: userInDB, client: stream.StreamChat.of(context).client);
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomeScreen(user: userInDB);
-          }));
+          Future.delayed(const Duration(milliseconds: 500), () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomeScreen(user: userInDB);
+            }));
+          });
         }
       } on FirebaseAuthException catch (e) {
         print(e);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_application_1/utils/formating_strings.dart';
 import "package:flutter_svg/flutter_svg.dart";
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -128,8 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
               color: const Color.fromRGBO(227, 227, 227, 1)),
-          padding: EdgeInsets.symmetric(horizontal: 13.0, vertical: 5.0),
-          child: Text(hobby,
+          padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 5.0),
+          child: Text(capitalize(hobby),
               style: const TextStyle(
                   fontSize: 12.0, color: Color.fromRGBO(32, 32, 32, 1))));
     });
