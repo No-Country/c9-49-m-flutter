@@ -44,7 +44,6 @@ dependencies:
   path_provider: ^2.0.12
   intl: ^0.17.0
   flutter_svg:
-  
 
 dev_dependencies:
   flutter_test:
