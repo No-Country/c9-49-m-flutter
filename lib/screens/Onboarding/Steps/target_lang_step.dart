@@ -3,6 +3,7 @@ import 'package:flutter_application_1/data/languages.dart';
 import 'package:flutter_application_1/types/user_form_data.dart';
 import 'package:flutter_application_1/widgets/Modals/errors_preferences_modal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import "./../../../widgets/Buttons/primary_button.dart";
 
 class TargetLangStep extends StatelessWidget {
   final UserFormData formData;
@@ -113,17 +114,20 @@ class TargetLangStep extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
-          child: ElevatedButton(
+          child: PrimaryButton(
             onPressed: () {
-              if (formData.nativeLanguage == formData.targetLanguage) {
+              if (formData.targetLanguage.isEmpty) {
+                showErrorDialog(context,
+                    titleText: 'Idioma',
+                    descriptionText: 'Elige su idioma nativo por favor');
+              } else if (formData.nativeLanguage == formData.targetLanguage) {
                 showErrorDialog(context,
                     titleText: 'Idioma',
                     descriptionText:
                         'El idioma el cual pongas como objetivo aprender no puede ser el mismo que tu idioma nativo');
 
                 return;
-              }
-              if (Form.of(context).validate()) {
+              } else if (Form.of(context).validate()) {
                 Form.of(context).save();
                 pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
@@ -131,14 +135,7 @@ class TargetLangStep extends StatelessWidget {
                 );
               }
             },
-            style: ElevatedButton.styleFrom(
-                fixedSize: const Size(100, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            child: const Text(
-              'Continuar',
-              style: TextStyle(fontSize: 25),
-            ),
+            text: "Continuar",
           ),
         ),
       ],

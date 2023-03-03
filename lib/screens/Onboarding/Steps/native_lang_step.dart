@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_application_1/data/languages.dart";
 import "package:flutter_application_1/types/user_form_data.dart";
+import "package:flutter_application_1/widgets/Modals/errors_preferences_modal.dart";
 import "package:flutter_svg/flutter_svg.dart";
+import "./../../../widgets/Buttons/primary_button.dart";
 
 class NativeLangStep extends StatelessWidget {
   final UserFormData formData;
@@ -91,7 +93,7 @@ class NativeLangStep extends StatelessWidget {
           height: 30,
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(14, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
           child: const Text(
             "Elegí tu idioma nativo",
             style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
@@ -112,27 +114,23 @@ class NativeLangStep extends StatelessWidget {
           height: 15,
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
-          child: ElevatedButton(
-            onPressed: () {
-              if (Form.of(context).validate()) {
-                Form.of(context).save();
-                pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-                fixedSize: const Size(100, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            child: const Text(
-              'Continuar',
-              style: TextStyle(fontSize: 25),
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
+            child: PrimaryButton(
+              text: "Continuar",
+              onPressed: () {
+                if (formData.nativeLanguage.isEmpty) {
+                  showErrorDialog(context,
+                      titleText: 'Idioma',
+                      descriptionText: 'Elige su idioma nativo por favor');
+                } else if (Form.of(context).validate()) {
+                  Form.of(context).save();
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+            )),
       ],
     );
   }

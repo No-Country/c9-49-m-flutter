@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import "package:flutter_application_1/screens/ConnectProfile/ConnectProfile.dart";
 import "package:stream_chat_flutter/stream_chat_flutter.dart";
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const RegisterScreen(),
         // "/profile": (context) => const ProfileScreen(),
-        "/userpreferences": (context) => const MyFormWidget()
+        "/userpreferences": (context) => const MyFormWidget(),
       },
       builder: (context, child) => StreamChat(
         client: client,

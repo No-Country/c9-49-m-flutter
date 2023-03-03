@@ -7,7 +7,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: Colors.transparent,
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +25,7 @@ class WelcomeScreen extends StatelessWidget {
           const Text(
             '¡Empezá a conectar!',
             style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold),
           ),
@@ -33,7 +33,7 @@ class WelcomeScreen extends StatelessWidget {
             height: 22.0,
           ),
           const CircularProgressIndicator(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ],
       ),
@@ -46,8 +46,8 @@ Future<void> showWelcomeLoader(BuildContext context) async {
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      return const Dialog(
-        backgroundColor: Colors.transparent,
+      return const Dialog.fullscreen(
+        backgroundColor: Colors.white,
         child: WelcomeScreen(),
       );
     },

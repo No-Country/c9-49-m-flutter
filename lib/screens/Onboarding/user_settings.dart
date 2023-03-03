@@ -67,9 +67,6 @@ class _MyFormWidgetState extends State<MyFormWidget> {
           .set({...newUser, ...arguments}).then((value) => {
                 // ignore: avoid_print
                 print("Document added"),
-                MyFormWidget.navigatorKey.currentState?.pushNamed(
-                  '/login',
-                )
               });
     }
   }

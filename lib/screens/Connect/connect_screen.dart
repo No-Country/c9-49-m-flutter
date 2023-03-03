@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/services/user_service.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 // Page:
 import '../Chat/channel_page.dart';
+import "./../ConnectProfile/ConnectProfile.dart";
 
 // Theme:
 import '../../theme/colors_theme.dart';
@@ -86,6 +88,7 @@ class _UserListPageState extends State<UserListPage> {
                 final User user = users[index];
                 final name = user.name;
 
+                final UserService userServices = UserService();
                 final nativeLang = user.extraData['nativeLanguage'].toString();
                 final nativeLangText = languages
                     .firstWhere((lang) => lang["code"] == nativeLang)['name']
@@ -126,6 +129,15 @@ class _UserListPageState extends State<UserListPage> {
                     borderRadius: BorderRadius.circular(45),
                     constraints: BoxConstraints.tight(const Size(40.0, 40.0)),
                     showOnlineStatus: false,
+                    onTap: (user) async {
+                      final UserInDB targetUserDB =
+                          await userServices.findById(uid: user.id);
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ConnectProfile(user: targetUserDB);
+                      }));
+                    },
                   ),
                   title: Row(
                     children: [
