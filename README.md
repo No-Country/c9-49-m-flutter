@@ -83,10 +83,10 @@ SpeakEasy is a mobile app where users can connect with native speakers from othe
 * **Natalia Pedraza** - *QA Tester* - <a href="https://www.linkedin.com/in/natalia-pedraza"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
 
 
-* **Tomas Salina** - *Full Stack Developer* - <a href="https://www.linkedin.com/linkedin.com/in/salinatomass"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
+* **Tomas Salina** - *Full Stack Developer* - <a href="https://www.linkedin.com/in/salinatomass"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
 
 
-* **Agustin Nazer** - *Full Stack Developer* - <a href="https://www.linkedin.com/linkedin.com/in/agustínnazer"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
+* **Agustin Nazer** - *Full Stack Developer* - <a href="https://www.linkedin.com/in/agustínnazer"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
 
 
 * **Raúl Ereño** - *Full Stack Developer* - <a href="https://www.linkedin.com/in/raulereno/"> <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="15"/> </a>
