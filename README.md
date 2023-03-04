@@ -49,7 +49,7 @@ SpeakEasy is a mobile app where users can connect with native speakers from othe
 - Realtime chat using StreamChat package
 
 
-### Design
+## Design
 
 - [Link to Figma](https://www.figma.com/file/hKVw37DvsOzj0qgF8uplYK/APP-NO-COUNTRY?node-id=0%3A1)
 
