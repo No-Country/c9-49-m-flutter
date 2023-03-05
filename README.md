@@ -126,4 +126,4 @@ Role: QA Analyst
 </br>
 
 <h1 style="text-align:center;">
- 🗺️Thank you No Country for making it possible to gain experience in real projects with real work teams for those of us who are starting in the world of technology.</h1>
+ 🗺️Thanks No Country for making it possible to gain experience in real projects with real work teams for those of us who are starting in the world of technology.</h1>
