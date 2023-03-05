@@ -55,7 +55,18 @@ SpeakEasy is a mobile app where users can connect with native speakers from othe
 
 <img width="100%"  src="./assets/readme/cap-figma.png" alt="Texto alternativo"> 
 
+## Testing 
+Name: Natalia Pedraza
 
+Role: QA Analyst
+
+#### Tools: 
+- Trello (user stories and daily activity) 
+- Excel (test matrix with functional and non-functional test cases and daily progress in charts)
+- Jira (tracking and closure of issues). 
+#### In addition to that, design of two evidence PDFs: 
+1. Evidence of test cases that were executed successfully
+2. Evidence of tests that did not execute successfully and were reported as issues.
 ## Deploy 📦
 
 - [Android Apk Link](https://drive.google.com/file/d/15Ylc4zan_U9Eowa9kYtmCyU-WMm9tGbF/view?usp=share_link)
