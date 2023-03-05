@@ -1,4 +1,4 @@
-<div style="text-align:center;"><img src="./assets/logos/logo.png" alt="Texto alternativo"></div>
+<div ><p style="text-align:center;"><img src="./assets/logos/logo.png" alt="Texto alternativo"></p></div>
 
 # SpeakEasy
 
